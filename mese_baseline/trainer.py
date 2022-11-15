@@ -75,7 +75,7 @@ class Trainer(object):
                 self.model.lm_restore_wtes(self.original_token_emb_size)
                 
             output_file = open(output_file_path, 'w')
-            output_file.writelines([f"Epcoh {ep} ppl: {np.mean(ppls)}, recall_loss: {np.mean(recall_losses)}, rerank_loss: {np.mean(rerank_losses)}"])
+            output_file.writelines([f"Epoch {ep} ppl: {np.mean(ppls)}, recall_loss: {np.mean(recall_losses)}, rerank_loss: {np.mean(rerank_losses)}"])
             output_file.write('\n')
             output_file.writelines([f"recall top100: {recall_top100_val/total_val}, top300: {recall_top300_val/total_val}, top500: {recall_top500_val/total_val}"])
             output_file.write('\n')
