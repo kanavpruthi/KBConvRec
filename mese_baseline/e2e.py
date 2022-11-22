@@ -68,7 +68,7 @@ num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // 
 num_samples_recall_train = 100
 num_samples_rerank_train = 150
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 500
+validation_recall_size = 150
 
 temperature = 1.2
 

@@ -1,4 +1,4 @@
 data
-runs
+runs/*.pt
 __pycache__
-out
+out/*.txt
