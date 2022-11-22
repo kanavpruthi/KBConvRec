@@ -1,15 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[6]:
-
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-# In[7]:
 
 
 class SequenceCrossEntropyLoss(nn.Module):
@@ -63,9 +55,6 @@ def sequence_cross_entropy_with_logits(logits, targets, mask, label_smoothing, r
             loss = loss.mean()
 
     return loss
-
-
-# In[ ]:
 
 
 

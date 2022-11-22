@@ -15,13 +15,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-# In[170]:
-
 
 test = None
-
-
-# In[171]:
 
 
 class MLP(nn.Module):
@@ -237,9 +232,6 @@ class AttentionIA(nn.Module):
         a = self.resid_dropout(a)
 
         return (a, present) + attn_outputs[1:]  # a, present, (attentions)
-
-
-# In[172]:
 
 
 class GPT2InductiveAttention(GPT2Model):

@@ -7,7 +7,7 @@ import numpy as np
 from utilities import get_memory_free_MiB
 
 class Trainer(object):
-    def __init__(self, model:UniversalCRSModel, engine: Engine, train_dataloader, test_dataloader, optimizer, scheduler, progress_bar) -> None:
+    def __init__(self, model:UniversalCRSModel, engine: Engine, train_dataloader = None, test_dataloader = None, optimizer = None, scheduler = None, progress_bar = None) -> None:
         self.model = model
         self.engine = engine
         self.train_dataloader = train_dataloader
@@ -74,7 +74,7 @@ class Trainer(object):
                 dist1, dist2, dist3, dist4 = distinct_metrics(total_sentences)
                 self.model.lm_restore_wtes(self.original_token_emb_size)
                 
-            output_file = open(output_file_path, 'w')
+            output_file = open(output_file_path, 'a')
             output_file.writelines([f"Epoch {ep} ppl: {np.mean(ppls)}, recall_loss: {np.mean(recall_losses)}, rerank_loss: {np.mean(rerank_losses)}"])
             output_file.write('\n')
             output_file.writelines([f"recall top100: {recall_top100_val/total_val}, top300: {recall_top300_val/total_val}, top500: {recall_top500_val/total_val}"])

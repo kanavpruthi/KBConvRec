@@ -227,7 +227,7 @@ class UniversalCRSModel(torch.nn.Module):
             lm_outputs = self.language_model(inputs_embeds=all_wtes)
             train_logits = lm_outputs.logits[:, -current_wtes.shape[1]:-1, :] # skip the last one
             train_targets = current_tokens[:,1:]
-        
+
         # torch.Size([batch, len_cur, lm_vocab]), torch.Size([batch, len_cur]), torch.Size([batch, len_past+len_cur, lm_emb(768)])
         return train_logits, train_targets
         
