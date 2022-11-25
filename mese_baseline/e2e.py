@@ -61,12 +61,12 @@ model.to(device)
 
 # parameters
 batch_size = 1
-num_epochs = 10
+num_epochs = 8
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 20
-num_samples_rerank_train = 30
+num_samples_recall_train = 100
+num_samples_rerank_train = 150
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
 validation_recall_size = 150
 
@@ -104,12 +104,14 @@ optimizer = AdamW(optimizer_grouped_parameters,
 
 scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=len(train_dataset) // num_gradients_accumulation , num_training_steps = num_train_optimization_steps)
 
+scaler = torch.cuda.amp.GradScaler()
+
 progress_bar = tqdm.std.tqdm
 
 # Data loader 
 
-train_dataloader = DataLoader(dataset=train_dataset, shuffle=False, batch_size=batch_size, collate_fn=train_dataset.collate)
-test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate)
+train_dataloader = DataLoader(dataset=train_dataset, shuffle=False, batch_size=batch_size, collate_fn=train_dataset.collate, pin_memory=True)
+test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate, pin_memory=True)
 
 
 engine = Engine(device,
@@ -126,8 +128,8 @@ engine = Engine(device,
                 temperature)
 
 
-output_file_path = "out/CRS_Train_Durecdial.txt"
-model_saved_path = "runs/Durecdial_"
+output_file_path = "out/CRS_Train_Redial.txt"
+model_saved_path = "runs/Redial_"
 
 ## Define Trainer
 trainer = Trainer(
@@ -137,6 +139,7 @@ trainer = Trainer(
     test_dataloader,
     optimizer,
     scheduler,
+    scaler,
     progress_bar
 )
 

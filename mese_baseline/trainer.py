@@ -7,13 +7,14 @@ import numpy as np
 from utilities import get_memory_free_MiB
 
 class Trainer(object):
-    def __init__(self, model:UniversalCRSModel, engine: Engine, train_dataloader = None, test_dataloader = None, optimizer = None, scheduler = None, progress_bar = None) -> None:
+    def __init__(self, model:UniversalCRSModel, engine: Engine, train_dataloader = None, test_dataloader = None, optimizer = None, scheduler = None, scaler = None, progress_bar = None) -> None:
         self.model = model
         self.engine = engine
         self.train_dataloader = train_dataloader
         self.test_dataloader = test_dataloader
         self.optimizer = optimizer 
         self.scheduler = scheduler
+        self.scaler = scaler
         self.progress_bar = progress_bar
         self.original_token_emb_size = model.language_model.get_input_embeddings().weight.shape[0]
         self.update_count = 0
@@ -26,12 +27,14 @@ class Trainer(object):
             self.model.train()
             for batch in pbar:
                 # batch size of train_dataloader is 1
-                avg_ppl = self.engine.train_one_iteration(batch[0], self.model)
+                avg_ppl = self.engine.train_one_iteration(batch[0], self.model, self.scaler)
                 self.update_count +=1
                 if self.update_count % num_gradients_accumulation == num_gradients_accumulation - 1:
                     
                     # update for gradient accumulation
-                    self.optimizer.step()
+                    self.scaler.step(self.optimizer)
+                    self.scaler.update()
+
                     self.scheduler.step()
                     self.optimizer.zero_grad()
                     
