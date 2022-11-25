@@ -31,7 +31,7 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-train_path = "data/processed/durecdial2_full_train_placeholder"
+# train_path = "data/processed/durecdial2_full_train_placeholder"
 test_path = "data/processed/durecdial2_full_test_placeholder"
 items_db_path = "data/processed/durecdial2_full_movie_db_placeholder"
 items_db = torch.load(items_db_path)
@@ -54,18 +54,18 @@ model = UniversalCRSModel(
     rec_end_token_str=REC_END_TOKEN
 )
 
-CKPT = 'runs/CRS_Redial_Train_Same_BERT_10.pt'
+CKPT = 'runs/Durecdial_9.pt'
 
 model.to(device)
 
-# model.load_state_dict(torch.load(CKPT,map_location='cuda:0')) only GPT2 base
+model.load_state_dict(torch.load(CKPT,map_location='cuda:0')) 
 
 
 progress_bar = tqdm.std.tqdm
 
 # parameters
-batch_size = 64
-validation_recall_size = 200
+batch_size = 1
+validation_recall_size = 150
 
 temperature = 1.2
 
@@ -88,6 +88,7 @@ trainer = Trainer(
 
 
 total_sentences_original, total_sentences_generated, (valid_cnt, response_with_items, total_gen_cnt) = trainer.generate()
-
+total_sentences_original = [item for sublist in total_sentences_original for item in sublist]
+total_sentences_generated = [item for sublist in total_sentences_generated for item in sublist]
 torch.save(total_sentences_generated, 'human_eval/preds.pt')
 torch.save(total_sentences_original,'human_eval/labels.pt')
