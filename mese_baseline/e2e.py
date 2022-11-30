@@ -64,14 +64,14 @@ model.to(device)
 
 # parameters
 batch_size = 1
-num_epochs = 8
+num_epochs = 15
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
 num_samples_recall_train = 20
 num_samples_rerank_train = 30
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 50
+validation_recall_size = 150
 
 temperature = 1.2
 
@@ -131,8 +131,8 @@ engine = Engine(device,
                 temperature)
 
 
-output_file_path = "out/CRS_Train_Redial.txt"
-model_saved_path = "runs/Redial_"
+output_file_path = "out/CRS_Train_Durecdial.txt"
+model_saved_path = "runs/Durecdial_"
 
 ## Define Trainer
 trainer = Trainer(
