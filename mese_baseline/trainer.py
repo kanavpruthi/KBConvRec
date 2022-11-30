@@ -35,8 +35,9 @@ class Trainer(object):
                     self.scaler.step(self.optimizer)
                     self.scaler.update()
 
-                    self.scheduler.step()
+                    
                     self.optimizer.zero_grad()
+                    self.scheduler.step()
                     
                     # speed measure
                     end = time.time()
