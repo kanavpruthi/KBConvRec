@@ -1,4 +1,4 @@
-data
+data/predictions/*txt
 runs/*.pt
 __pycache__
 out/*.txt
