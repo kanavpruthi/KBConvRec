@@ -1,0 +1,8 @@
+annoy==1.17.1
+nltk==3.7
+numpy==1.17.4
+pynvml==11.4.1
+requests==2.22.0
+torch==1.11.0
+tqdm==4.64.1
+transformers==4.24.0
