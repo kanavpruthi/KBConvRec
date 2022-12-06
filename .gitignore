@@ -133,5 +133,4 @@ mese_baseline/human_eval/*.pt
 mese_baseline/*.log
 mese_baseline/data/metadata/*
 mese_baseline/data/preprocessed/*
-mese_baseline/data/processed/*
 mese_baseline/predictions*
