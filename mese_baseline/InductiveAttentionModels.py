@@ -1,11 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[169]:
-
-
 import math
-
+from loguru import logger
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, AdamW, get_linear_schedule_with_warmup, GPT2Config
 from transformers import GPT2Config, GPT2Tokenizer, GPT2LMHeadModel,GPT2Model, AdamW, get_linear_schedule_with_warmup, BertModel, BertTokenizer
 from transformers import modeling_outputs, modeling_utils

@@ -32,8 +32,8 @@ gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
 # train_path = "data/processed/durecdial2_full_train_placeholder"
-test_path = "data/processed/durecdial2_oov_test_placeholder"
-items_db_path = "data/processed/durecdial2_full_movie_db_placeholder"
+test_path = "data/processed/durecdial2_food_sub_test_placeholder"
+items_db_path = "data/processed/durecdial2_full_food_db_placeholder"
 items_db = torch.load(items_db_path)
 
 test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
@@ -54,7 +54,7 @@ model = UniversalCRSModel(
     rec_end_token_str=REC_END_TOKEN
 )
 
-CKPT = 'runs/Redial_7.pt'
+CKPT = 'runs/Durecdial_19.pt'
 
 model.to(device)
 

@@ -45,7 +45,9 @@ def f1(preds, golds, movie_list):
 		else:
 			print(entities_in_gold)
 			print(entities_in_pred)
-			print(f'{gold}\t{pred}\n')
+			print(f'{gold}{pred}')
+			print()
+			print()
 			re_list.append(common/len(entities_in_gold))
 
 		
@@ -61,9 +63,23 @@ def f1(preds, golds, movie_list):
 
 
 file_path = sys.argv[1]
-MOVIE_DB = '../auxiliary/movies.pkl'
 
+MOVIE_DB = '../auxiliary/movies.pkl'
 movies = pickle.load(open(MOVIE_DB,'rb'))
+
+FOOD_DB = '../auxiliary/food.pkl'
+food = pickle.load(open(FOOD_DB,'rb'))
+
+POI_DB = '../auxiliary/poi.pkl'
+poi = pickle.load(open(POI_DB,'rb'))
+
+MUSIC_DB = '../auxiliary/music.pkl'
+music = pickle.load(open(MUSIC_DB,'rb'))
+
+movies.extend(food)
+movies.extend(poi)
+movies.extend(music)
+
 file = open(file_path,'r')
 
 golds = [];preds = []

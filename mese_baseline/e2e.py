@@ -29,11 +29,11 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = "data/processed/durecdial2_full_movie_db_placeholder"
+items_db_path = "data/processed/durecdial2_full_food_db_placeholder"
 items_db = torch.load(items_db_path)
 
-train_path = "data/processed/durecdial2_non_oov_train_placeholder"
-test_path = "data/processed/durecdial2_non_oov_dev_placeholder"
+train_path = "data/processed/durecdial2_food_sub_train_placeholder"
+test_path = "data/processed/durecdial2_food_sub_dev_placeholder"
 
 
 
@@ -64,7 +64,7 @@ model.to(device)
 
 # parameters
 batch_size = 1
-num_epochs = 15
+num_epochs = 20
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
