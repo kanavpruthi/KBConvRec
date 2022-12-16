@@ -141,7 +141,7 @@ class Engine(object):
 
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
-
+    
         # Free GPU memory
         # dialog_tensors = [torch.LongTensor(utterance).to(self.cpu) for utterance, _ in dialogues]
         del dialog_tensors
