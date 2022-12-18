@@ -43,11 +43,12 @@ def f1(preds, golds, movie_list):
 		if len(entities_in_gold) == 0:
 			continue
 		else:
-			print(entities_in_gold)
-			print(entities_in_pred)
-			print(f'{gold}{pred}')
-			print()
-			print()
+			if entities_in_gold != entities_in_pred:
+				print(entities_in_gold)
+				print(entities_in_pred)
+				print(f'{gold}{pred}')
+				print()
+				print()
 			re_list.append(common/len(entities_in_gold))
 
 		
