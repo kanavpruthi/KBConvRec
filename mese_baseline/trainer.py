@@ -30,6 +30,7 @@ class Trainer(object):
             self.model.train()
             for batch in pbar:
                 # batch size of train_dataloader is 1
+                self.optimizer.zero_grad()
                 avg_ppl = self.engine.train_one_iteration(batch[0], self.model, self.scaler)
                 self.update_count +=1
                 if self.update_count % num_gradients_accumulation == num_gradients_accumulation - 1:
@@ -37,9 +38,6 @@ class Trainer(object):
                     # update for gradient accumulation
                     self.scaler.step(self.optimizer)
                     self.scaler.update()
-
-                    
-                    self.optimizer.zero_grad()
                     self.scheduler.step()
                     
                     # speed measure

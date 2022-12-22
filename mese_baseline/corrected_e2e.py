@@ -2,7 +2,8 @@ import torch
 from torch.utils.data import DataLoader
 
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
-from transformers import AdamW, get_linear_schedule_with_warmup
+from transformers import get_linear_schedule_with_warmup
+from torch.optim import AdamW
 
 from InductiveAttentionModels import GPT2InductiveAttentionHeadModel
 from loss import SequenceCrossEntropyLoss
@@ -10,8 +11,8 @@ from loss import SequenceCrossEntropyLoss
 from trainer import Trainer
 import tqdm
 from dataset import MovieRecDataset
-from corrected_mese import UniversalCRSModel
-from corrected_engine import Engine
+from corrected_mese import C_UniversalCRSModel
+from corrected_engine import C_Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
 
@@ -45,7 +46,7 @@ test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokeni
 device = torch.device(0)
 
 
-model = UniversalCRSModel(
+model = C_UniversalCRSModel(
     gpt2_model, 
     bert_model_recall, 
     bert_model_rerank, 
@@ -70,7 +71,7 @@ num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // 
 num_samples_recall_train = 300
 num_samples_rerank_train = 30
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 300
+validation_recall_size = 30
 
 temperature = 1.2
 
@@ -116,7 +117,7 @@ train_dataloader = DataLoader(dataset=train_dataset, shuffle=False, batch_size=b
 test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate, pin_memory=True)
 
 
-engine = Engine(device,
+engine = C_Engine(device,
                 criterion_language,
                 criterion_recall,
                 criterion_rerank_train,

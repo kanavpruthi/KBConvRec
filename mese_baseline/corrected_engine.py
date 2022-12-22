@@ -2,7 +2,7 @@ import torch
 from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB
 import numpy as np
 import sys
-from corrected_mese import UniversalCRSModel
+from corrected_mese import C_UniversalCRSModel
 from loguru import logger
 
 class C_Engine(object):
@@ -33,7 +33,7 @@ class C_Engine(object):
         self.validation_recall_size = validation_recall_size
         self.cpu = torch.device('cpu')
 
-    def train_one_iteration(self,batch,model: UniversalCRSModel, scaler):
+    def train_one_iteration(self,batch,model: C_UniversalCRSModel, scaler):
         role_ids, dialogues = batch
         # print('before training free space: ',get_memory_free_MiB(4))
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
@@ -110,7 +110,6 @@ class C_Engine(object):
                             past_wtes,
                             current_tokens,
                             recommended_id,
-                            self.num_samples_recall_train
                         )
                         # language loss in recall turn, REC_TOKEN, Language on conditional generation
                         all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
@@ -132,7 +131,7 @@ class C_Engine(object):
         return np.mean(ppl_history)
 
 
-    def validate_one_iteration(self, batch, model: UniversalCRSModel):
+    def validate_one_iteration(self, batch, model: C_UniversalCRSModel):
         role_ids, dialogues = batch
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
 
@@ -179,7 +178,7 @@ class C_Engine(object):
                     total += 1
 
                     recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
-
+                    
                     if recommended_id in recalled_ids[:500]:
                         recall_top500 += 1
                     if recommended_id in recalled_ids[:400]:
@@ -191,7 +190,6 @@ class C_Engine(object):
                         continue # no need to compute rerank since recall is unsuccessful
 
                     # rerank
-                    past_wtes = past_wtes_constructor(past_list, model)
                     rerank_true_index = recalled_ids.index(recommended_id)
                     rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
         #             print(rerank_logits)

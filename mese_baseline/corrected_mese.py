@@ -22,7 +22,7 @@ class C_UniversalCRSModel(torch.nn.Module):
                  sep_token_str="[SEP]",
                  placeholder_token_str="[MOVIE_ID]"
                 ):
-        super(UniversalCRSModel, self).__init__()
+        super(C_UniversalCRSModel, self).__init__()
         
         #models and tokenizers
         self.language_model = language_model
@@ -311,7 +311,6 @@ class C_UniversalCRSModel(torch.nn.Module):
                        past_wtes, # past word token embeddings, [1, len, 768]
                        current_tokens, # Current Utterance
                        gt_item_id, # tokens of current turn conversation, [1, len]
-                       num_samples, # num examples to sample for training, including groud truth 
                       ):
         REC_wtes = self.get_rec_token_wtes() # [1, 1, self.language_model.config.n_embd]
         gt_item_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, [gt_item_id], self.items_db)
