@@ -1,14 +1,16 @@
-from corrected_engine import Engine
+from corrected_engine import C_Engine
+from engine import Engine
 import time 
 import torch
 from metrics import distinct_metrics
-from corrected_mese import UniversalCRSModel
-
+from corrected_mese import C_UniversalCRSModel
+from mese import UniversalCRSModel
+from typing import Union
 import numpy as np
 from utilities import get_memory_free_MiB
 
 class Trainer(object):
-    def __init__(self, model:UniversalCRSModel, engine: Engine, train_dataloader = None, test_dataloader = None, optimizer = None, scheduler = None, scaler = None, progress_bar = None) -> None:
+    def __init__(self, model: Union[ UniversalCRSModel, C_UniversalCRSModel], engine: Union[ Engine, C_Engine], train_dataloader = None, test_dataloader = None, optimizer = None, scheduler = None, scaler = None, progress_bar = None) -> None:
         self.model = model
         self.engine = engine
         self.train_dataloader = train_dataloader

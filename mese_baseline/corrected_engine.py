@@ -5,7 +5,7 @@ import sys
 from corrected_mese import UniversalCRSModel
 from loguru import logger
 
-class Engine(object):
+class C_Engine(object):
     def __init__(self,
                 device, 
                 criterion_language = None, 

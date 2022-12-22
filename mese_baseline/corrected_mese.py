@@ -4,7 +4,7 @@ import math
 import numpy as np
 from utilities import sample_ids_from_db, get_memory_free_MiB
 from loguru import logger
-class UniversalCRSModel(torch.nn.Module):
+class C_UniversalCRSModel(torch.nn.Module):
     def __init__(self, 
                  language_model, # backbone of Pretrained LM such as GPT2
                  encoder, # backbone of item encoder such as bert
