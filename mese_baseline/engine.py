@@ -148,7 +148,6 @@ class Engine(object):
         del dialog_tensors
         return np.mean(ppl_history)
 
-
     def validate_one_iteration(self, batch, model):
         role_ids, dialogues = batch
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
@@ -254,7 +253,6 @@ class Engine(object):
         return ppl_history, recall_loss_history, rerank_loss_history, \
                 total, recall_top100, recall_top300, recall_top500, \
                 rerank_top1, rerank_top10, rerank_top50
-
 
     def validate_language_metrics_batch(self, batch, model, item_id_2_lm_token_id):
         role_ids, dialogues = batch
