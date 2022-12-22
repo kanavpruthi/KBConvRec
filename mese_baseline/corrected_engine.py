@@ -2,7 +2,8 @@ import torch
 from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB
 import numpy as np
 import sys
-from mese import UniversalCRSModel
+from corrected_mese import UniversalCRSModel
+from loguru import logger
 
 class Engine(object):
     def __init__(self,
@@ -85,60 +86,42 @@ class Engine(object):
                     # print(model.lm_tokenizer.decode(current_tokens))
                     # recall
                     with torch.cuda.amp.autocast():
-                        recall_logits, recall_true_index, all_wte_logits, all_wte_targets = model.forward_recall(
+                        select_logits, select_true_index, rerank_logits = model.forward_retrieval(
                             past_wtes, 
-                            current_tokens, 
+                            # current_tokens, 
                             recommended_id, 
                             self.num_samples_recall_train
                         )
-                        # print(all_wte_logits.shape)
-                        # print(model.lm_tokenizer.decode(all_wte_targets[0]))
-                        # print(model.lm_tokenizer.decode(all_wte_logits.argmax(dim=2)[0]))
-                        # sys.exit(0)
-                        # print('after forward recall turn (recommendation): ',get_memory_free_MiB(4))
                         
                         # recall items loss
-                        recall_targets = torch.LongTensor([recall_true_index]).to(model.device)
-                        loss_recall = self.criterion_recall(recall_logits.unsqueeze(0), recall_targets)
+                        select_targets = torch.LongTensor([select_true_index]).to(model.device)
+                        loss_recall = self.criterion_recall(select_logits.unsqueeze(0), select_targets)
+                        
+                        # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
+                        rerank_logits /= self.temperature
+                        rerank_logits = rerank_logits.squeeze()
+                        # rerank loss 
+                        rerank_targets = torch.LongTensor([select_true_index]).to(model.device)
+                        loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
+                        loss_rerank *= self.rerank_loss_train_coeff
 
+                        # Response Generation
+                        all_wte_logits, all_wte_targets = model.forward_response_generation(
+                            past_wtes,
+                            current_tokens,
+                            recommended_id,
+                            self.num_samples_recall_train
+                        )
                         # language loss in recall turn, REC_TOKEN, Language on conditional generation
                         all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
                         loss_ppl = self.criterion_language(all_wte_logits, all_wte_targets, all_wte_targets_mask, label_smoothing=0.02, reduce="batch")
                         perplexity = np.exp(loss_ppl.item())
                         ppl_history.append(perplexity)
-                    # Language turn is negligible gpu
-                    # print('after forward recall language turn (recommendation): ',get_memory_free_MiB(4))
 
                     # combined loss
-                    recall_total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff
-                    scaler.scale(recall_total_loss).backward()
-
-                    # rerank
-                    past_wtes = past_wtes_constructor(past_list, model)
-                    with torch.cuda.amp.autocast():
-                        rerank_logits, rerank_true_index = model.forward_rerank(
-                            past_wtes, 
-                            recommended_id, 
-                            self.num_samples_rerank_train, 
-                            self.rerank_encoder_chunk_size
-                        )
+                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank* self.rerank_loss_train_coeff
+                    scaler.scale(total_loss).backward()
                         
-                        # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
-                        rerank_logits /= self.temperature
-
-                        # rerank loss 
-                        rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
-                        loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
-                        loss_rerank *= self.rerank_loss_train_coeff
-                    scaler.scale(loss_rerank).backward()
-
-                    # Combined loss backward 
-                    # #-----------------ADD---------------------
-                    # comb_loss = loss_rerank+recall_total_loss
-                    # comb_loss.backward()
-                    #-----------------------------------------
-
-                    # print('after backward call  (recommendation): ',get_memory_free_MiB(4))
 
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
@@ -149,7 +132,7 @@ class Engine(object):
         return np.mean(ppl_history)
 
 
-    def validate_one_iteration(self, batch, model):
+    def validate_one_iteration(self, batch, model: UniversalCRSModel):
         role_ids, dialogues = batch
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
 
@@ -194,28 +177,6 @@ class Engine(object):
                     past_wtes = past_wtes_constructor(past_list, model)
 
                     total += 1
-
-                    # recall
-                    recall_logits, recall_true_index, all_wte_logits, all_wte_targets = model.forward_recall(
-                        past_wtes, 
-                        current_tokens, 
-                        recommended_id, 
-                        self.num_samples_recall_train
-                    )
-
-                    
-                    # recall items loss
-                    recall_targets = torch.LongTensor([recall_true_index]).to(model.device)
-                    loss_recall = self.criterion_recall(recall_logits.unsqueeze(0), recall_targets)
-                    recall_loss_history.append(loss_recall.item())
-                    del loss_recall; del recall_logits; del recall_targets
-
-                    # language loss in recall turn, REC_TOKEN, Language on conditional generation
-                    all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
-                    loss_ppl = self.criterion_language(all_wte_logits, all_wte_targets, all_wte_targets_mask, label_smoothing=-1, reduce="sentence")
-                    perplexity = np.exp(loss_ppl.item())
-                    ppl_history.append(perplexity)
-                    del loss_ppl; del all_wte_logits; del all_wte_targets
 
                     recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
 
