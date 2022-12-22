@@ -267,7 +267,7 @@ class UniversalCRSModel(torch.nn.Module):
         lm_outputs = self.language_model(inputs_embeds=lm_wte_inputs, output_hidden_states=True)
         
         # recall step 3. pull logits (recall, rec_token and language logits of current turn) and compute
-        
+            
         # recall logit(s)
         rec_token_start_index = -current_wtes_len-REC_END_wtes_len-gt_item_wte_len-REC_wtes_len
         rec_token_end_index = -current_wtes_len-REC_END_wtes_len-gt_item_wte_len
