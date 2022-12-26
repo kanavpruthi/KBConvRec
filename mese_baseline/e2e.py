@@ -29,7 +29,7 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = "data/processed/durecdial2_full_entity_db_placeholder_CORRECT"
+items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
 train_path = "data/processed/durecdial2_all_train_placeholder"
@@ -39,6 +39,7 @@ test_path = "data/processed/durecdial2_all_dev_placeholder"
 
 train_dataset = MovieRecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
 test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+
 
 
 # print(get_memory_free_MiB(0))
@@ -68,8 +69,8 @@ num_epochs = 15
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 60
-num_samples_rerank_train = 90
+num_samples_recall_train = 600
+num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
 validation_recall_size = 300
 

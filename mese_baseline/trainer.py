@@ -7,6 +7,7 @@ from corrected_mese import C_UniversalCRSModel
 from mese import UniversalCRSModel
 from typing import Union
 import numpy as np
+from loguru import logger 
 from utilities import get_memory_free_MiB
 
 class Trainer(object):
@@ -102,6 +103,7 @@ class Trainer(object):
 
 
             item_id_2_lm_token_id = self.model.lm_expand_wtes_with_items_annoy_base()
+            
             pbar = self.progress_bar(self.test_dataloader)
             total_sentences_original = []; total_sentences_generated = []
             integration_cnt, total_int_cnt = 0, 0

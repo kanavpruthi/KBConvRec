@@ -46,7 +46,8 @@ class C_UniversalCRSModel(torch.nn.Module):
         self.REC_END_TOKEN_STR = rec_end_token_str
         self.SEP_TOKEN_STR = sep_token_str
         self.PLACEHOLDER_TOKEN_STR = placeholder_token_str
-        
+        # map output of recommender vector to a single class to check whether it is a recommendation or not 
+        self.rec_query_goal_type_mapper = torch.nn.Linear(self.language_model.config.n_embd, 1) 
         # map language model hidden states to a vector to query annoy-item-base for recall
         self.recall_lm_query_mapper = torch.nn.Linear(self.language_model.config.n_embd, self.recall_item_dim) # default [768,768]
         # map output of self.item_encoder to vectors to be stored in annoy-item-base 
@@ -231,87 +232,15 @@ class C_UniversalCRSModel(torch.nn.Module):
         # torch.Size([batch, len_cur, lm_vocab]), torch.Size([batch, len_cur]), torch.Size([batch, len_past+len_cur, lm_emb(768)])
         return train_logits, train_targets
         
-    def forward_retrieval(self, 
+    def forward_retrieval_and_response_generation(self, 
                        past_wtes, # past word token embeddings, [1, len, 768]
-                    #    current_tokens, # tokens of current turn conversation, [1, len]
+                       current_tokens, # tokens of current turn conversation, [1, len]
                        gt_item_id, # id, ex. 0
                        num_samples # num examples to sample for training, including groud truth id
                       ):
         # recall step 1. construct LM sequence output
         # LM input composition: [past_wtes, REC_wtes, gt_item_wte, (gt_item_info_wtes), REC_END_wtes, current_wtes ]
         
-        REC_wtes = self.get_rec_token_wtes() # [1, 1, self.language_model.config.n_embd]
-        gt_item_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, [gt_item_id], self.items_db)
-        gt_item_wte = self.rerank_item_wte_mapper(gt_item_wte) # [1, self.rerank_item_wte_mapper.out_features]
-        
-        REC_END_wtes = self.get_rec_end_token_wtes() # [1, 1, self.language_model.config.n_embd]
-        # current_wtes = self.language_model.transformer.wte(current_tokens) #[1, current_tokens.shape[1], self.language_model.config.n_embd]
-        
-        
-        # current_wtes_len = current_wtes.shape[1]
-        
-        # sample num_samples item ids to train recall with "recommendation as classification"
-        sampled_item_ids = sample_ids_from_db(self.items_db, gt_item_id, num_samples, include_gt=True)
-        gt_item_id_index = sampled_item_ids.index(gt_item_id)
-         # [num_samples, self.item_encoder.config.hidden_size]
-        encoded_items_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, sampled_item_ids, self.items_db)
-        encoded_items_wte = self.recall_item_wte_mapper(encoded_items_wte)
-        
-        REC_wtes_len = REC_wtes.shape[1] # 1 by default
-        encoded_items_wte_len = encoded_items_wte.shape[0] # Num Samples Randomly Retrieved
-        REC_END_wtes_len = REC_END_wtes.shape[1] # 1 by default
-
-        
-        lm_wte_inputs = torch.cat(
-            (past_wtes, # [batch (1), len, self.language_model.config.n_embd]
-             REC_wtes,
-             encoded_items_wte.unsqueeze(0), # reshape to [1,1,self.rerank_item_wte_mapper.out_features]
-             REC_END_wtes,
-            #  current_wtes # [batch (1), len, self.language_model.config.n_embd]
-            ),
-            dim=1
-        )
-        lm_wte_inputs = self.trim_lm_wtes(lm_wte_inputs) # trim for len > self.language_model.config.n_positions
-        
-        # recall step 2. get gpt output logits and hidden states
-        lm_outputs = self.language_model(inputs_embeds=lm_wte_inputs, output_hidden_states=True)
-        
-        # recall step 3. pull logits (recall, rec_token and language logits of current turn) and compute
-        
-        # recall logit(s)
-        rec_token_start_index = -REC_END_wtes_len-encoded_items_wte_len-REC_wtes_len
-        rec_token_end_index = -REC_END_wtes_len-encoded_items_wte_len
-        enc_items_start_index = -REC_END_wtes_len-encoded_items_wte_len
-        enc_items_end_index = -REC_END_wtes_len
-        # [batch (1), REC_wtes_len, self.language_model.config.n_embd]
-        rec_token_hidden = lm_outputs.hidden_states[-1][:, rec_token_start_index:rec_token_end_index, :]
-        enc_items_hidden = lm_outputs.hidden_states[-1][:, enc_items_start_index:enc_items_end_index, :]
-        # [batch (1), self.recall_lm_query_mapper.out_features]
-        rec_query_vector = self.recall_lm_query_mapper(rec_token_hidden).squeeze(1)
-        
-        rerank_logits = self.rerank_logits_mapper(enc_items_hidden)
-       
-        # to compute dot product with rec_query_vector
-        items_key_vectors = self.recall_item_wte_mapper(encoded_items_wte) # [num_samples, self.recall_item_wte_mapper.out_features]
-        # Expanded Query Vector => Dr
-        expanded_rec_query_vector = rec_query_vector.expand(items_key_vectors.shape[0], rec_query_vector.shape[1]) # [num_samples, self.recall_item_wte_mapper.out_features]
-        select_logits = torch.sum(expanded_rec_query_vector * items_key_vectors, dim=1) # torch.size([num_samples])
-        
-
-        # REC_TOKEN prediction and future sentence prediction
-        # hidden rep of the token that's right before REC_TOKEN
-        token_before_REC_logits = lm_outputs.logits[:, rec_token_start_index-1:rec_token_end_index-1, :]
-        REC_targets = self.lm_tokenizer(self.REC_TOKEN_STR, return_tensors="pt")['input_ids'].to(self.device) # [1, 1]
-        
-        #
-        # torch.size([num_samples]), id, [batch, current_wtes_len+REC_wtes_len, lm_vocab], [current_wtes_len+REC_wtes_len, lm_vocab]
-        return select_logits, gt_item_id_index, rerank_logits
-        
-    def forward_response_generation(self,
-                       past_wtes, # past word token embeddings, [1, len, 768]
-                       current_tokens, # Current Utterance
-                       gt_item_id, # tokens of current turn conversation, [1, len]
-                      ):
         REC_wtes = self.get_rec_token_wtes() # [1, 1, self.language_model.config.n_embd]
         gt_item_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, [gt_item_id], self.items_db)
         gt_item_wte = self.rerank_item_wte_mapper(gt_item_wte) # [1, self.rerank_item_wte_mapper.out_features]
@@ -339,9 +268,27 @@ class C_UniversalCRSModel(torch.nn.Module):
         lm_outputs = self.language_model(inputs_embeds=lm_wte_inputs, output_hidden_states=True)
         
         # recall step 3. pull logits (recall, rec_token and language logits of current turn) and compute
-        
+            
+        # recall logit(s)
         rec_token_start_index = -current_wtes_len-REC_END_wtes_len-gt_item_wte_len-REC_wtes_len
         rec_token_end_index = -current_wtes_len-REC_END_wtes_len-gt_item_wte_len
+        # [batch (1), REC_wtes_len, self.language_model.config.n_embd]
+        rec_token_hidden = lm_outputs.hidden_states[-1][:, rec_token_start_index:rec_token_end_index, :]
+        # [batch (1), self.recall_lm_query_mapper.out_features]
+        rec_query_vector = self.recall_lm_query_mapper(rec_token_hidden).squeeze(1)
+        
+        goal_type_logits = self.rec_query_goal_type_mapper(rec_query_vector).squeeze(1)
+
+        # sample num_samples item ids to train recall with "recommendation as classification"
+        sampled_item_ids = sample_ids_from_db(self.items_db, gt_item_id, num_samples, include_gt=True)
+        gt_item_id_index = sampled_item_ids.index(gt_item_id)
+        
+        # [num_samples, self.item_encoder.config.hidden_size]
+        encoded_items_embeddings, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, sampled_item_ids, self.items_db)
+        # to compute dot product with rec_query_vector
+        items_key_vectors = self.recall_item_wte_mapper(encoded_items_embeddings) # [num_samples, self.recall_item_wte_mapper.out_features]
+        expanded_rec_query_vector = rec_query_vector.expand(items_key_vectors.shape[0], rec_query_vector.shape[1]) # [num_samples, self.recall_item_wte_mapper.out_features]
+        recall_logits = torch.sum(expanded_rec_query_vector * items_key_vectors, dim=1) # torch.size([num_samples])
         
         # REC_TOKEN prediction and future sentence prediction
         # hidden rep of the token that's right before REC_TOKEN
@@ -359,7 +306,74 @@ class C_UniversalCRSModel(torch.nn.Module):
         all_wte_targets = torch.cat((REC_targets, current_language_targets), dim=1)
         
         # torch.size([num_samples]), id, [batch, current_wtes_len+REC_wtes_len, lm_vocab], [current_wtes_len+REC_wtes_len, lm_vocab]
-        return all_wte_logits, all_wte_targets
+        return recall_logits, gt_item_id_index, all_wte_logits, all_wte_targets, goal_type_logits
+        
+        
+    def forward_rerank(self,
+                       past_wtes, # past word token embeddings, [1, len, 768]
+                       gt_item_id, # tokens of current turn conversation, [1, len]
+                       num_samples, # num examples to sample for training, including groud truth id
+                       rerank_items_chunk_size=10, # batch size for encoder GPU computation
+                      ):
+        # REC wte
+        REC_wtes = self.get_rec_token_wtes() # [batch (1), 1, self.language_model.config.n_embd]
+        
+        #  items wtes to compute rerank loss
+        # sample rerank examples
+        sampled_item_ids = sample_ids_from_db(self.items_db, gt_item_id, num_samples, include_gt=True)
+        gt_item_id_index = sampled_item_ids.index(gt_item_id)
+        # compute item wtes by batch
+        num_chunks = math.ceil(len(sampled_item_ids) / rerank_items_chunk_size)
+        total_wtes = []
+        for i in range(num_chunks):
+            chunk_ids = sampled_item_ids[i*rerank_items_chunk_size: (i+1)*rerank_items_chunk_size]
+            chunk_pooled, _ = self.compute_encoded_embeddings_for_items(self.item_encoder, chunk_ids, self.items_db) # [rerank_items_chunk_size, self.item_encoder.config.hidden_size]
+            chunk_wtes = self.rerank_item_wte_mapper(chunk_pooled)
+            total_wtes.append(chunk_wtes)
+        total_wtes = torch.cat(total_wtes, dim=0) # [num_samples, self.language_model.config.n_embd]
+        
+        past_wtes_len = past_wtes.shape[1]
+        REC_wtes_len = REC_wtes.shape[1] # 1 by default
+        total_wtes_len = total_wtes.shape[0]
+        
+        # compute positional ids, all rerank item wte should have the same positional encoding id 0
+        position_ids = torch.arange(0, past_wtes_len + REC_wtes_len, dtype=torch.long, device=self.device)
+        items_position_ids = torch.zeros(total_wtes.shape[0], dtype=torch.long, device=self.device)
+#         items_position_ids = torch.tensor([1023] * total_wtes.shape[0], dtype=torch.long, device=device)
+        combined_position_ids = torch.cat((position_ids, items_position_ids), dim=0)
+        combined_position_ids = combined_position_ids.unsqueeze(0) # [1, past_wtes_len+REC_wtes_len+total_wtes_len]
+        
+        # compute concatenated lm wtes
+        lm_wte_inputs = torch.cat(
+            (past_wtes, # [batch (1), len, self.language_model.config.n_embd]
+             REC_wtes, # [batch (1), 1, self.language_model.config.n_embd]
+             total_wtes.unsqueeze(0), # [1, num_samples, self.language_model.config.n_embd]
+            ),
+            dim=1
+        ) # [1, past_len + REC_wtes_len + num_samples, self.language_model.config.n_embd]
+
+        # trim sequence to smaller length (len < self.language_model.config.n_positions-self.lm_trim_offset)
+        combined_position_ids_trimmed = self.trim_positional_ids(combined_position_ids, total_wtes_len) # [1, len]
+        lm_wte_inputs_trimmed = self.trim_lm_wtes(lm_wte_inputs) # [1, len, self.language_model.config.n_embd]
+        assert(combined_position_ids.shape[1] == lm_wte_inputs.shape[1])
+        
+        # compute inductive attention mask
+        #     Order of recommended items shouldn't affect their score, thus every item 
+        # should have full attention over the entire sequence: they should know each other and the entire
+        # conversation history
+        inductive_attention_mask = self.compute_inductive_attention_mask(
+            lm_wte_inputs_trimmed.shape[1]-total_wtes.shape[0], 
+            total_wtes.shape[0]
+        )
+        rerank_lm_outputs = self.language_model(inputs_embeds=lm_wte_inputs_trimmed,
+                  inductive_attention_mask=inductive_attention_mask,
+                  position_ids=combined_position_ids_trimmed,
+                  output_hidden_states=True)
+        
+        rerank_lm_hidden = rerank_lm_outputs.hidden_states[-1][:, -total_wtes.shape[0]:, :]
+        rerank_logits = self.rerank_logits_mapper(rerank_lm_hidden).squeeze() # torch.Size([num_samples])
+        
+        return rerank_logits, gt_item_id_index
     
     def validation_perform_recall(self, past_wtes, topk):
         REC_wtes = self.get_rec_token_wtes()

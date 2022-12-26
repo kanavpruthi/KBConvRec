@@ -10,7 +10,7 @@ from loss import SequenceCrossEntropyLoss
 
 from trainer import Trainer
 import tqdm
-from dataset import MovieRecDataset
+from dataset import MovieRecDataset, RecDataset
 from corrected_mese import C_UniversalCRSModel
 from corrected_engine import C_Engine
 from utilities import get_memory_free_MiB
@@ -32,13 +32,13 @@ gpt2_model.resize_token_embeddings(len(gpt_tokenizer))
 items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
-train_path = "data/processed/durecdial2_all_train_placeholder"
-test_path = "data/processed/durecdial2_all_dev_placeholder"
+train_path = "data/processed/durecdial2_all_train_placeholder_updated"
+test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
 
 
 
-train_dataset = MovieRecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
-test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 
 # print(get_memory_free_MiB(0))
@@ -69,9 +69,9 @@ num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
 num_samples_recall_train = 300
-num_samples_rerank_train = 30
+num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 30
+validation_recall_size = 300
 
 temperature = 1.2
 
@@ -85,6 +85,7 @@ criterion_language = SequenceCrossEntropyLoss()
 criterion_recall = torch.nn.CrossEntropyLoss()
 # rerank_class_weights = torch.FloatTensor([1] * (num_samples_rerank_train-1) + [30]).to(model.device)
 criterion_rerank_train = torch.nn.CrossEntropyLoss()
+criterion_goal = torch.nn.BCEWithLogitsLoss()
 
 # optimizer and scheduler
 param_optimizer = list(model.language_model.named_parameters()) + \
@@ -121,6 +122,7 @@ engine = C_Engine(device,
                 criterion_language,
                 criterion_recall,
                 criterion_rerank_train,
+                criterion_goal,
                 language_loss_train_coeff,
                 recall_loss_train_coeff,
                 rerank_loss_train_coeff,
@@ -147,13 +149,13 @@ trainer = Trainer(
 )
 
 # print(get_memory_free_MiB(4))
-trainer.train(
-    num_epochs,
-    num_gradients_accumulation,
-    batch_size,
-    output_file_path,
-    model_saved_path
-)
+# trainer.train(
+#     num_epochs,
+#     num_gradients_accumulation,
+#     batch_size,
+#     output_file_path,
+#     model_saved_path
+# )
 
 
 total_sentences_original, total_sentences_generated, (valid_cnt, response_with_items, total_gen_cnt) = trainer.generate()

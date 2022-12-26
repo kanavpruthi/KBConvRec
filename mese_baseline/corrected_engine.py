@@ -11,6 +11,7 @@ class C_Engine(object):
                 criterion_language = None, 
                 criterion_recall = None,
                 criterion_rerank_train = None,
+                criterion_goal = None,
                 language_loss_train_coeff = None, 
                 recall_loss_train_coeff = None,
                 rerank_loss_train_coeff = None, 
@@ -21,6 +22,7 @@ class C_Engine(object):
                 temperature = None) -> None:
         self.criterion_language = criterion_language
         self.criterion_recall = criterion_recall
+        self.criterion_goal = criterion_goal
         self.criterion_rerank_train = criterion_rerank_train
         self.device = device 
         self.temperature = temperature
@@ -36,7 +38,7 @@ class C_Engine(object):
     def train_one_iteration(self,batch,model: C_UniversalCRSModel, scaler):
         role_ids, dialogues = batch
         # print('before training free space: ',get_memory_free_MiB(4))
-        dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
+        dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
         # print('after sending dialogue tensors: ',get_memory_free_MiB(4)) 
         # Negligible GPU Usage at this point
         past_list = []
@@ -48,7 +50,7 @@ class C_Engine(object):
     #     language_logits, language_targets = [], []
         for turn_num in range(len(role_ids)):
             current_tokens = dialog_tensors[turn_num]
-            _, recommended_ids = dialogues[turn_num]
+            _, recommended_ids, true_goal = dialogues[turn_num]
 
             if past_list == []:
                 past_list.append((current_tokens, recommended_ids))
@@ -75,6 +77,7 @@ class C_Engine(object):
                     
                     # append to past list
                     past_list.append((current_tokens, None))
+                
             else: # rec!
                 
                 if role_ids[turn_num] == 0: #user mentioned
@@ -83,45 +86,45 @@ class C_Engine(object):
                 for recommended_id in recommended_ids:
                     #system recommend turn
                     past_wtes = past_wtes_constructor(past_list, model)
-                    # print(model.lm_tokenizer.decode(current_tokens))
-                    # recall
                     with torch.cuda.amp.autocast():
-                        select_logits, select_true_index, rerank_logits = model.forward_retrieval(
+                        select_logits, select_true_index, language_logits, language_targets , goal_type_logits = model.forward_retrieval_and_response_generation(
                             past_wtes, 
-                            # current_tokens, 
+                            current_tokens, 
                             recommended_id, 
                             self.num_samples_recall_train
                         )
-                        
+                        # goal type loss 
+                        goal_targets = torch.Tensor([true_goal]).to(model.device)
+                        loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+
                         # recall items loss
                         select_targets = torch.LongTensor([select_true_index]).to(model.device)
                         loss_recall = self.criterion_recall(select_logits.unsqueeze(0), select_targets)
                         
-                        # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
-                        rerank_logits /= self.temperature
-                        rerank_logits = rerank_logits.squeeze()
-                        # rerank loss 
-                        rerank_targets = torch.LongTensor([select_true_index]).to(model.device)
-                        loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
-                        loss_rerank *= self.rerank_loss_train_coeff
-
-                        # Response Generation
-                        all_wte_logits, all_wte_targets = model.forward_response_generation(
-                            past_wtes,
-                            current_tokens,
-                            recommended_id,
-                        )
-                        # language loss in recall turn, REC_TOKEN, Language on conditional generation
-                        all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
-                        loss_ppl = self.criterion_language(all_wte_logits, all_wte_targets, all_wte_targets_mask, label_smoothing=0.02, reduce="batch")
+                        # language loss in retrieval and generation turn, REC_TOKEN, Language on conditional generation
+                        language_targets_mask = torch.ones_like(language_targets).float()
+                        loss_ppl = self.criterion_language(language_logits, language_targets, language_targets_mask, label_smoothing=0.02, reduce="batch")
                         perplexity = np.exp(loss_ppl.item())
                         ppl_history.append(perplexity)
+                    
+                        # Reranking Pass
+                        rerank_logits, rerank_true_index = model.forward_rerank(
+                            past_wtes, 
+                            recommended_id, 
+                            self.num_samples_rerank_train, 
+                            self.rerank_encoder_chunk_size
+                        )
+                        
+                        # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
+                        rerank_logits /= self.temperature
 
+                        # rerank loss 
+                        rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
+                        loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
                     # combined loss
-                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank* self.rerank_loss_train_coeff
+                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type
                     scaler.scale(total_loss).backward()
                         
-
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
     
@@ -282,7 +285,7 @@ class C_Engine(object):
     def validate_language_metrics_batch2(self, batch, model, item_id_2_lm_token_id):
         with torch.no_grad():
             role_ids, dialogues = batch
-            dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
+            dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
             # print('dialog_tensors :',get_memory_free_MiB(0))
         #     past_list = []
             past_tokens = None
@@ -293,7 +296,15 @@ class C_Engine(object):
             
             for turn_num in range(len(role_ids)):
                 dial_turn_inputs = dialog_tensors[turn_num]
-                _, recommended_ids = dialogues[turn_num]
+                _, recommended_ids, target_goal = dialogues[turn_num]
+                
+                ##
+                # logger.debug(f'{turn_num}. Dial Turn Inputs --> {dial_turn_inputs.shape}')
+                # original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
+                # logger.debug(f'{turn_num}. Current Utterance --> {original_sen}')
+                # logger.debug(f'{turn_num}. Recommended Ids : {recommended_ids}')
+                # logger.debug(f'{turn_num}. Target Goal => : {target_goal}')
+                ##
                 
                 item_ids = []; item_titles = []
                 if recommended_ids != None:
@@ -463,4 +474,5 @@ class C_Engine(object):
                         if turn_num == 0:
                             past_tokens = dial_turn_inputs
                         del generated
+
             return original_sentences, tokenized_sentences, integration_cnt, integration_total, valid_gen_selected_cnt, total_gen_cnt, response_with_items, original_response_with_items
