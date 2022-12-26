@@ -1,0 +1,3565 @@
+{'Marinated Fish'}
+set()
+[2] It's nice weather to rat Marinated Fish
+[2] Today's weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Marinated Fish', 'Wanzhou Roasted Fish'}
+{'The Big Stuffing Dumpling Restaurant'}
+[3] I recommend you to Wanzhou Roasted Fish  to eat Marinated Fish You can book it.
+[3] If you want to eat, you can order it from The Big Stuffing Dumpling Restaurant.
+
+
+{'Hand in Hand'}
+set()
+[3] Yes, have you ever listened to his Hand in Hand The singing is very good! Coco recorded a new album in the United States, so she just contributed two transitions, which is really the brilliance of this song.
+[3] Yes, he's also a good singer, and he has won the 15th Huading Award for Best Singer in the world!
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] Haha, this is a great weather to eat Sliced Fish in Hot Chili Oil
+[2] Thank you for your praise. It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Liuguosanchun Sichuan Cuisine (Global Financial Center Store)'}
+set()
+[3] I'd like to recommend Liuguosanchun Sichuan Cuisine (Global Financial Center Store). It's a great restaurant and you can make reservations.
+Yes, it's a delicious dish.
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+[4] Do you want to me play Blamefully Beautiful for you?
+[4] Can I play it for you now?
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+Now playing Blamefully Beautiful
+There you go.
+
+
+{'Fly Me to Polaris'}
+set()
+[3] Speaking her film, I recommend you to watch her movie Fly Me to Polaris All the actresses and actors in it perform naturally. You can feel the emotion when they communicate to each other.
+[3] When it comes to acting skills, I recommend you to see Cecilia Cheung's The Bare-Footed Kid. It's very funny.
+
+
+{'Love Now'}
+set()
+[2] Love Now is also a great song. Jiong He rarely does duet but this one has a soothing tune. I recommend you to listen to it.
+[2] You're welcome. I'd like to recommend a song named Wonderful Happiness to you. It's a song about memories.
+
+
+{'Lonely Shadow'}
+set()
+How about Lonely Shadow It's a little bit sad but also true to life.
+Then you can listen to it. It's very nice.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] It's a great day to have Sliced Fish in Hot Chili Oil
+[2] No worries. It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'The Days of Being Dumb'}
+set()
+[3] Would you like to watch his movie The Days of Being Dumb? It's an interesting Hong Kong movie released in 1992. I recommend you to watch it.
+[3] Yes, I'd like to recommend you to watch his movie, Jackie Chan: The Lost Legend, which is a Hong Kong film with a great reputation. I recommend it to you.
+
+
+{'A Chinese Ghost Story'}
+set()
+[3] Do you want to listen to A Chinese Ghost Story It's a great song created by James Wong. It has classical elements in it, such as the sound of streams in the woods and Chinese flute and Guzheng. Leslie Cheung performed the song perfectly with waves in his voice and showed us the message hidden in the lyrics.
+[3] Yes, by the way, Leslie Cheung's singing is very good. I'd like to recommend it to you. Leslie Cheung was born in Kowloon, Hong Kong. He was born in Kowloon, China.
+
+
+{'A Chinese Ghost Story'}
+set()
+Now playing A Chinese Ghost Story
+It's playing for you.
+
+
+{'Rain'}
+set()
+Rain is playing for you.
+It's playing for you.
+
+
+{'Heartburn'}
+set()
+[2] My pleasure. By the way, Jiong He's Heartburn is also a good song. Do you want to listen to it?
+[2] You're welcome. Do you like Jiong He's songs? He is the Most Popular TV Host of China Student Television Festival. Do you like him?
+
+
+{'Hope for Love'}
+set()
+Yes. How about Hope for Love It's a great song created for charity purpose. Do you want to listen to it?
+You can listen to his Another Myself, which is very good.
+
+
+{'Hope for Love'}
+set()
+Hope for Love is playing for you now.
+It's playing for you.
+
+
+{'Four Girls Sichuan Cuisine'}
+set()
+[3] I know that the Poached Spice Slices of Pork in Four Girls Sichuan Cuisine is excellent.
+Have a nice meal
+
+
+{'What We are Today'}
+set()
+I like What We are Today
+I love listening to music.
+
+
+{'You Are a Song Within My Heart'}
+set()
+Now playing You Are a Song Within My Heart
+OK, playing now.
+
+
+{'Change Me'}
+set()
+[2] My pleasure. Change Me is also a great song. It's like rock and roll. Unlike other songs Leehom Wang has created, this one is not so enthusiastic or passionate, but will touch your heart and make you find beauty of common everyday life.
+[2] You're welcome. I'd like to recommend another song by Jay Chou. It's called Don't Love Me. It's a lyric song.
+
+
+{'All the Things You Never Knew'}
+set()
+OK. Leehom Wang's All the Things You Never Knew has the unforgettable melody and the lyrics are in line with the plot of the movie. It's a great song.
+It's Leehom Wang. It's a very good song.
+
+
+{'All the Things You Never Knew'}
+set()
+Now playing All the Things You Never Knew
+It's playing.
+
+
+{'Run Toward the Future', 'Run'}
+set()
+Alright. How about his another Cantonese song Run Toward the Future It's the theme song of the movie A Better Tomorrow 2.
+Another one is Leslie Cheung's A Man of Intention.
+
+
+{'Hand in Hand'}
+set()
+OK. Now playing Hand in Hand Please enjoy.
+OK, I'll play it for you right away.
+
+
+{'All the Things You Never Knew'}
+set()
+Alright. How about All the Things You Never Knew? This song has classical elements. The lyrics and the melody are sincere, and every note will tug at your heartstrings.
+Leehom Wang's song is very good. You can listen to it.
+
+
+{'Where Are You Now'}
+set()
+[3] You can listen to this touching song - Where Are You Now As Leslie Cheung said, some songs can only appear in the record but will not be sung again in any other occasion. This song is one of them.
+Well, he's very popular. Many people like him very much.
+
+
+{'Where Are You Now'}
+set()
+Now playing Where Are You Now
+It's playing for you.
+
+
+{'The Crescent'}
+set()
+[3] The Crescent one of Jacky Cheung's works, is composed and written in consistent with the vibe the title implies. Jacky Cheung's voice is like the icing on the cake! He expresses perfectly the feeling of relaxation, tranquility, and innocence. You may get lost in this great song.
+[3] Do you want to listen to his song One Dream? It's very good. The whole song interprets the loneliness and powerlessness of love between men and women.
+
+
+{'The Sun Washed by Spring Rain', 'Rain'}
+set()
+Now playing The Sun Washed by Spring Rain
+OK, playing now.
+
+
+{'Flower Field Mistake+Sun & Moon of My Heart', 'Sun & Moon of My Heart', 'Flower Field Mistake'}
+set()
+[2] My pleasure. By the way, Leehom Wang's Flower Field Mistake+Sun & Moon of My Heart mixes Peking Opera and western pop music. It's a good one. You can listen to it.
+[2] You're welcome. I'd like to recommend a song of Jiong He. It's very nice.
+
+
+{'Open Fire'}
+set()
+Open Fire is also a great song. Just like the title, the song will make you feel powerful.
+Leehom Wang, of course. He is a great singer and a good singer. I recommend it to you.
+
+
+{'Open Fire'}
+set()
+[3] Let me play Open Fire for you, OK?
+[3] Do you want me to play it for you now?
+
+
+{'Open Fire'}
+set()
+Open Fire is playing.
+Playing now.
+
+
+{'Who'}
+set()
+Who is the director?
+I don't want to see it now.
+
+
+{'Sautéed\xa0Beef\xa0Fillet'}
+set()
+[2] Thank you! You can have Sautéed Beef Fillet today.
+[2] Hee hee, my pleasure. It is good to listen to a song in such weather. Do you want to listen to it?
+
+
+{'Unforgettable'}
+set()
+[3] You can go to Unforgettable Hunan Restaurant in Powerlong City Plaza. It's a great restaurant!
+[3] Do you want me to play it for you now?
+
+
+{'Murderer'}
+set()
+[3] You should show your support by watching his movies. One of his movies, Murderer released in 2009, is a movie worth your time.
+[3] Do you want to listen to his song? I can play it for you.
+
+
+{'Who'}
+set()
+[2] Haha, this kind of weather is perfect to listen to Who the Keyman. Oh, the song is catching.
+[2] You're welcome. This kind of weather is very suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Who'}
+set()
+Yes, it's the theme song of the variety show Who the Keyman. The song is catchy and has a light rhythm.
+It's sung by Jiong He.
+
+
+{'Who'}
+set()
+Now playing Who the Keyman.
+It's playing for you.
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+[3] I'd like to recommend you Leslie Cheung's Blamefully Beautiful It's a touching song. No singing skills or natural voice can beat the concentration he put in singing this song.
+[3] Can I play this song for you now?
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+[4] Do you want me to play Blamefully Beautiful for you now?
+[4] Do you want me to play it for you now?
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+Now playing Blamefully Beautiful
+OK, it's playing for you.
+
+
+{'Golden Armor'}
+set()
+[2] This kind of weather is suitable for listening to Golden Armor which combines heavy rock, street rap and Chinese style.
+[2] You're welcome. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Sacrifice'}
+set()
+[3] I'd like to recommend you one of his movies called Sacrifice which has a good reputation.
+[3] I'd like to recommend you his movie One Dream (1981). The movie tells a story in a non-linear way, whereas Xiaoming Huang's story is very simple. I recommend it to you.
+
+
+{'Xiangyuxuan New Hunan Cuisine (Shouyihui Store)'}
+{'Huihuang Sichuan Restaurant'}
+[3] I know that the speciality of Xiangyuxuan New Hunan Cuisine (Shouyihui Store) is Boiled Fish with Pickled Cabbage and Chili.
+[3] If you want to eat, you can order it at Huihuang Sichuan Restaurant.
+
+
+{'Perhaps Love'}
+set()
+[3] If you like her, you can support her works more. Perhaps Love is very good, which is praised as the best domestic musical film.
+It's Jackie Chan.
+
+
+{'I Waited Until the Flower Withered'}
+set()
+I Waited Until the Flower Withered is playing.
+OK, playing for you.
+
+
+{'Happy Camp: Bring Happiness Home'}
+set()
+[3] Yes, her acting skills are also very good. I recommend you to see Happy Camp: Bring Happiness Home starred by her. If you are a fan of Happy Camp, it should be very kind to watch this movie.
+[3] I'd like to recommend a movie starred by her, "Dream Girl". It's very good and worth watching.
+
+
+{'Forever Young'}
+set()
+Remember, it's Forever Young
+I like Ruby Lin best.
+
+
+{'Hope for Love'}
+set()
+[2] You know what? Today's weather is suitable for listening to Hope for Love
+[2] Thank you for your praise. It's suitable for eating Boiled Fish with Pickled Cabbage and Chili in such weather.
+
+
+{'Hope for Love'}
+set()
+Hope for Love is playing for you.
+There you go.
+
+
+{'Homelike Sichuan Restaurant', 'The Enigma of Love'}
+set()
+I like reading the news about Jacky Cheung, watching The Enigma of Love and eating at Homelike Sichuan Restaurant.
+I like to watch movies and listen to music.
+
+
+{'Deserve'}
+set()
+[3] Yes, he is also a good singer. I recommend this song Deserve to you. Fanfan has a good voice.
+[3] Speaking of Kris Wu, he's a supermodel in the entertainment industry. I'd like to recommend his song One Dream (Live).
+
+
+{'Silent Witness'}
+set()
+My favorite movie is Silent Witness
+I like to watch Bo Huang's movies.
+
+
+{'The Coldest Day'}
+set()
+[4] Then you can listen to his The Coldest Day which is full of deep feeling. The overall sound is low and cold, and the emotion is delicate. It really gives people a deep and cold feeling. It's a great song.
+[4] Do you want me to play it for you?
+
+
+{'The Coldest Day'}
+set()
+The Coldest Day is playing for you.
+It's playing for you.
+
+
+{'Children From The Distant Planet'}
+set()
+I like Children From The Distant Planet best.
+I like The Big Stuff best.
+
+
+{'American Dreams in China'}
+set()
+[3] Yes, he has great acting. Let me show you his movie, American Dreams in China the best Chinese movie in 2013.
+[3] Well, I'd like to recommend one of his movies, The Bare-Footed Kid, to you. It's very good.
+
+
+{'Who'}
+set()
+Who are the stars?
+What kind of movie is it?
+
+
+{'Call for Love'}
+set()
+[3] Her movies are very good. I recommend you her movie Call for Love which is worth seeing.
+[3] I'd like to recommend a movie to you, called The Bare-Footed Kid, starred by Bingbing Fan, which is a good domestic movie.
+
+
+{'Fallen City'}
+set()
+Hello, the star of Fallen City is Ruby Lin.
+It's Bo Huang.
+
+
+{'Crying Palms'}
+set()
+My favorite song is Crying Palms
+I like to listen to Jay Chou's songs first.
+
+
+{'Life and Death Plunder'}
+set()
+[3] Ha ha, your idol's movies are really good. Life and Death Plunder is very good. This film shows that women are easy to fall in love, and then they are always trapped in love. Finally, it is more and more deep. Xun Zhou's free acting skills also add a lot of points to the film. It's worth seeing.
+[3] I'd like to recommend you to see the movie One Dream (1981). It's very good.
+
+
+{'There Is a Place'}
+set()
+[2] Yes, pay attention to keep warm. I recommend you to listen to There Is a Place in such weather. The lyrics full of pictures, with soothing melody and clear and moving singing, gently hit the hearts of the audience.
+Yes, keep warm.
+
+
+{'Marinated Fish'}
+set()
+Marinated Fish There is a grouper. In this cold weather, a spicy marinated fish can let you get rid of the coldness in your body. Do you want to have a try?
+OK, it's a nice day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Bridge of Faith'}
+set()
+[4] Do you want me to play Bridge of Faith for you now?
+[4] Do you want me to play it for you now?
+
+
+{'Bridge of Faith'}
+set()
+I'll play Leehom Wang's Bridge of Faith for you now.
+OK, it's playing for you.
+
+
+{'Mojin-The Lost Legend'}
+set()
+[3] Since you appreciate him so much, I'd like to recommend you a movie. How about Mojin-The Lost Legend The movie tells a good story.
+But he is not only a good actor, but also a good singer.  He has won the 15th Huading Award for Best Singer in Taiwan.
+
+
+{'Beef in Sour Soup'}
+set()
+[2] This kind of weather is suitable for eating Beef in Sour Soup
+[2] It's suitable to eat Sautéed Shredded Pork in Sweet Bean Sauce in such weather.
+
+
+{'Fatty Hu Hunan Restaurant'}
+set()
+[3] Hum, but I know where to get this delicious food. I'll tell you. It can be bought at Fatty Hu Hunan Restaurant.
+[3] If you want to eat it, I recommend you to go to Yicaiyige Classic Sichuan Cuisine. The specialty here is beef.
+
+
+{'McDull, Prince de la Bun'}
+set()
+I like the movie McDull, Prince de la Bun
+I like to watch the movies starred by Mi Yang.
+
+
+{'Who'}
+set()
+Who is the director?
+What kind of movie is it?
+
+
+{'Marinated Fish'}
+set()
+[2] Yes, this kind of weather is suitable for eating Marinated Fish
+[2] It's a nice day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Invisible Target'}
+set()
+[4] Then you can see Invisible Target starred by Nicholas Tse. The most impressive plots is the dazzling action and blasting scene.
+Yes, Nicholas Tse's movies are really good.
+
+
+{'Forever Young'}
+set()
+[3] You can see his film Forever Young In a non-linear narrative way, the film tells four different stories, but points to a common theme, which is beautiful virtue and helpful words are the foundation of youth.
+[3] I recommend you to see Xiaoming Huang's movie, The Beast in Cold Blood Warm Heart, which has a good reputation.
+
+
+{'Perfect Two'}
+set()
+[4] Then her movie Perfect Two is also very sincere. The story is wonderful, the overall style is unified, and the details are attentive, creating a warm family which is rare in mainland movies.
+[4] Then you can see her movie "Good Times". It's very good.
+
+
+{'Insanity'}
+set()
+[3] By the way, his movie Insanity is not bad. The movie tells the story of fighting between the most handsome man and the most intelligent man. You can see it.
+But I don't want to listen to music now.
+
+
+{'The Bullet Vanishes'}
+set()
+[4] About Mi Yang's movies, how about The Bullet Vanishes The perfect combination of Dongsheng Er and Zhiliang Luo is able to graft Hong Kong style elements into the period of the Republic of China, which is a lightspot.
+Well, Mi Yang's works are very good. She has won the Best Actress of the Hundred Flowers Awards.
+
+
+{'Mapo Tofu'}
+set()
+[2] This kind of weather is most suitable for eating Mapo Tofu
+[2] You're welcome. This kind of weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Mapo Tofu'}
+set()
+[3] Then you can go to Qicai Me Town Store. The Mapo Tofu here is a specialty.
+[3] If you want to eat, I recommend you to go to Xiangfulou Hunan Cuisine. Tofu is their specialty.
+
+
+{'All the Way'}
+set()
+[2] Ha ha, you're welcome. I recommend you All the Way sung by Jiong He, which is a song that makes people feel happy.
+[2] You're welcome. Do you like Leehom Wang? He is a great singer.
+
+
+{'Wonerful Happiness'}
+set()
+OK, how about Wonerful Happiness which is the episode of the teleplay Don't Love Me.
+Then you must like this song very much. Do you want to listen to it?
+
+
+{'Who'}
+set()
+Who are the stars in this movie?
+What kind of movie is it?
+
+
+{'The Star'}
+set()
+[2] Thank you for your praise. I also know that he is The Star of Charity for Children in China.
+[2] Jiong He is the Most Popular Male TV Host of China Student Television Festival. Do you like him?
+
+
+{'Fatty Hu Hunan Restaurant'}
+set()
+[3] If you like pickled pepper, I recommend that you go to Fatty Hu Hunan Restaurant, where pickled pepper is put in Steamed Fish Head with Diced Hot Red Peppers.
+Yes, it's a very popular dish.
+
+
+{'Happy Running', 'Run'}
+set()
+[3] Well, I recommend you her Happy Running a rare animation masterpiece by Happy Family!
+[3] Yes, I recommend you to see the movie Na Xie's Lost in Thailand. It's a rare romantic comedy in the show business.
+
+
+{'After Leaving'}
+set()
+[3] I recommend you a song After Leaving It's very interesting. Now it sounds sad, ha ha.
+Yes, he is also a star of the Hong Kong Film Awards, and his music is also very good.
+
+
+{'Thousands of Songs'}
+set()
+[4] Would you like to play Thousands of Songs for you now?
+[4] Can I play this song for you now?
+
+
+{'Thousands of Songs'}
+set()
+This will play the song Thousands of Songs for you
+Here it goes. Please enjoy.
+
+
+{'Murderer'}
+set()
+[3] Then I'll recommend you Amway's Murderer The plot is good, but I won't tell you more in advance.
+[3] Ha ha, do you want to see his movie Heroes 2? It's very good. It has a good reputation!
+
+
+{'I Am Not Madame Bovary'}
+set()
+[3] I Am Not Madame Bovary is a very good movie. The movie basically respects the story and details of the original book, especially inherits the black humor style of the original book. Bingbing Fan plays the village women vividly, and the male stars do not play many parts but perform well.
+[3] Do you want to watch the movie named Wonderful Happiness starred by her? It's a very good movie.
+
+
+{'Jialinjiang Riverside Sichuan Cuisine'}
+set()
+[3] It's recommended that you go to Jialinjiang Riverside Sichuan Cuisine to eat it, which can be reserved.
+[3] Then I recommend you to go to Shijiazhuang Sichuan Restaurant (Fengye Square), which is the specialty of this restaurant.
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+[2] You're welcome. This kind of weather is suitable for listening to A Life Of Fighting Is But A Dream It's full of the young style.
+[2] You're welcome. Today's weather is suitable for eating Sautéed Beef Fillet.
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+[3] Just in time, the song Blamefully Beautiful is recommended to you. It seems to be a love letter, which makes my heart beat. No matter how good the singing is and how perfect the voice line is, it's no better than such a dedicated voice.
+[3] Well, I'd like to recommend a song of him to you. It's called The Bare-Footed Kid. It's very nice.
+
+
+{'Heartburn'}
+set()
+[3] Yes, his Heartburn do you know that? This song is really good。 ha ha
+[3] Yes, and he is also very professional. Do you want to hear about his achievements?
+
+
+{'Heartburn'}
+set()
+Yeah, it's amazing. My mind is full of Heartburn
+That sounds better.
+
+
+{'Heartburn'}
+set()
+OK, I'm playing Heartburn for you.
+It's playing for you.
+
+
+{'A World Without Thieves'}
+set()
+[3] Well, here's his movie A World Without Thieves which has a good reputation.
+[3] Have you seen his movie, How to Get by, which is an excellent documentary!
+
+
+{'Marinated Fish'}
+set()
+[2] You're welcome. This kind of weather is very suitable for eating Marinated Fish
+[2] You're welcome. This kind of weather is suitable for eating Sliced Fish in Hot Chili Oil.
+
+
+{'Marinated Fish'}
+set()
+[2] Thank you. It's a great day to eat Marinated Fish
+[2] Thank you. It's a perfect day for Duck Blooding Chili Sauce.
+
+
+{'Shengtang Fish&Bullfrog No.1 Resyaurant'}
+set()
+[3] I recommend you to go to Shengtang Fish&Bullfrog No.1 Resyaurant. It's a good restaurant!
+[3] You can order it at Mr. Fashionable Sichuan Cuisine.
+
+
+{'Marinated Fish'}
+set()
+The address is Qinyuanchun Stage 3, No. 18, Tianyi Street, Huishan District(the old Tangding Marinated Fish
+It's on the sixth floor of Zhubang City Square, Qingnian Road in Donggang District.
+
+
+{'Stir-Fried Venerupis'}
+set()
+[2] Hey, this kind of warm weather is suitable to eat Stir-Fried Venerupis
+[2] Thank you for your praise. It's a good day for Duck Blooding Chili Sauce.
+
+
+{'Stir-Fried Venerupis'}
+{'Chuanlaojiu Chuanchuanxiang'}
+[3] You can order Stir-Fried Venerupis at Wanzhou Marined Fish.
+[3] If you want to eat, you can go to Chuanlaojiu Chuanchuanxiang. You can order it there.
+
+
+{'Insanity'}
+set()
+[3] So don't miss his movie. Here's a good movie Insanity starred by him.
+[3] I recommend you to see his movie Wonderful Happiness! It's a classic movie in the hearts of the audience!
+
+
+{'The Message'}
+set()
+[3] Yeah. Then don't miss the The Message starred by Xiaoming Huang! It's a typical spy movie.
+[3] You like him so much. I'd like to recommend a movie starred by him to you. It's called The Bare-Footed Kid. This movie is really wonderful.
+
+
+{'The Bullet Vanishes'}
+set()
+[4] About Mi Yang, The Bullet Vanishes is a very good work. The gold medal combination of Er Dongsheng and Luo Zhiliang, which can graft Hong Kong style elements into the period of the Republic of China, is also a highlight. Would you like to watch it?
+It's a good movie.
+
+
+{'The Art of Action: Martial Arts in Motion Picture'}
+set()
+My favorite movie is The Art of Action: Martial Arts in Motion Picture
+I like Xun Zhou best.
+
+
+{'Where Are You Now'}
+set()
+[3] Since you are his fan, this treasure song Where Are You Now is recommended to you. As Leslie Cheung said, some songs have been sung on the record and will not be sung on any occasion. This song Where Are You Now is just like this.
+Yes, he is also the Best Actor of the Hong Kong Film Awards.
+
+
+{'My Boyfriends'}
+set()
+[3] It's a great star! Speaking of Na Xie, you can't miss My Boyfriends starred by her. It's amazing!
+[3] Yes. By the way, have you seen her movie Heroes 2? It's a good movie.
+
+
+{'Hollywood Hong-Kong'}
+set()
+[3] Yes, if you like her, I would recommend her movie Hollywood Hong-Kong The film focuses on exploring the dramatic elements of the changes in Hong Kong society at the turn of the century, showing a sense of uneasiness
+[3] Well, she is very famous. You can watch her movie Unforgetable. You can see that this is a comedy with sincere feelings and sincere feelings.
+
+
+{"All's Well, Ends Well 2012"}
+set()
+Hello, the movie All's Well, Ends Well 2012 is starred by Mi Yang, the goddess of beauty!
+It's Jackie Chan.
+
+
+{'Forever Young'}
+set()
+[3] Then you can't miss his Forever Young a very meaningful film.
+[3] Well, I'd like to recommend a movie to you. The film "Falls All Night" starred by Xiaoming Huang, is very good. You can see it.
+
+
+{'A Simple Life'}
+set()
+My favorite movie is A Simple Life
+I like Aaron Kwok best.
+
+
+{'Left Right Love Destiny'}
+set()
+Left Right Love Destiny is my favorite movie.
+I like Xiaoming Huang best.
+
+
+{'Who'}
+set()
+Who is the director of this movie?
+What kind of movie is it?
+
+
+{'Fireworks Cool Easily'}
+set()
+[2] It's such a fine day. I recommend that you listen to Jay Chou's Fireworks Cool Easily which is produced by Zhou Dong. It must be a boutique.
+[2] Hehe, it's a perfect day to eat Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'My Boyfriends'}
+set()
+[3] I'd like to recommend you a movie My Boyfriends starred by Na Xie. I've been waiting for the punchline, and I finally found that it's a romantic story. It's worth seeing.
+Yes, she is very popular. She has won the Excellent Host Award of China TV Golden Eagle Award.
+
+
+{'The Witness'}
+set()
+[3] It's recommended that you watch this movie The Witness starred by her. The rhythm is compact and very good.
+[3] Well, I'd like to recommend you a movie called Mi Yang: The Bare-Footed Kid starred by her. It's very good.
+
+
+{'Impossible to Miss You', 'Miss You'}
+set()
+I like Impossible to Miss You best.
+My favorite song is Wonderful Happiness.
+
+
+{'Zhongtian Food Sichuan Cuisine(Normal University store)'}
+set()
+[3] That's very good. I recommend you book this dish at Zhongtian Food Sichuan Cuisine(Normal University store)!
+Well, it's really delicious.
+
+
+{'Zhongtian Food Sichuan Cuisine(Normal University store)'}
+set()
+[3] OK, you can order Sautéed Sweet and Sour Pork Tenderloin at Zhongtian Food Sichuan Cuisine(Normal University store). Oh, it's his specialty!
+OK.
+
+
+{'Hunan Cuisine Restaurant of Juncheng Hotel'}
+set()
+[3] I recommend you to order Duck Blooding Chili Sauce at Hunan Cuisine Restaurant of Juncheng Hotel. This restaurant is very good!
+Then you can try it!
+
+
+{'The Moon Represents My Heart'}
+set()
+Yes, I like listening to The Moon Represents My Heart best.
+I like listening to the songs named Happy New Year and Happy Old Woman.
+
+
+{'Let Me Feel the Warmth'}
+set()
+Let Me Feel the Warmth is playing for you.
+It's playing for you.
+
+
+{'All the Things You Never Knew'}
+set()
+[2] You're welcome. By the way, All the Things You Never Knew the lead singer of Leehom Wang, is also very good. Both the melody and the lyrics of the movie are impressive.
+[2] You're welcome. By the way, there's a new song Wonderful Happiness by Leehom Wang. It's very nice. It's a classic Leehom Wang song.
+
+
+{'Open Fire'}
+set()
+[3] Do you want to play Open Fire for you now?
+[3] Do you want me to play it for you now?
+
+
+{'Open Fire'}
+set()
+Open Fire is playing for you now.
+It's playing for you.
+
+
+{'New Police Story'}
+set()
+[3] Well, if you have time, you can have a look at his New Police Story which many people used to like very much.
+[3] Well, I recommend you to see his movie named Unforgetable. It's very good. You can't miss it.
+
+
+{'Brother', 'Where Are You Now'}
+{'Where Are You Now'}
+[3] Let me recommend a song to you! Where Are You Now is great! As Elder Brother Leslie Cheung said, some songs can only be recorded and they will not be sung on any other occasions. So is this song.
+[3] I'd like to recommend a song of Leslie Cheung, Where Are You Now which is a classic in the hearts of the audience.
+
+
+{'Marinated Fish'}
+set()
+[2] It's a nice day to eat Marinated Fish
+[2] Hehe, I'm flattered. This kind of weather is very suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Promise'}
+set()
+[2] You're welcome. I'd like to recommend another song Promise This song is very positive, relaxing and warm. You can listen to it.
+[2] You're welcome. I'd like to recommend another song One Dream (Live). It's a beautiful song. I recommend it to you.
+
+
+{'The Crescent'}
+set()
+Well, The Crescent is not bad, too. It's a warm work.
+I don't want to listen to music now.
+
+
+{'Once'}
+set()
+Yes, it also gives people a very gentle feeling. Once you listen to it, you will fall in love with it.
+Yes, the lyrics are very interesting. You can try it.
+
+
+{'A Man Of Intention'}
+{'Love You'}
+[2] It's OK. I'd like to recommend another song A Man Of Intention by Leslie Cheung, in which Leslie Cheung interprets the inner thoughts of women.
+[2] You're welcome. By the way, Kris Wu's another song, "I Belong To Love You". I recommend it to you.
+
+
+{'Run Toward the Future', 'Run'}
+set()
+Would you like to hear Run Toward the Future which is also the theme song of the movie "Heroes 2"?
+Then you can listen to "Don't Love Me" by Leslie Cheung. It's full of strong classical flavor.
+
+
+{'Silence is Gold'}
+set()
+[3] I'd like to recommend his Silence is Gold It's a combination of classical music and pop music. There was no such song before and the Guzheng performance is also spectacular.
+[3] I happen to know a song by him. I recommend it to you. The song is very nice. Leslie Cheung sang it very well!
+
+
+{"It's Enough"}
+set()
+[3] I recommend you to listen to his It's Enough It's very nice.
+[3] I recommend you to listen to his song One Dream (Live). It's very nice. It's a light song, but it's also a very touching song.
+
+
+{'Hope for Love'}
+set()
+How about Hope for Love which is the theme song of I Want to Go to School, a charity event.
+It's OK, but I don't want to listen to music now.
+
+
+{'Those Were the Days'}
+set()
+Those Were the Days
+I like Ruby Lin best.
+
+
+{'Who'}
+set()
+Who is the director?
+How do people say about it?
+
+
+{'July Rhapsody'}
+set()
+[3] You can have a look at his July Rhapsody which portrays real human nature and desire. You can  have a look.
+[3] Yes, I happen to know a movie starred by him. It's a classic one. I recommend it to you. It's a classic movie. I hope you like it.
+
+
+{'McDull, Prince de la Bun'}
+set()
+I like McDull, Prince de la Bun best.
+I like the movie named Wonderful Wedding.
+
+
+{'Who'}
+set()
+Who are the stars in this movie?
+How about the word of mouth?
+
+
+{'The Crossing I'}
+set()
+[3] Then you can see The Crossing I starred by him. The actors' acting skills are good, and the film reproduces the beautiful scenes on both sides of the Taiwan Straits sixty years ago in a real and delicate manner.  It's really worth seeing.
+[3] Then I recommend his movie, Don't Love Me, to you. It's a good movie that tells the story of a boy who is infatuated by a girl, but can't stop thinking about his beloved.
+
+
+{'Perfect Two'}
+set()
+[4] Well, her Perfect Two is recommended to you. The story of the film is wonderful, the overall style is consistent, and the details are carefully designed to create a warm family bond which is rarely seen in mainland movies.
+[4] Then I recommend Mi Yang's Mi Yang's Mi Yang to you. She's really beautiful. I recommend you to watch it. She's a model worker in the mainland.
+
+
+{'King of Comedy'}
+set()
+[3] Since you appreciate her so much, would you like to see her King of Comedy It's full of tears and laughter. It's both touching and thought-provoking.
+[3] Yes, I'd like to recommend a movie of her starred by Jiong He. It's a comedy with a good reputation.
+
+
+{'November Rain', 'Rain'}
+set()
+OK, listen to November Rain It's not bad. It's a nice song. Many people like it very much.
+Sorry, don't really wanna listen to music for the moment.
+
+
+{'Beautiful'}
+set()
+[3] A simple and joyful song is recommended to you. The title of the song is Beautiful This song was originally a light and witty film soundtrack. With the rearrangement of Leehom Wang, it has become such a work with high international recognition.
+[3] I recommend you to listen to his song One Dream (Live). The song is a light and cheerful love song. I hope you like it.
+
+
+{'Beautiful'}
+set()
+No problem. Beautiful is on.
+It's playing for you.
+
+
+{'The Crossing I'}
+set()
+[3] I'd like to recommend one of his movies, The Crossing I The audience is deeply impressed by the historical scene, romantic love and moving music in the movie.
+[3] Yes, you can watch his movie, The Wind Waker, which is one of the best domestic thrillers.
+
+
+{'Cities In Love'}
+set()
+[4] Then you can see her Cities In Love which is a collection of 10 popular stars, including Mi Yang and Bai Baihe. The cast is rather commercial, but the content and narration are literary and artistic.
+[4] Then I recommend you to see the movie starred by Mi Yang, which is very touching!
+
+
+{'Love Now'}
+set()
+[3] Since you like him so much, listen to his song Love Now It's a love song, but it's not about the lingering bitter love. It's about the courage and confidence to break through the barrier of love, and the determination and responsibilty of love.
+[3] I want to recommend a song of him to you. Do you want to listen to it?
+
+
+{'The One and Only'}
+set()
+I like The One and Only best.
+I like to listen to Wonderful Happiness.
+
+
+{'Another Self'}
+set()
+[3] Well, have you ever heard his Another Self It's a great song! This 41-year-old singer puts his dream of being a film director into the song as a challenge for himself, demonstrating his positive thought that nothing is too late to be done.
+[3] Ha ha, then I'd like to recommend you to watch the movie Don't Love Me Tonight, which is a classic in the hearts of fans.
+
+
+{'Secret', 'Rain'}
+{'Rain'}
+[3] I'd like to recommend Rain for you. It's a piano music created by Jay Chou. In the movie Secret it appears twice.
+[3] Well, I'd like to recommend one of his songs, Rain to you. It's very nice. Jay Chou sings with the voice of "God of Songs". It's very catchy.
+
+
+{'Rain'}
+set()
+Playing Rain for you.
+OK, playing for you.
+
+
+{'Dream at That Time'}
+set()
+Yes, Dream at That Time
+I don't want to listen to music now.
+
+
+{'As The Light Goes Out'}
+set()
+[3] I'd like to recommend his As The Light Goes Out The plot is unexpected and the story is interesting. Its depiction of human nature is good too.
+[3] Yes, he also won the Hong Kong Film Award for Best Supporting Actor.
+
+
+{'Left Right Love Destiny'}
+set()
+[4] Then you can see Cecilia Cheung's Left Right Love Destiny in which she plays a very pure and beautiful role!
+Cecilia Cheung is an excellent actress.
+
+
+{'1:99 Shorts'}
+set()
+I like 1:99 Shorts best
+I like the movie named One Dream.
+
+
+{'Yixiangyuan New Hunan Cuisine'}
+set()
+[3] Then I recommend you to Yixiangyuan New Hunan Cuisine. The dish of this restaurant is very good, and you can make a reservation in advance.
+Then you can try it.
+
+
+{'Chongqing Blues'}
+set()
+[3] Well, the works of excellent people must be great. Her movie Chongqing Blues is very good. It's about the absence of her father.
+[3] Since you like her so much, I'd like to recommend her movie "Beauty and the Beast in Love" to you. This movie tells about the life of a woman who falls in love with a handsome guy.
+
+
+{'A Man Of Intention'}
+set()
+OK, A Man Of Intention is playing for you.
+OK, it's playing for you.
+
+
+{'A Chinese Ghost Story'}
+set()
+[2] This song is finished. I'd like to recommend another song of Leslie Cheung. How about A Chinese Ghost Story Leslie's singing is excellent. It's a very good song.
+[2] You're welcome. Do you like it? It's Jay Chou's song.
+
+
+{'Wish You Could Decide', 'Wish'}
+set()
+How about Wish You Could Decide? Netizens said that every time they heard this song, they'd like to put it on repeat. You should have a try.
+OK, how about There's a Place? Leslie Cheung's voice is very infectious. I recommend it to you.
+
+
+{'Wish You Could Decide', 'Wish'}
+set()
+OK, Wish You Could Decide is playing for you.
+OK, it's playing for you.
+
+
+{'Rooftop'}
+set()
+I'll play Rooftop for you right away.
+It's playing for you. Please enjoy it!
+
+
+{"You're Not Here"}
+set()
+[2] Haha, today's weather is suitable for listening to You're Not Here This song interprets the feeling of loneliness and powerlessness between men and women for love, and has strong penetrating power. Hope you like it!
+[2] You're welcome. This kind of weather is suitable for eating Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Slowly'}
+set()
+[3] I'd like to recommend his song Slowly to you. He can easily control any style.
+[3] You really have a good taste. I'd like to recommend his song "Orchid Pavilion" to you. It's a very good song.
+
+
+{'Slowly'}
+set()
+Yeah, how about Slowly Is it attrative enough to you?
+Of course, I'm a fan of him.
+
+
+{'Slowly'}
+set()
+Slowly is playing for you.
+It's playing for you.
+
+
+{'Ordinary Heart'}
+set()
+My favorite song is Ordinary Heart
+I like Jiong He.
+
+
+{'Future Cops'}
+set()
+[3] Since you like him, I recommend his Future Cops to you. The theme of campus will never fade.
+[3] Since you like him so much, I'd like to recommend another song One Dream (Live). It's a good song.
+
+
+{'Infernal Affairs'}
+set()
+[3] Then you have to support your idol's movie. I recommend Infernal Affairs to you! It's a classic of Hong Kong movies, pushing gangster movies to a new level!
+[3] Yes, but do you want to watch his movie? Andy Lau's movie is very good. I recommend it to you.
+
+
+{'Flower Field Mistake'}
+set()
+[2] Would you like to hear another song? Flower Field Mistake is also very good. The highlight of this song is that Leehom Wang skillfully integrates R & B and Peking opera, which makes listeners feel both classical and innovative.
+[2] You're welcome. Do you want to listen to the song Another Myself? It's a song about memories.
+
+
+{'The Sun Washed by Spring Rain', 'Rain'}
+set()
+The Sun Washed by Spring Rain is playing for you.
+All the Things You Never Know is playing for you.
+
+
+{'Run'}
+set()
+[4] OK, I'd like to recommend Cecilia Cheung's Run On Karma to you. The style of this movie is a new attempt based on the original one by Qifeng Du and Jiahui Wei.
+[4] Then you can see Cecilia Cheung's movie, What A Life Of Fighting Is A Dream.
+
+
+{"She's Gone Far Away"}
+set()
+[2] You're welcome. It's suitable to listen to She's Gone Far Away at home at night. It's a love song with soft style and sad melody.
+[2] You're welcome. It's perfect for eating marinated fish in this weather.
+
+
+{"She's Gone Far Away"}
+set()
+OK, She's Gone Far Away is playing for you.
+OK, it's playing for you.
+
+
+{"Still Think You're the Best"}
+set()
+[2] Yes. In fact, listening to Still Think You're the Best can't be more pleasant in such kind of weather.
+[2] I'm flattered. It's a perfect day to eat Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Daxianghui Hunan Cuisine'}
+{'Wanzhou Roasted Fish'}
+[3] If you want to eat, I'll recommend you to go to Daxianghui Hunan Cuisine. The Boiled Fish with Pickled Cabbage and Chili in this restaurant is the best nearby.
+[3] If you want to try it, I recommend you to go to Wanzhou Roasted Fish. Their specialty is Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Miracle', 'Run'}
+set()
+[3] He has a very good song called Run which I'd like to recommend to you. Miracle belongs to people who believe in it.
+Yes, and he also won the Most Popular Male TV Host of China Student Television Festival.
+
+
+{'Lingering Memory of Past Love'}
+set()
+[2] It's a good time to listen to Lingering Memory of Past Love a theme song of classic love movies.
+[2] Hey, hey, it's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Lingering Memory of Past Love'}
+set()
+[2] Haha, this kind of weather is very suitable for listening to Lingering Memory of Past Love a theme song of classic love movies.
+[2] You're welcome. This kind of weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Lingering Memory of Past Love'}
+set()
+Lingering Memory of Past Love is playing for you now.
+There you go.
+
+
+{'Marinated Fish'}
+set()
+[2] Hey, you're welcome. This kind of weather is quite suitable for eating Marinated Fish You can try it.
+[2] You're welcome. It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Who'}
+set()
+[2] You're welcome. It's suitable for listening to Who the Keyman in such weather. The song is very nice.
+[2] You're welcome. This kind of weather is suitable for listening to the song Orchid Pavilion. It's very nice.
+
+
+{'Who'}
+set()
+Who the Keyman is playing for you.
+It's playing for you.
+
+
+{'I Am Not Madame Bovary'}
+set()
+[3] I'd like to recommend her movie I Am Not Madame Bovary to you. The rhythm of the movie is very good. It's too smooth, and it's worth watching.
+[3] Well, she is really excellent. Her acting skills are excellent. I recommend you to watch her TV drama The Bare-Footed Kid.
+
+
+{'Chivalry'}
+set()
+Chivalry is playing for you.
+OK, it's playing for you.
+
+
+{"Superman Can't Fly"}
+set()
+[2] My pleasure. The lead singer has also sung other songs, such as Superman Can't Fly This is a hip-hop song with warm melody, which sounds inexplicably moving.
+[2] You're welcome. I'd like to recommend another song by Jacky Cheung, which is the theme song of World of Sword.
+
+
+{'Golden Armor'}
+set()
+OK, Golden Armor is playing for you.
+It's playing for you.
+
+
+{'Stir-Fried Venerupis'}
+set()
+[2] It's a wonderful day to have Stir-Fried Venerupis It's so delicious.
+[2] I'm flattered. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Marinated Fish'}
+{'Country Love Dumpling Restaurant'}
+[3] I recommend the restaurant named Chongqing Wanzhou Marinated Fish The marinated fish in the restaurant is very tasty.
+[3] You can order it at Country Love Dumpling Restaurant.
+
+
+{'Woman Who Flirt', 'Who'}
+set()
+[3] Haha, I'd like to recommend his movie Woman Who Flirt. It's not bad. You can watch it when you have time. It's interesting.
+[3] Yes, I'd like to recommend to you his movie, Unforgetable, which is starred by Xiaoming Huang. It's a classic Chinese animation. I'll recommend it to you.
+
+
+{'Suzhou River'}
+set()
+I like Suzhou River best.
+I like watching movies very much.
+
+
+{'And I Hate You So'}
+set()
+[3] I don't know whether you will like his And I Hate You So It is a typical Hong Kong romantic comedy film.
+I mean he's a real actor. He also won the Hong Kong Film Award for Best Actor.
+
+
+{'Thousands of Songs'}
+set()
+[3] Thousands of Songs is a beautiful song. Looking back slowly, the night used to belong to each other. You were the sunshine once in my heart. The song expresses the feeling of parting vividly, and also shows young girls' mood. I'd like to recommend it to you.
+[3] Yes, do you like Leslie Cheung? He is a model worker in the field of music.
+
+
+{'Thousands of Songs'}
+set()
+Thousands of Songs is playing for you.
+I've played this song for you.
+
+
+{'Homelike Sichuan Restaurant'}
+{'Huihuang Sichuan Restaurant'}
+[3] If you want to eat, you can order it from Homelike Sichuan Restaurant! This restaurant has a good reputation!
+[3] If you want to eat, you can order Steamed Fish Head with Diced Hot Red Peppers from Huihuang Sichuan Restaurant.
+
+
+{'Suzhou River'}
+set()
+[3] Speaking of her acting skill, I'd like to recommend Suzhou River to you. It's not a fable about a person living two life styles, but a story of a modern spirit looking for lost love. It's an excellent work.
+[3] I'd like to recommend her movie The Big Stuff to you. The movie is very good. I believe you will like it.
+
+
+{'Snake Dance'}
+set()
+Snake Dance is playing for you.
+It's playing for you.
+
+
+{'Marinated Fish'}
+set()
+[3] You are so lucky. This dish in Shujiang Marinated Fish is very authentic. It must suit your taste very well.
+[3] I know a restaurant. Would you like to order Tofu with Preserved Eggs for you?
+
+
+{'To Miss with Love'}
+set()
+[3] Well, his movie To Miss with Love is highly recommended. It's a must-see movie.
+[3] It seems that you like him very much. Let's talk about him. Do you like watching his movies?
+
+
+{'The Stool Pigeon'}
+set()
+My favorite movie is The Stool Pigeon
+I like the movie named Lost in Thailand.
+
+
+{'Hard to Go Back'}
+set()
+[2] You're welcome. By the way, Hard to Go Back is highly recommended. It's also sung by Jacky Cheung. Everyone says that Jacky sings very delicately.
+[2] You're welcome. I'd like to recommend you another song by Jiong He, Don't Love Me. It's an old song that he sang twice. You can listen to it.
+
+
+{'The Crescent'}
+set()
+Then you can listen to his song The Crescent which is also very good. Even in the 1980s, when great Cantonese songs came out in large numbers, it can be seen as a masterpiece in every generation.
+I'm sure you'll like this song. It's also a classic in the hearts of fans.
+
+
+{'Secret'}
+set()
+OK, Secret is playing for you.
+OK, it's playing for you.
+
+
+{'Happy Birthday'}
+set()
+[2] My pleasure. Would you like to try  another song of him? Happy Birthday (Live) is a very good song which describes a girl's decision to say goodbye to her old relationship.
+[2] You're welcome. Would you like to listen to another song of Jiong He? It's called One Dream. It's a song about memories.
+
+
+{'Time Machine'}
+set()
+What about Time Machine The music arrangement and performance are quite suitable. Sometimes it feels retro, sometimes fictional, so that it gives the audience enough space to imagine, just like taking life as a movie.
+I don't want to listen to music for the time being.
+
+
+{'Time Machine'}
+set()
+OK, Time Machine is playing for you.
+It's playing for you.
+
+
+{'Rooftop'}
+set()
+Rooftop is playing for you.
+OK, I'm on it.
+
+
+{'From Now On'}
+set()
+OK, playing From Now On now.
+OK, it's playing for you.
+
+
+{'Coupe'}
+set()
+[2] Do you like Kris Wu's songs? I'd like to recommend Coupe to you. It's the prelude of Kris Wu's debut album ANTARES in the year of 2018. It's really great. You can hear the song.
+[2] You're welcome. I'd like to recommend another song of Jiong He. It's called "Another Myself". I recommend it to you.
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+OK, how about A Life Of Fighting Is But A Dream It's the theme song of the mobile game World of Sword.
+The song is very nice. It's sung by Kris Wu.
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+[3] Yes, I can play A Life Of Fighting Is But A Dream for you if you want to listen to it.
+[3] Do you want me to play it for you now?
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+OK, playing A Life Of Fighting Is But A Dream for you.
+OK, playing for you.
+
+
+{'Promise', 'Hand in Hand', 'Hand in Hand Promise'}
+{'Hand in Hand'}
+I love Hand in Hand Promise
+I like Hand in Hand best.
+
+
+{'Dream at That Time'}
+set()
+OK, playing the song Dream at That Time now.
+OK, playing now.
+
+
+{'Lonely Shadow'}
+set()
+OK, how about Lonely Shadow You'll never get bored of the beginning of this song. I'd like to recommend it to you.
+The lead singer of this song is also very excellent. He is also very humorous.
+
+
+{'Lonely Shadow'}
+set()
+[3] Do you want me to play Lonely Shadow now?
+[3] Do you want me to play it for you now?
+
+
+{'Lonely Shadow'}
+set()
+Playing the song Lonely Shadow right now. Please enjoy it.
+Playing the song for you.
+
+
+{'Rain'}
+set()
+[3] I'd like to recommend a song named Rain sung by Jay Chou to you. You'll have goose bumps when you listening to the song. It's not bad.
+[3] Do you want me to play it for you now?
+
+
+{'Rain'}
+set()
+[4] Play Rain for you now?
+[4] Do you want me to play it for you now?
+
+
+{'Rain'}
+set()
+Playing Rain for you.
+It's playing for you.
+
+
+{'Happy Camp: Bring Happiness Home'}
+set()
+I prefer funny movies recently, such as Happy Camp: Bring Happiness Home
+I like to watch the movie "Unforgetable".
+
+
+{'Ever Since We Love'}
+set()
+My favorite movie is Ever Since We Love
+I like to watch the movies I like best.
+
+
+{'Who'}
+set()
+Who are the leading actors of the movie?
+What's the score?
+
+
+{'A Man Of Intention'}
+set()
+[2] Try A Man Of Intention sung by Leslie Cheung, which is also one of Leslie Cheung's most boudoir songs.
+[2] You're welcome. I'd like to recommend another song sung by Jacky Cheung. It's called Wonderful Happiness.
+
+
+{'Marinated Fish'}
+set()
+[2] It is suitable for eating Marinated Fish in today's weather. It is a hot dish.
+[2] You're welcome. Today's weather is suitable for eating Steamed Fish Head with Diced Hot Red Peppers.
+
+
+{'Marinated Fish'}
+set()
+[3] OK, then you can eat it in Bailechuan Marinated Fish Square Nongye Road Branch).
+Really? You can try it.
+
+
+{'Impossible to Miss You', 'Miss You'}
+set()
+[3] It's recommended that you listen to Impossible to Miss You It shows us the determination of love by a song.
+[3] Well, do you want me to play it for you?
+
+
+{'Suzhou River'}
+set()
+[3] Well, the movie Suzhou River starred by her is great. It's a movie that deliberately creates imperfections. It's about fairy tales in an imperfect life. I'd like to recommend it to you.
+[3] I'd like to recommend a movie starred by her to you. It's called "The Bare-Footed Kid". You can see it.
+
+
+{'Love You', 'To Love You is to Love Myself'}
+set()
+Playing the To Love You is to Love Myself for you.
+OK, it's playing for you.
+
+
+{'All the Things You Never Knew'}
+set()
+[2] As long as you like it. I would  also like to recommand the song All the Things You Never Knew to you. The song described the  love relationship in the movie Love In Disguise. The  fall in love with her senior secretly, while the senior doesn't love her. And the hero fall in love with the heroine unconsciously. It's a love story come full circle. Do you want to listen to it?
+[2] You're welcome. I'd like to recommend another song by Kris Wu, "Flamenco" which is also sung by Kris Wu. It's a very rhythmic song.
+
+
+{'Need Some Company'}
+set()
+Well, Need Some Company is a slow song in which melody is dominated by piano. Leehom Wang successfully performed this lyric song by virtue of his sensational skills. He gave perfect expression of both ardent and restrained emotion.
+It's a love song. It's sung by Jiong He.
+
+
+{'Fireworks Cool Easily'}
+set()
+[2] OK. In fact, it is the most suitable for listening to Fireworks Cool Easily in this kind of weather. The lyrics of this song are classical and beautiful, and the artistic conception is far-reaching. It's very nice.
+[2] You're welcome. This kind of weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'A World Without Thieves'}
+set()
+[3] Yeah. By the way, you should watch the movie A World Without Thieves starred by Andy Lau. The movie enjoys a good reputation.
+[3] Yes, do you want to watch his movie? It's called the Golden Bauhinia.
+
+
+{'Lingering Memory of Past Love'}
+set()
+[2] You're welcome. It is suitable for listening to Lingering Memory of Past Love in this kind of weather. It's a classic theme song of love movie and is suitable in such an atmosphere!
+[2] Hehe, this kind of weather is suitable for eating Steamed Chicken with Chili Sauce.
+
+
+{'Marinated Fish'}
+set()
+[2] It is suitable for eating Marinated Fish in today's weather.
+[2] Thank you for your praise. It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Who'}
+set()
+Who is the leading actor?
+What kind of movie is it?
+
+
+{'After Leaving'}
+set()
+[3] The song After Leaving sung by him is great. Sounds like the singer was sighing the past memories.
+Yes, I recommend you to see his movie, The Bare-Footed Kid.
+
+
+{'All the Things You Never Knew'}
+set()
+What about All the Things You Never Knew It's absolutely a good song, and it is classic. The lyrics and the melody are profound and sincere. Besides, each note can touche your heart deeply.
+I don't want to hear it for the time being.
+
+
+{'Self Directed Act'}
+set()
+[2] Since you like Jay Chou's song, I recommend you to listen to his Self Directed Act which is a song with R & B style.
+[2] Do you want to listen to the song Orchid Pavilion? This is a classic song of Jiong He
+
+
+{'Floral Sea'}
+set()
+[3] I'd like to recommand that you listen to the song Floral Sea sung by him. The song is full of island style. Jay Chou sang with island style singing, which has a soothing power. It's very fair-sounding.
+Sorry, don't really want to listen to music for the time being.
+
+
+{'A Man Of Intention'}
+set()
+[2] Well, I'd like to recommend another song named A Man Of Intention sung by Leslie Cheung to you. It is also Leslie Cheung's most boudoir work.
+[2] Hehe, I'd like to recommend another song One Dream (Live). It's a song with island style. It's very nice.
+
+
+{'Run Toward the Future', 'Run'}
+set()
+OK, the song Run Toward the Future is also good. It's also the theme song of the movie Heroes 2.
+Then you can listen to his other songs, such as One Dream, which is also his most representative work.
+
+
+{'Gardenia'}
+set()
+[3] I'd like to recommend his song Gardenia to you. The light music lightly describes the mood of parting. The simple music rhythm makes people feel the fragrance of Gardenia when listening to the song. The catchy and natural melody and lyrics construct a strong campus atmosphere.
+[3] Yes, I'd like to recommend you his song One Dream. It's full of strong classical flavor, profound and sincere words and music, the parting scene and parting mood are vividly displayed.
+
+
+{'Invisible Hands'}
+set()
+[2] Hey, listen to Invisible Hands at your midday rest, you will be shocked by the lyrics.
+[2] Thank you for your praise. It's a perfect day to eat Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Invisible Hands'}
+set()
+OK, playing Invisible Hands for you.
+It's playing for you.
+
+
+{"All's Well, Ends Well 2012"}
+set()
+[3] Great. There's a movie I'd like to recommend to you. All's Well, Ends Well 2012 was starred by her. The movie is creative and it's close to the real urban love and life. And the figures are nostalgic.
+[3] Ha ha, do you want to watch the movie Mi Yang starred by Mi Yang? It's very funny.
+
+
+{'Together We Move On'}
+set()
+[3] Do you want to listen to his song Together We Move On Leslie Cheung showed his ability to sing a song well again. He was conducting a band rather than singing a song in the unworldly state.
+He is also the Best Actor of the Hong Kong Film Awards.
+
+
+{'Wish'}
+set()
+I like Star Wish
+I like watching Xun Zhou best.
+
+
+{'Chinese Soul'}
+set()
+[3] Then I'd like to recommend a song that is really moving to you. Its name is Chinese Soul It integrates the eastern and western elements and makes innovations base on it, so that rap music can be better integrated with Chinese traditional culture.
+[3] I'd like to recommend a song called One Dream to you. It's very good. It's a song full of island style, and the use of flamenco and hip-hop is so brilliant.
+
+
+{'Starry Starry Night'}
+set()
+[4] How about the movie Starry Starry Night starred by Rene Liu? It's a thought-provoking movie. You can try it.
+[4] Well, Rene Liu's movie is very good. I'd like to recommend it to you.
+
+
+{'A Chinese Ghost Story'}
+set()
+OK, playing A Chinese Ghost Story for you now.
+I'm playing it for you.
+
+
+{'Heaven & Earth'}
+set()
+Well, I like listening to Heaven & Earth
+Well, I like the song Wonderful Happiness best.
+
+
+{'Yuweitang Flavour Sichuan Cuisine'}
+set()
+[3] You can make a reservation for Boiled Fish with Pickled Cabbage and Chili in Yuweitang Flavour Sichuan Cuisine.
+It won't let you down.
+
+
+{'The Crescent'}
+set()
+[3] Do you want me to play The Crescent for you now?
+[3] Can I play this song for you now?
+
+
+{'The Crescent'}
+set()
+Now playing The Crescent
+It's playing for you.
+
+
+{'Rain'}
+set()
+The music Rain is on
+Playing now.
+
+
+{'Enchanting Melody'}
+set()
+[2] It's my pleasure. By the way, there's another song named Enchanting Melody sung by Jay Chou I'd like to recommand to you. It is Jay Chou's first attempt at electronic dance music. It's not bad. You can listen to it.
+[2] Thank you. I also recommend you to listen to the song Don't Love Me. It's a good one.
+
+
+{'Chivalry'}
+set()
+OK, what about Chivalry It's a classic old song.
+It's Jay Chou's song. I don't want to listen to it now.
+
+
+{'Chivalry'}
+set()
+[3] Do you want me to play Chivalry
+[3] Do you want me to play it for you now?
+
+
+{'Drunken Master II', 'Drunken Master'}
+set()
+Usually I like watching movies. I like to watch the movie Drunken Master II
+I like listening to music.
+
+
+{'Three Times'}
+set()
+My favourite one is Three Times
+I like Ruby Lin best.
+
+
+{'Peanuts with Black Vinegar'}
+set()
+[2] You're welcome. It is suitable for eating Peanuts with Black Vinegar in this kind of warm weather.
+[2] You're welcome. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Peanuts with Black Vinegar', 'Chuanlaojiu Chuanchuanxiang'}
+set()
+[3] If you want to eat it, I'd like to recommend you to go to Chuanlaojiu Chuanchuanxiang. The Peanuts with Black Vinegar of this restaurant is very delicious.
+Well, this dish is really delicious.
+
+
+{'Insanity'}
+set()
+[3] I'd like to recommend his movie Insanity to you. Xiaoming Huang and SeanLau cooperated well in the movie.
+[3] Yes, I'd like to recommend a movie starred by Xiaoming Huang. It's a good movie with good story. I recommend it to you.
+
+
+{'Kung Fu Panda 3'}
+set()
+[4] How about the movie Kung Fu Panda 3 The special-effects are amazing and it's funny with strong Chinese style. It's a good work.
+[4] Then I'll recommend her movie, The Wedding Singer, to you. It's a good movie.
+
+
+{'The Sun Washed by Spring Rain', 'Rain'}
+set()
+[3] You must like the song The Sun Washed by Spring Rain which is fair-sounding and one will never get bored of. It's a happy song. The beautiful melody combines with the American R & B skills make this song sound very beautiful and make people feel active.
+Yes, he sings well, and his acting is good. It's worth seeing.
+
+
+{'The Sun Washed by Spring Rain', 'Rain'}
+set()
+OK, playing The Sun Washed by Spring Rain now.
+I don't want to hear it for the time being.
+
+
+{'Tiramisu'}
+set()
+I like Tiramisu
+I like the movie named Wonderful Wedding.
+
+
+{'Who'}
+set()
+What kind of movie is this? Who is the director?
+What's the score?
+
+
+{'Failan'}
+set()
+[3] So you want to watch her movie. There's a movie Failan starred by her, which makes the audience touched and shocked.
+[3] Yes, I recommend you to see Cecilia Cheung's movie One Dream. It's a very touching movie.
+
+
+{'Bodyguards and Assassins'}
+set()
+[4] Well, then you can watch the movie Bodyguards and Assassins I was so moved that I still remember the feeling now.
+OK, you won't be disappointed.
+
+
+{'Can You Feel the Love Tonight'}
+set()
+[2] Such weather is suitable for listening to Can You Feel the Love Tonight This song also won  the Oscar for Best Original Song.
+[2] You're welcome. This kind of weather is suitable for eating Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Heroes of Earth'}
+set()
+[2] You're welcome. Let's warm up with a dynamic song in such cold weather! Heroes of Earth is recommended to you. It's very nice. It's the title song of the highest circulation album of Leehom Wang.
+[2] You're welcome. It's a perfect day to have Marinated fish.
+
+
+{'Mr.Fish Roasted'}
+set()
+[3] I'd like to recommend a restaurant for you. Mr.Fish Roasted cooks it very well.
+OK.
+
+
+{'Pinshang Grilled Fish (Wuyi Road Store)'}
+set()
+[3] Then I'd like to recommend you to go to the Pinshang Grilled Fish (Wuyi Road Store). Boiled fish with pickled cabbage and chili is the specialty of the store!
+You're going to love it.
+
+
+{'Failan'}
+set()
+[4] Then you can see Failan the film revolves around the saving and being saved spiritually, unfolds the story by cutting through the people's blinding with sharp blade, and giving the audience the most real touching and shocking.
+[4] Do you want to see her movie "This Is How I Want to Be Single"? Cecilia Cheung's performance in it is great!
+
+
+{'Chuanlaojiu Chuanchuanxiang'}
+set()
+[3] I recommend you to go to the Chuanlaojiu Chuanchuanxiang. This restaurant's spice crawfish is very delicious.
+[3] Well, if you want to eat, I recommend you to go to the Hunan Cuisine Restaurant. This restaurant is very famous.
+
+
+{'Beef in Sour Soup'}
+set()
+[2] Thank you for your praise. Today's weather is very suitable for eating Beef in Sour Soup
+[2] You're welcome. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Old fellow Hunan Cuisine'}
+set()
+[3] I'm flattered. Old fellow Hunan Cuisine cooks boiled fish with pickled cabbage and chili very well.
+[3] OK, if you want to eat, you can order Boiled Fish with Pickled Cabbage and Chili at the Big belly fish at Zhongshan Food Sichuan Cuisine.
+
+
+{'Wish'}
+set()
+GoodBye! Wish you enjoy the movie!
+OK, see ya!
+
+
+{'Chishangyin Roasted Fish', 'Sweet\xa0and\xa0Sour\xa0Spare\xa0Ribs'}
+{'Sweet\xa0and\xa0Sour\xa0Spare\xa0Ribs'}
+[3] You can order Sweet and Sour Spare Ribs at the Chishangyin Roasted Fish.
+[3] The specialty of the restaurant Shangwei Sichuan Cuisine is Sweet and Sour Spare Ribs
+
+
+{'From Now On'}
+set()
+I like listening to From Now On
+I like listening to the song Wonderful Happiness.
+
+
+{'Who'}
+set()
+Yes, yes, he's handsome and sings well. Who doesn't like him.
+Yes, he is also very good at acting. He has won the Hundred Flowers Awards for Best Leading Actor.
+
+
+{'Big belly snow dumplings'}
+{'Happy dumplings'}
+[3] If you are interested, I recommend you to go to the Big belly snow dumplings. Its marinated fish is very good and you can order in advance.
+[3] You can order marinated fish at Happy dumplings.
+
+
+{'Murderer'}
+set()
+[3] Ha ha, you know him so well. It seems that you like him very much. You must see the movie Murderer starred by him. In the movie, he interprets the essence of metamorphosis with great effort.
+[3] Ha ha, I recommend you his film "The Bare-Footed Kid". It's very touching!
+
+
+{'Secret', 'Rain'}
+set()
+[3] Recommend a song to you, Rain which is Jay chou's piano song. In the movie Secret the Rain appears twice.
+I don't want to listen to music now.
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+A Life Of Fighting Is But A Dream is playing for you.
+OK, it's playing for you.
+
+
+{'Tossed\xa0Clear\xa0Noodles\xa0in\xa0Chili\xa0Sauce'}
+set()
+[2] I'm flattered! Today, today is perfect for eating Tossed Clear Noodles in Chili Sauce
+[2] This kind of weather is suitable for listening to the song One Dream (Live). Do you want to listen to it?
+
+
+{'The Island Tales', 'The Island'}
+set()
+[3] Hey, hey, you think so highly of her. I'll recommend her movie The Island Tales. Some people say that I like this movie after watching it, like reading a novel.
+[3] I'd like to recommend you a movie called The Bare-Footed Kid starred by her. It's a good movie.
+
+
+{'Snake Dance'}
+set()
+Snake Dance is playing for you.
+It's playing for you.
+
+
+{'Wolf Legend'}
+set()
+Well, I like listening to Wolf Legend
+Well, I like Kris Wu very much.
+
+
+{'Woman Who Flirt', 'Who'}
+set()
+I like watching movies. I like watching the movie Woman Who Flirt very much.
+I like watching movies and listening to music.
+
+
+{'Peanuts with Black Vinegar'}
+set()
+[2] Let me tell you in private, this weather is suitable for eating Peanuts with Black Vinegar
+[2] You're welcome. It's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Woman Who Flirt', 'Who'}
+set()
+[3] It's good. I recommend you his Woman Who Flirt which is a good domestic film.
+[3] Yes, I'd like to recommend his movie, The Bare-Footed Kid, to you. It's a great movie.
+
+
+{'1:99 Shorts'}
+set()
+[3] So you should watch his movie 1:99 Shorts I recommend it to you. Andy Lau's long hair style will make a deep impression on you.
+[3] Thank you for your praise. Have you seen his movie named Unforgetable? Andy Lau once again shows his ability to control a movie with his mellow voice.
+
+
+{'Beijing Rocks'}
+set()
+[3] Beijing Rocks starred by her is a low-cost film with a distinct style. I recommend it to you.
+[3] Since you like her so much, I'd like to recommend you a movie starred by her. This movie is full of tension and vicissitudes. It's a good movie.
+
+
+{'Steamed\xa0Egg\xa0Custard'}
+set()
+[2] You're welcome. It's very nice to eat Steamed Egg Custard at home in such weather.
+[2] You're welcome. It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Happy dumplings'}
+set()
+[3] If you're too lazy to do it by yourself, I recommend you to  order steamed egg custard at Happy dumplings which cooks very well.
+[3] If you want to eat it, you can go to the Xiangfulou Hunan Cuisine (RT Mart store). It's their speciality.
+
+
+{'The Bullet Vanishes'}
+set()
+[4] Well, you should be interested in Nicholas Tse's The Bullet Vanishes It's his first time to play a villain.
+[4] Well, Nicholas Tse's Unforgetable is a good movie. I recommend it to you.
+
+
+{'Princess and Seven Kung Fu Masters'}
+set()
+[3] Yes, speaking of acting skills, you have to see the movie Princess and Seven Kung Fu Masters starred by her. It's very funny. It's suitable to watch when you are in a relaxed mood.
+[3] Then I recommend you to see her movie "It's a Wonderful Story". It's really good. I recommend it to you.
+
+
+{'From ashes to ashes'}
+set()
+My favorite is From ashes to ashes
+I like the movie Jackie Chan best.
+
+
+{'Kwonkimdo Korean Self-served BBQ and Hot Pot'}
+{'Laoqi Sichuan Restaurant'}
+[3] If you want to eat, I recommend you to go to Kwonkimdo Korean Self-served BBQ and Hot Pot. Its spice hot pot is unique.
+[3] You can order it at Laoqi Sichuan Restaurant.
+
+
+{'Free Tutorial Video'}
+set()
+[3] His Free Tutorial Video is very good. Obviously, it's very imaginative. There are all kinds of lovely things in it.
+[3] You like Jay Chou. Do you know Jay Chou? He is one of the 100 Outstanding Actors in Chinese Films Century.
+
+
+{'Braised Chicken with Mushroom'}
+set()
+[2] You're welcome. By the way, this kind of weather is very suitable for eating Braised Chicken with Mushroom
+[2] You're welcome. It's suitable to eat Sautéed Shredded Pork in Sweet Bean Sauce in such weather.
+
+
+{'Braised Chicken with Mushroom', 'Country Love Dumpling Restaurant'}
+set()
+[3] Braised Chicken with Mushroom is the speciality of the Country Love Dumpling Restaurant.
+[3] I recommend that you order it at Laoqi Sichuan Cuisine. It's very delicious.
+
+
+{'Fall In Love Like A Star'}
+set()
+[3] Then I recommend you to see her Fall In Love Like A Star The movie is a relaxed fashion comedy with smile and tears.
+[3] Speaking of acting skills, I recommend you to see her movie There's A Place. It's a very good domestic spy movie.
+
+
+{'10+10'}
+set()
+[3] You have a good taste! I have a movie 10+10 starred by her, which shows the simple and pure culture and life of Taiwan. It's worth watching.
+[3] I'd like to recommend a movie starred by Hsu Chi to you. It's called The Big Stuff. You can see it.
+
+
+{"I Can't Forget You"}
+set()
+Well, what about I Can't Forget You Singing needs emotion, so it's not easy for ordinary people to sing well.
+Well, how about this? I don't want to listen to it now.
+
+
+{'The Beast Stalker'}
+set()
+[3] Then I have his movie The Beast Stalker recommended to you. It's worth seeing.
+[3] Since you like him so much, I recommend you to watch his movie, The Bare-Footed Kid. It's very good.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] You're welcome. It's a good weather for eating Sliced Fish in Hot Chili Oil
+[2] This kind of weather is suitable for eating marinated fish.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil', 'Homelike Sichuan Restaurant'}
+set()
+[3] If you want to eat the dish, you can go to Homelike Sichuan Restaurant. The Sliced Fish in Hot Chili Oil there is very delicious.
+I'm sorry, but this dish won't let you down.
+
+
+{'Orchid Pavillion'}
+set()
+[2] You're welcome. It's a good weather for listening to Orchid Pavillion! This song has a long lasting charm. It makes people taste it many times.
+[2] Thank you for your praise. By the way, today's weather is perfect for eating Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Kiss Goodbye'}
+set()
+Yes.I'm playing Kiss Goodbye sung by Jacky Cheung.
+OK, it's playing for you.
+
+
+{'Wolf Legend'}
+set()
+[2] His Wolf Legend is also a great song. It's a very lively and hot song. It's the most rock and roll love song among Jacky Cheung's hundreds of songs. You can listen to it.
+[2] I'm flattered. Do you want to listen to his song, Let Me Kiss You? It's very nice. Jacky Cheung sang this song with the same emotion, which is very nice.
+
+
+{"I Can't Forget You"}
+set()
+What about I Can't Forget You Jacky Cheung released the music album I Can't Forget You in 1996. You must listen to it.
+OK, what about his 1996 love song Love Is The Most Popular Song of Jade Solid Gold Best 10 Awards.
+
+
+{"I Can't Forget You"}
+set()
+OK, playing I Can't Forget You now.
+OK, I'm on it.
+
+
+{'My Dear Son'}
+set()
+[3] Yes, since you like him so much, I'd like to recommend My Dear Son starring Jacky Cheung. It's a good film with sincere feelings.
+[3] By the way, he's the winner of the Golden Needle Award, the highest honor in Hong Kong music circle.
+
+
+{'Free Tutorial Video'}
+set()
+[3] Yes, his cute song Free Tutorial Video is recommended to you. It's still so unrestrained. There are all kinds of lovely little things in it.
+[3] Yes, do you want to listen to his song One Dream (Live)? It's very good. It's very nice. There are all kinds of lovely little things in it.
+
+
+{'Free Tutorial Video'}
+set()
+The song Free Tutorial Video is playing for you.
+It's playing for you.
+
+
+{'You Deserve To Be Single', 'Deserve'}
+{'Deserve'}
+[3] Yes, I'd like to recommend a movie You Deserve To Be Single starring her. The movie is good, and the theme song is very nice.
+[3] Yes, I'd like to recommend you a movie called Deserve starred by her. It's a typical Chinese fairy tale.
+
+
+{'Rain Falls All Night', 'Rain'}
+{'Rain'}
+[3] Recommend you his song Rain Falls All Night. It's a lyric song and in the middle of the song into Chinese style you will have a refreshing feeling.
+[3] I'd like to recommend his song Rain to you. It's a very good song. It's a song about memories.
+
+
+{'Free Tutorial Video'}
+set()
+[3] I recommend a song Free Tutorial Video for you. Jay has been improving and ahead of time, but few people can keep up.
+[3] Yes, I recommend you to listen to his song One Dream(Live). It's very good. You can listen to it.
+
+
+{'Lingering Memory of Past Love'}
+set()
+[2] In such weather, listening to Lingering Memory of Past Love can't be more pleasant.
+[2] It's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Descendants of the Dragon'}
+set()
+Playing Descendants of the Dragon
+Playing now.
+
+
+{'All the Things You Never Knew'}
+set()
+[2] You're welcome. By the way, All the Things You Never Knew is a song that impresses people both in the melody and in the lyrics of the movie. It's very nice. I recommend it to you.
+[2] You're welcome. By the way, there is an episode of Xun Zhou's TV show, Unforgetable. It's very good. You can listen to it.
+
+
+{'Open Fire'}
+set()
+The song Open Fire will give you the feeling like its name. And it's full of power.
+The lead singer of this song is Kris Wu.
+
+
+{'Open Fire'}
+set()
+[3] Let me play Open Fire for you, OK?
+[3] Do you want me to play it for you now?
+
+
+{'Open Fire'}
+set()
+Open Fire is playing.
+It's playing for you.
+
+
+{'Lonely Night'}
+set()
+[4] Then I recommend a song Lonely Night to you. It's not hoarse, but very gentle from the beginning to the end. It's used to change the tune, lengthen, and express sadness with unique timbre.
+[4] Yes, Leslie Cheung is a very excellent singer. Would you like to listen to it?
+
+
+{'Mapo Tofu'}
+set()
+[2] You're welcome. It’s a good weather for eating Mapo Tofu
+[2] It's a perfect day for eating Duck Blooding Chili Sauce.
+
+
+{'There Is a Place'}
+set()
+No problem. Playing There Is a Place
+It's playing for you.
+
+
+{'Wonerful Happiness'}
+set()
+Playing Wonerful Happiness for you.
+It's playing for you. Please enjoy it!
+
+
+{'Heartburn'}
+set()
+[2] You're welcome. The Heartburn by Jiong He is also very good.
+[2] You're welcome. Do you want to listen to it now?
+
+
+{'Lonely Shadow'}
+set()
+What about Lonely Shadow by Jiong He? The beginning of that monologue really never tired of listening!
+It's a very affectionate song.
+
+
+{'Lonely Shadow'}
+set()
+[3] May I play Lonely Shadow for you now?
+[3] Do you want me to play it for you now?
+
+
+{'Jackie Chan: My Story'}
+set()
+[3] Jackie Chan's movies are popular. You can see Jackie Chan: My Story He is the pride of Chinese people!
+Well, he's really a good actor. He starred in the movie "10 + 10", which is very good.
+
+
+{"You're Not Here"}
+set()
+[2] Hehe, it's a good weather for listening to You're Not Here This song interprets the loneliness and powerlessness of love between men and women, and has a strong penetrating power. I'm sure it won't let you down.
+[2] You're welcome. It's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{"You're Not Here"}
+set()
+You're Not Here is playing.
+OK, it's playing for you.
+
+
+{'Hand Phone'}
+set()
+[3] I recommend you to watch her movie, Hand Phone which still has realistic significance.
+[3] Well, I'd like to recommend a movie of her, The Bare-Footed Kid, to you. I hope you'll like it.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] By the way, it's a good weather for eating Sliced Fish in Hot Chili Oil
+[2] It's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Rain'}
+set()
+[3] I recommend you to listen to his Rain It's very catchy.
+[3] I recommend you to listen to his song One Dream (Live). It's a great song sung by Jay Chou, which has strong campus atmosphere.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] Hey, hey, it's a good weather for eating Sliced Fish in Hot Chili Oil
+[2] Hehe, this kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Who'}
+set()
+[2] It's a  good weather for listening to Who Let's recall our childhood.
+[2] You're welcome. It's a perfect day to have Steamed Fish Head with Diced Hot Red Peppers.
+
+
+{'Snake Dance'}
+set()
+Now play Snake Dance
+It's playing for you.
+
+
+{'Yu-Shiang\xa0Shredded\xa0Pork\xa0(Sautéed\xa0with\xa0Spicy\xa0Garlic\xa0Sauce)'}
+set()
+OK, it is a good weather for eating Yu-Shiang Shredded Pork (Sautéed with Spicy Garlic Sauce).
+OK, I'd like to recommend a delicious dish, Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Zhongtian Food Sichuan Cuisine(Normal University store)', 'Yu-Shiang\xa0Shredded\xa0Pork\xa0(Sautéed\xa0with\xa0Spicy\xa0Garlic\xa0Sauce)'}
+set()
+[3] I recommend you order Yu-Shiang Shredded Pork (Sautéed with Spicy Garlic Sauce) at Zhongtian Food Sichuan Cuisine(Normal University store).
+Yes, it's a delicious dish.
+
+
+{'Heroes of Earth'}
+set()
+[2] I'm flattered. I recommend you to listen to Heroes of Earth in this weather. It's the title song of Leehom Wang's highest circulation album.
+[2] Thank you for your praise. It's a good day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Together We Move On'}
+set()
+[2] Never mind. It sung by Leslie Cheung. His song Together We Move On accompany many people's childhood. I think you can listen to it.
+[2] Hey hey, I'm flattered. Do you like Jiong He? He's the Most Popular TV Host of China Student Television Festival.
+
+
+{'Wish You Could Decide', 'Wish'}
+{'Wish'}
+How about Wish You Could Decide? It's a good song that you want to cycle.
+Then you must listen to his Wish This is also Leslie Cheung's first attempt at electronic dance music, which is really good.
+
+
+{'Wish You Could Decide', 'Wish'}
+set()
+Playing Wish You Could Decide.
+OK, here it goes.
+
+
+{'Sautéed\xa0Beef\xa0Fillet'}
+set()
+[2] You're welcome. It's a fine day to eat Sautéed Beef Fillet
+[2] You're welcome. It's a perfect day to have Poached Spicy Slices of Pork.
+
+
+{'Unforgettable Hunan Restaurant(Powerlong City Plaza)', 'Unforgettable'}
+set()
+[3] If you want to eat, you can go to Unforgettable Hunan Restaurant(Powerlong City Plaza).
+You can eat it. You will feel warm after eating it.
+
+
+{'Chinese Soul'}
+set()
+[2] It's a good weather for listening to Chinese Soul This song integrates the eastern and western elements for innovation, so that rap music can be better combined with Chinese traditional culture.
+[2] You're welcome. This kind of weather is suitable for eating Poached Spice Slices of Pork.
+
+
+{'The Crescent'}
+set()
+[3] I recommend The Crescent for you. Even in the 1980s, when there were many good Cantonese songs, it was a masterpiece handed down from generation to generation.
+[3] Ha ha, if you like him, you can listen to his music, which is very good. Do you want to listen to it?
+
+
+{'The Crescent'}
+set()
+Playing The Crescent for you.
+OK, playing for you.
+
+
+{'Everyday is Valentine'}
+set()
+[3] I'd like to recommend to you a movie called Everyday is Valentine which is starred by her. You can go to see it. It's quite funny.
+It's Xiaoming Huang.
+
+
+{'Top Chef Sichuan Restaurant(Downtown Store)'}
+set()
+[3] Mm-hmm, I'd like to recommend you order it at Top Chef Sichuan Restaurant(Downtown Store). It tastes delicious there.
+I'm sure it won't let you down.
+
+
+{'Marinated Fish'}
+set()
+[2] It's a good day for Marinated Fish
+[2] This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Wanzhou Roasted Fish'}
+set()
+[3] I recommend you order it at Wanzhou Roasted Fish.
+[3] You can order it from Jiaozi Stuffed with Celery.
+
+
+{'Marinated Fish'}
+set()
+[2] You're welcome. It's a good day for Marinated Fish
+[2] You're welcome. This kind of weather is suitable for listening to the song Orchid Pavilion. The song is very interesting. It's a piano music created by Orchid Pavilion's lead singer Jiong He.
+
+
+{'When Heaven Burns'}
+set()
+[3] Then go to see his movies. After all, he's your favorite star. Here's a movie for you, When Heaven Burns It's similar to The Untouchables by Brian De Palma in style.
+[3] Yes. I'd like to recommend you to see his movie Unforgetable, which is very funny. It's also the best documentary of Andy Lau.
+
+
+{'The Crescent'}
+set()
+[3] Have you listened to his song The Crescent It's a warm song. Even a hard-hearted man will be intoxicated to spend such a warm and romantic early summer night with the beloved one.
+Well, he's also good at acting. He won the Hong Kong Film Awards for Best Actor.
+
+
+{'Love in The Buff'}
+set()
+[3] In this case, I'd like to recommend to you a movie called Love in The Buff starred by her. All kinds of emotional states imaginable can be found in it.
+[3] Yes. I recommend you to see her movie The Big Leagues. It's very good. It's a typical Hong Kong movie.
+
+
+{'The 18 Martial Arts'}
+set()
+[2] You're welcome. You know what? It's a good day to listen to the The 18 Martial Arts It combines diversified music styles and can make people happy.
+[2] Hehe, it's suitable for eating Steamed Fish Head with Preserved Eggs in such weather.
+
+
+{'Perhaps Love'}
+set()
+[3] When it comes to acting skills, I'd like to recommend you the movie Perhaps Love starred by her. The plot and dance in it are very good.
+[3] Yes. By the way, have you seen her movie, The Bare-Footed Kid? It's a good domestic animation.
+
+
+{'Who'}
+set()
+Who starred in it?
+What's the score?
+
+
+{'Who'}
+set()
+Who is the director?
+What kind of movie is it?
+
+
+{'New Police Story'}
+set()
+[3] Yeah. He's not only good at singing, but also at acting. I'd like to recommend to you the movie New Police Story starred by him. In this movie, there are not only fashionable trends catering to the young people, but also sentimental nostalgia of the older generation.
+[3] I'd like to recommend his song One Dream (Live). The song is very good. It's a good song. I recommend it to you.
+
+
+{'Marinated Fish'}
+set()
+[2] You're welcome. By the way, it's a good day for Marinated Fish
+[2] Thank you for your praise. It's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Forever Young'}
+set()
+[3] Yeah. Here's a movie for you. It's called Forever Young which is starred by him. It tells four different stories in a non-linear way with a common theme, that is, good virtue and helpful words are the foundation of youth.
+[3] Yes, I'd like to recommend a movie of Xiaoming Huang, Xiaoming Huang and others to you. It's called A Better Tomorrow. You can watch it.
+
+
+{'Life Express'}
+set()
+[3] Yeah, here's a movie for you. It's called Life Express which is starred by her. The story is complete and coherent.
+[3] Well, I'd like to recommend her movie, A Better Tomorrow II, to you. In the movie, Ruby Lin plays a leading role. It's not bad.
+
+
+{'Three Times'}
+set()
+[3] Yes. Speaking of that, go to see the movie Three Times starred by her. Drama is like life. There's no need to say anything. It's really a good movie.
+[3] I recommend you to see her movie One Dream (2018). It's really good.
+
+
+{'Sautéed\xa0Shredded\xa0Pork\xa0in\xa0Sweet\xa0Bean\xa0Sauce'}
+set()
+[2] You're welcome. It can't be more suitable to have a hot Sautéed Shredded Pork in Sweet Bean Sauce at home in such weather.
+[2] I'm flattered. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Country Love Dumpling Restaurant'}
+set()
+[3] You can order it at Country Love Dumpling Restaurant. It's good.
+Well, I won't keep you then, goodbye.
+
+
+{'Miracle', 'Run'}
+set()
+[3] I recommend you listen to the song Run by him. Miracle belongs to those who believe in it.
+[3] Do you want me to play it for you now?
+
+
+{'Tossed\xa0Clear\xa0Noodles\xa0in\xa0Chili\xa0Sauce'}
+set()
+[2] It's a good day for Tossed Clear Noodles in Chili Sauce
+[2] It's a nice day to have Poached Spicy Slices of Pork.
+
+
+{'Chongqing Roasted Fish'}
+set()
+[3] You can go to Chongqing Roasted Fish to have it. You can also order it at this store. It's very good.
+You can try it when you have time.
+
+
+{'Sautéed\xa0Sweet\xa0and\xa0Sour\xa0Pork\xa0Tenderloin'}
+set()
+[2] I'm flattered! It's a good day for Sautéed Sweet and Sour Pork Tenderloin I'd like to recommend it to you.
+[2] It's a perfect day to eat Steamed Fish Head with Diced Hot Red Peppers.
+
+
+{'Happy Birthday to Me', 'Happy Birthday'}
+set()
+[2] My pleasure. I recommend you listen to Happy Birthday to Me, which is also sung by Jay Chou. It's about a girl who bid farewell to her old relationship and relive bravely.
+[2] You're welcome. Would you like to listen to the song Wonderful Happiness? It's a good song.
+
+
+{"Superman Can't Fly"}
+set()
+How about Superman Can't Fly It's a hip-hop song with warm melody. Sounds inexplicably moving. It's a great song.
+It's a song you'll never get tired of. It's sung by Jay Chou.
+
+
+{'The Foreigner'}
+set()
+[3] You can watch Jackie Chan's film, The Foreigner in which he still fought hard as young.
+You really have good taste. Jackie Chan has won the Best Actor of Hong Kong Film Awards.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] It's wonderful to have a Sliced Fish in Hot Chili Oil in such weather.
+[2] It is suitable to eat marinated fish in this kind of weather.
+
+
+{'Chongqing Roasted Fish'}
+{'Country Love Dumpling Restaurant'}
+[3] If you want to eat it, Chongqing Roasted Fish is recommended to you. It's the specialty of this store. And you can order it in advance.
+[3] The specialty at Country Love Dumpling Restaurant is Country Love Dumpling. Do you want to try it?
+
+
+{"Nana's Rose war"}
+set()
+[3] Ha ha, I'd like to recommend Nana's Rose war to you. She's starring herself in it.
+[3] Do you want me to play it for you now?
+
+
+{'Time Machine'}
+set()
+Yes. Time Machine by Jay is also catchy.
+Jay Chou's another song, I Want to Go to School, is also very good. It's also the theme song of the movie Heroes 2.
+
+
+{'Who'}
+set()
+[2] Thanks! It's suitable for listening to Who the Keyman in such weather. The melody is catchy and the rhythm is lively.
+[2] Hehe, it's a good day for Steamed Fish Head with Diced Hot Red Peppers.
+
+
+{'JULY'}
+set()
+[2] Yes, it's a good song. Let me recommend to you another song called JULY by Kris Wu. It's urban electronic music with a unique style.
+[2] Thank you. I'd like to recommend another song Wonderful Happiness to you, which is also sung by Leehom Wang. It's a very touching song.
+
+
+{'Rain Falls All Night', 'Rain'}
+set()
+[2] It's nothing. I'd like to recommend to you another song by Jay Chou, Rain Falls All Night. It's a lyric song. You can listen to it.
+[2] I'm flattered. This song is also sung by Jiong He. It's very touching. Do you like it?
+
+
+{'The Pirate'}
+set()
+There's another song called The Pirate It's dance music in the style of "flamenco" and "hip hop". Very interesting!
+Then you can listen to his another song One Dream. It's very good.
+
+
+{'Promise', 'Hand in Hand', 'Hand in Hand Promise'}
+set()
+It's Hand in Hand Promise
+I like listening to Jacky Cheung's songs best.
+
+
+{'Marinated Fish'}
+set()
+[2] It's a good day for Marinated Fish
+[2] Today's weather is perfect for eating Poached Spicy Slices of Pork.
+
+
+{'The Wonderful Wedding'}
+set()
+The Wonderful Wedding
+I like watching movies.
+
+
+{'Who'}
+set()
+Who starred in it?
+How's the review?
+
+
+{'Like That'}
+set()
+[2] This is what I should do. Another song named Like That is also catchy. Some of the songs in Kris Wu's album  are not that powerful in CD version. However, after listening to the live version, you will find that the feeling like dream of the wonderland is really wonderful. I recommend it to you.
+[2] Hey hey, thank you. I'd like to recommend another song named Wonderful Happiness for you. This song is a song about memories. It's very catchy.
+
+
+{'November Rain', 'Rain'}
+set()
+Well, this song named November Rain is also very catchy. It's really good.
+Well, how about the song named Wonderful Happiness? It's very nice.
+
+
+{'Side Face'}
+set()
+[2] You're welcome. By the way, would you like to listen to Leslie Cheung's song named Side Face which has also won the highest honor of 12th RTHK The Golden Melody in Top Ten Singing Chat.
+[2] I'm flattered. Do you want to listen to a song named Wonderful Happiness? It's a classic song. Would you like to listen to it?
+
+
+{'The Years Flow Like Water'}
+set()
+How about the song named The Years Flow Like Water This song is also my favourite song in Top 20 Golden Melody of RTHK in 1997.
+It's a very good song. Leslie Cheung was awarded as one of the 100 Outstanding Actors of Chinese Films Century.
+
+
+{'Chicken Wings in Cola'}
+set()
+[2] I also know that today's weather is very suitable for eating Chicken Wings in Cola
+[2] It's a nice day to have Sautéed Spicy Pork in Sweet Bean Sauce.
+
+
+{"If It's Not Love"}
+set()
+[2] I like you, too! I recommend a song named If It's Not Love to you in this weather. This song is also full of the creator's thinking and confusion about "love".
+[2] Thank you for your praise. This kind of weather is suitable for eating Sliced Fish in Hot Chili Oil.
+
+
+{'McDull, Prince de la Bun'}
+set()
+[3] Since you like Andy Lau so much, I recommend his movie named McDull, Prince de la Bun to you. This movie has a lot of jokes, with a more complicated and coordinated story, and a lot of energy in production. The grass-roots scene of making fun in pain and laughing with tears is also the most touching part of this film.
+[3] Speaking of acting skills, you may watch the movie named Unforgetable starred by Andy Lau. The film tells us that Andy Lau is a perfect man.
+
+
+{'The 18 Martial Arts'}
+set()
+[2] It's all my job. You know, this weather is the most suitable for listening to The 18 Martial Arts Oh, it's a fast song with diversified styles.
+[2] This kind of weather is very suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Who'}
+set()
+Who directed this movie? What's the score?
+How do people say about it?
+
+
+{'Braised Chicken with Potato and Green Pepper'}
+set()
+[2] You're welcome. Besides, it's a good day to eat Braised Chicken with Potato and Green Pepper
+[2] You're welcome. This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Big belly snow dumplings', 'Braised Chicken with Potato and Green Pepper'}
+{'Yuweitang Flavour Sichuan Cuisine'}
+[3] I know the specialty of one restaurant named Big belly snow dumplings is Braised Chicken with Potato and Green Pepper You can also book the seats.
+[3] If you want to eat, you can go to Yuweitang Flavour Sichuan Cuisine.
+
+
+{'Failan'}
+set()
+[3] Well, since you like her so much. I wanna recommend her movie named Failan to you. The film shows a love tragedy isolated in different time and space to audience. Moreover,  the film does not stop at telling a sad love. Through the shell of the sad story, the audience can see the director's more profound thinking and understanding of human nature.
+[3] Well, you must like her very much, but I'd like to recommend a movie of her starring in. It's called The Bare-Footed Kid.
+
+
+{'New Police Story'}
+set()
+[4] OK, I'd like to recommend his movie named New Police Story This movie not only caters to the fashion trend of the new generation of young audiences, but also has the sentimental nostalgia of the old generation. It's worth seeing.
+[4] Well, do you want to watch his movie named Orchid Pavilion? It's a great film. You can watch it.
+
+
+{'City of Glass'}
+set()
+[3] Since you appreciate her so much. Her movie named City of Glass is very good. This movie use the panorama first, then use each individual to show details. I recommend you to see this movie.
+[3] Yes, she's very good at acting. She starred in the movie named Heroes 2, which is a very good domestic film.
+
+
+{'All Of Me'}
+set()
+[2] You're welcome. It's such a fine day. It's the best time to listen to the song named All Of Me The gentle melody is full of love.
+[2] This kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Failan'}
+set()
+[3] Then you must see her movie named Failan which shows a love tragedy isolated in different time and space, but the film does not stop at telling a sad and beautiful love. So amazing.
+[3] That's what I should do. Do you want to watch her movie The Bare-Footed Kid? It's really good.
+
+
+{'Hard to Go Back'}
+set()
+[2] This is what I should do. Do you want to listen to another song named Hard to Go Back It was composed by Yu Zhang.
+[2] You're welcome. I'd like to recommend another song named Wonderful Happiness for you. It's a song about memories. I recommend you to listen to it.
+
+
+{'Shaolin Popey'}
+set()
+[3] I wanna recommend his movie named Shaolin Popey which is contemporary young youth inspirational movie. Not bad.
+[3] Yes, do you want to listen to the song One Dream? It's very good.
+
+
+{'Stir-Fried Venerupis'}
+set()
+[2] It's a wonderful day to have Stir-Fried Venerupis It's so delicious.
+[2] Thank you. It's a good day to eat Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Marinated Fish'}
+set()
+[3] I recommend the restaurant named Chongqing Wanzhou Marinated Fish The marinated fish in the restaurant is very tasty.
+You're gonna love it.
+
+
+{'Princess and Seven Kung Fu Masters'}
+set()
+[3] You should be interested in her movie named Princess and Seven Kung Fu Masters In this movie, Na Xie looks like Junru Wu.
+[3] Then I'd like to recommend you to see the movie named Li Yin's Big Adventure. The story is so good and the narration is great.
+
+
+{'Rain'}
+set()
+[3] His song named Rain is very catchy. It's giving people the goose bumps. Would you like to listen to it?
+Yes, he is very good at singing. He has also won the 15 Golden Melody Awards.
+
+
+{"She's Gone Far Away", 'Rain'}
+set()
+[2] You're welcome. Rain weather is suitable for listening to She's Gone Far Away It's a love song with soft style and sad melody.
+[2] You're welcome. It's very suitable for eating Sautéed Shredded Pork in Sweet Bean Sauce in such weather.
+
+
+{'Glamour Forever'}
+set()
+I like the song named Glamour Forever best.
+I like to listen to Jacky Cheung's songs.
+
+
+{'Insanity'}
+set()
+[3] That's right. I recommend the movie named Insanity to you. You can see the two God of actors to show their power.
+[3] Yes, I'd like to recommend you a movie named One Dream: Xiaoming Huang. It's a short film with a good reputation. Do you want to see it?
+
+
+{'A Fairy Tale in Beijing'}
+set()
+[4] What a coincidence, you can watch the aesthetic movie named A Fairy Tale in Beijing which is starred by her.
+[4] Then you can watch the movie named "Powerlessness" starring Mi Yang. It's a great domestic movie. I recommend it to you.
+
+
+{'1:99 Shorts'}
+set()
+My favorite movie is 1:99 Shorts
+I like the movie One Dream best.
+
+
+{'Buddha Mountain'}
+set()
+[3] I recommend Bingbing Fan's movie named Buddha Mountain to you, which is a real description of the plight of the post-80s generation. This movie also reflects the different views of contemporary people on life.
+[3] Yes, she is also the Best Actress of the Houston International Film Festival. You can see her performance in the play named "Falls All Night".
+
+
+{'Spicy Crawfish'}
+set()
+[2] It's a warm day for eating Spicy Crawfish
+[2] Thank you for your praise. This kind of weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Spicy Hot Pot', 'Spicy Crawfish', 'Spicy Hot Pot (Little Water)'}
+{'Chuanlaojiu Chuanchuanxiang'}
+[3] Well, if you want to eat, the specialty of the restaurant named Spicy Hot Pot (Little Water) is Spicy Crawfish You can go there to eat.
+[3] I recommend you to order it at Chuanlaojiu Chuanchuanxiang.
+
+
+{'Mapo Tofu'}
+set()
+[2] This weather is suitable for eating Mapo Tofu
+[2] It's a good day for Poached Spicy Slices of Pork.
+
+
+{'Hunan Cuisine Restaurant of Juncheng Hotel'}
+{'The Big Stuffing Dumpling Restaurant'}
+[3] I recommend you a restaurant named Hunan Cuisine Restaurant of Juncheng Hotel. The specialty of this restaurant is Poached Spicy Slices of Pork. You also can book seats.
+[3] I recommend you to order Poached Spicy Slices of Pork at The Big Stuffing Dumpling Restaurant.
+
+
+{"You're Not Here"}
+set()
+[2] This kind of weather is very suitable for listening to You're Not Here This song just reflects the "monophobia" of modern people in the emotional world.
+[2] You're welcome. This kind of weather is suitable to eat Duck Blooding Chili Sauce.
+
+
+{'Laoqi Sichuan Restaurant'}
+set()
+[3] Yes, if you are interested in it, you can make a reservation at Laoqi Sichuan Restaurant. It's delicious!
+[3] If you want to eat it, I recommend you to go to Wochi Sichuan Cuisine. It's full of authentic Sautéed Pork.
+
+
+{'Time Boils The Rain', 'Rain'}
+set()
+[3] You're welcome. It's suitable for listening to Time Boils The Rain in such weather. The melody is very beautiful! This song can touch the youth memory of the audience.
+[2] Hehe, it's suitable for eating Poached Spicy Slices of Pork in such weather.
+
+
+{'The Crossing I'}
+set()
+[3] Yes, his The Crossing I is recommended to you. The audience is deeply impressed by the historical texture, romantic love and moving music in the film.
+[3] Since you like him so much, I'd like to recommend his movie "Orchid Pavilion" to you. It's very good. It's an impressive movie. You can have a look.
+
+
+{'The Breakup Guru'}
+set()
+[4] Then you can see her The Breakup Guru There is a seed of optimism in its essence. It makes people laugh under great pressure.
+[4] Then I'd like to recommend Mi Yang's film Mi Yang to you. It's very good. The film tells the story of a young woman who is saved by her beloved by the Huangpu River.
+
+
+{'Forever Young'}
+set()
+[3] It's just that you like him so much. His Forever Young is recommended to you. Each generation has its own difficulties and everyone has their own difficulties.
+[3] It seems that you really like Xiaoming Huang. You can go to see his movies. Xiaoming Huang's acting skills are very good. Do you want to see his movie?
+
+
+{'Can You Feel the Love Tonight'}
+set()
+[2] In fact, it's suitable for listening to Can You Feel the Love Tonight in such weather. This song also won the The Oscar for best original song.
+[2] I'm flattered. By the way, this kind of weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Dream at That Time'}
+set()
+[2] Thank you very much! Do you want to listen Dream at That Time sung by Mr. He? It's a very nice song!
+[2] Thank you. I'd like to recommend another song by Jiong He. This song is very nice. Would you like to listen to it?
+
+
+{'Love Now'}
+set()
+How about Love Now It's a rare duet song in He's works.
+I don't want to listen to music for the time being.
+
+
+{'Marinated Fish'}
+set()
+[1] You're flattering me.  It's gorgeous to have a Marinated Fish on such a fine day.
+[2] It's a good day to eat Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Marinated Fish'}
+set()
+[2] It's suitable for eating Marinated Fish in such weather.
+[2] You're welcome. This kind of weather is suitable for Duck Blooding Chili Sauce.
+
+
+{'Marinated Fish', 'Spicy Hot Pot'}
+set()
+[3] If you like spicy food, you can eat at Spicy Hot Pot (little water). Marinated Fish is the specialty of this restaurant.
+I know you like it very much.
+
+
+{'I Am Not Madame Bovary'}
+set()
+[3] Yes, by the way, I recommend her I Am Not Madame Bovary to you, which is a modern version of officialdom.
+[3] I'd like to recommend you to see the movie She Belongs to Love starred by Bingbing Fan. It's a very touching movie.
+
+
+{'Marinated Fish'}
+set()
+[3] Well, you can go to Shunjiang Marinated Fish at Jiangning Wanda Shopping Store. It's great.
+It's a very popular dish.
+
+
+{'The Art of Action: Martial Arts in Motion Picture'}
+set()
+I like The Art of Action: Martial Arts in Motion Picture
+I like Andy Lau best.
+
+
+{'My Way'}
+set()
+[3] Her movie My Way is recommended to you. It tells a good story that it's worthy seeing.
+[3] I'd like to recommend a good movie called Unforgetable starred by her. It's a good movie. It's a good movie with sincere feelings.
+
+
+{'Who'}
+set()
+Who are the stars?
+How's the review?
+
+
+{'Left Right Love Destiny'}
+set()
+[4] Then I recommend her Left Right Love Destiny to you, which is also a French short film.
+Cecilia Cheung is the star of this movie.
+
+
+{'Suzhou River'}
+set()
+[3] You should see her Suzhou River It's a representative work of Chinese modernist independent film. It just likes Xun Zhou, smart and real.
+[4] Yes, I recommend a movie starred by her, One Dream (Live). It's really good and good. It's worth seeing.
+
+
+{'A World Without Thieves'}
+set()
+[4] A World Without Thieves is good. Although the film still rewards good people in the end, its efforts to present the concept of good and evil in the form of paradox still give people a refreshing feeling.
+Rene Liu's acting is really good. I recommend you to see it.
+
+
+{"Still Think You're the Best"}
+set()
+OK, what about Still Think You're the Best It's one of his representative Cantonese songs.
+It's a very classic song.
+
+
+{'Coupe'}
+set()
+[2] You're welcome. I'd like to recommend you his another good song Coupe You can listen to it when you have time.
+[2] You're welcome. I'd like to recommend another song Wonderful Happiness to you. It's a song about memories. Do you want to listen to it?
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+Another great song A Life Of Fighting Is But A Dream is recommended to you. It's the theme song of World of Sword.
+It's OK. You can listen to it.
+
+
+{'Jackie Chan: My Story'}
+set()
+[3] Well, Jackie Chan: My Story is a good documentary, which tells Jakie's struggling history. You can see it.
+I don't want to talk about movies now.
+
+
+{"If It's Not Love"}
+set()
+[2] It's suitable for listening to If It's Not Love This song is full of the creator's thinking and confusion about "love".
+[2] Thank you. It's a perfect day to eat Steamed Chicken with Chili Sauce.
+
+
+{'Comic King'}
+set()
+[3] Well, by the way, do you know her Comic King The actors are very good. You can see it.
+[3] Yes, I'd like to recommend a movie starred by her. It's called "The Lost Legend". It's a movie about a young woman who is not afraid of rumors, but only loves her beloved.
+
+
+{'My Boyfriends'}
+set()
+[3] Since you like her so much, her movie My Boyfriends is recommended to you. The strong combination of Na Xie and Xie Yilin makes the movie funny. It's not bad.
+Well, you have a good taste. Na Xie has also won the Golden Eagle Award for Excellent Host of China TV.
+
+
+{'Rumble in the Bronx'}
+set()
+[3] Yes, his movie is really good. Rumble in the Bronx is also known as the pioneering work of Chinese Kung Fu stars. You can see it.
+[3] I'd like to recommend a movie Jackie Chan: The Lost Legend to you. It's  a classic Jackie Chan movie.
+
+
+{'To Miss with Love'}
+set()
+To Miss with Love is my favorite one.
+My favorite movie is A Better Tomorrow II
+
+
+{'Reset'}
+set()
+I like Reset best.
+I like the movie named Wonderful Wedding best.
+
+
+{'How Bruce Lee Changed the World', 'Bruce Lee'}
+set()
+I prefer How Bruce Lee Changed the World
+I like Bo Huang best.
+
+
+{'The Island Tales', 'The Island'}
+set()
+[3] Then I recommend you to see her movie The Island Tales. Yes, it's a movie that people want to see for a second time.
+Well, I don't want to talk about movies now.
+
+
+{'Marinated Fish'}
+set()
+[2] It's suitable to eat Marinated Fish in such weather!
+[2] Thank you for your praise. It's a perfect day to have Duck Blooding Chili Sauce.
+
+
+{'The Last Tycoon'}
+set()
+The Last Tycoon
+I like the movie named Unforgetable.
+
+
+{'Made in Human(Jiandeguan Store)'}
+{'Wanzhou Roasted Fish'}
+[3] Okay. I'd like to recommend a good restaurant to you, Made in Human(Jiandeguan Store). Hand-Shredded Chicken is the speciality here.
+[3] OK, I recommend that you go to Wanzhou Roasted Fish, which cooks Hand-Shredded Chicken in such weather.
+
+
+{'I Waited Until the Flower Withered'}
+set()
+[3] Yes. I recommend a song I Waited Until the Flower Withered to you. Through Jacky Cheung's affectionate singing, the listeners can feel the sorrow that is as deep as penitence as well as helplessness from this song.
+[3] Yes, I recommend you to listen to his song named Goodbye to the Future, which is very good. Jacky Cheung sings in a simple and delicate way. It's a very good song.
+
+
+{'The Equation of Love & Death'}
+set()
+[3] Of course. After all, she has really good acting skills. I recommend her movie The Equation of Love & Death to you. In this film, Xun Zhou has devoted much passion and sincerity, bringing the audience into the situation of "love even if you're dying", and making people express a lot about the city,love,gain and loss.
+[3] Yes. I'd like to recommend Xun Zhou's movie to you. It's a documentary with a good reputation.
+
+
+{'I Waited Until the Flower Withered'}
+set()
+[3] Then have you listened to I Waited Until the Flower Withered before? I recommend it to you. Through Jacky Cheung's affectionate singing, the listeners can feel the sorrow that is as deep as penitence as well as helplessness from this song.
+[3] You're welcome. It's time for me to go to bed, goodbye.
+
+
+{'I Waited Until the Flower Withered'}
+set()
+[4] Then can I play this I Waited Until the Flower Withered for you now? Would you like to listen to it?
+[4] Do you want me to play it for you now?
+
+
+{'I Waited Until the Flower Withered'}
+set()
+I Waited Until the Flower Withered is playing for you now.
+Playing for you, please enjoy.
+
+
+{'Unforgettable Hunan Restaurant(Powerlong City Plaza)', 'Unforgettable'}
+{'Chuanlaojiu Chuanchuanxiang'}
+[3] There is a restaurant called Unforgettable Hunan Restaurant(Powerlong City Plaza). You can order Steamed Fish Head with Diced Hot Red Peppers here.
+[3] If you want to eat, you can go to Chuanlaojiu Chuanchuanxiang. The Steamed Fish Head with Diced Hot Red Peppers is their specialty.
+
+
+{'Perfect Two'}
+set()
+[3] Then, you must also love her movies, right? You can watch her movie, Perfect Two which is a warm one.
+[3] Do you want to see her movie The Magnolia Award for Best Actress?
+
+
+{'Golden Chicken 2'}
+set()
+[3] Speaking of movies, I can recommend this funny movie, Golden Chicken 2 to you. You'll laugh with tears. It's very moving.
+Yes, but he was also nominated for the Best Actor of Hong Kong Film Awards two times.
+
+
+{'A Man Of Intention'}
+set()
+Okay, I'll play the song A Man Of Intention for you.
+OK, I'll play it for you.
+
+
+{'Who'}
+set()
+Who directed the movie? What type is it?
+What kind of movie is it?
+
+
+{'Bridge of Faith'}
+set()
+[3] I recommend this song, Bridge of Faith to you. It's pretty catchy as the ending music. You can't miss it.
+[3] I recommend you to listen to the song One Dream (Live). It's a very good song. Leehom Wang once again shows his ability to control music.
+
+
+{'There Is a Place'}
+set()
+[3] His song There Is a Place has lyrics which have a strong sense of pictures. Together with a soothing melody as well as a clear and moving singing, the song gently hits the hearts of the audience.
+[3] Yes. He is also the Best Supporting Actor of the Asian Film Awards. I recommend you to see his movie One Dream (2018). Kris Wu's acting skills are really good.
+
+
+{'Happy Running', 'Run'}
+set()
+[3] Yes. Actually Na Xie's not only a great hostress, but also a great actress. Her movie Happy Running is wonderful. It's very interesting.
+[3] I'd like to recommend a song named Wonderful Happiness to you. It's not too late now.
+
+
+{'Levin'}
+set()
+[3] You like her so much. Then have you watched her Levin We've been expecting it for so long. Now it's finally on!
+[3] Well, you can see her movie "It's a Very Special Love". This movie is very special. Do you want to see it?
+
+
+{'You Will Always Be My Love'}
+set()
+I like Jacky Cheung. I like listening to You Will Always Be My Love I like reading Jacky Cheung's news.
+I like watching movies and listening to music.
+
+
+{'When Distance Keeps us Apart'}
+set()
+Okay. When Distance Keeps us Apart is playing for you now. Please enjoy it.
+OK, playing for you.
+
+
+{'The Daytime Never Know The Darkness Of Night', 'Miss You'}
+set()
+[2] Then have you listened to The Daytime Never Know The Darkness Of Night by him? Unlike the gentle style of Miss You Everyday, it's a song with details, images and artistic conceptions. It deeply shows the feelings of the heart.
+[2] Jiong He is the Most Popular Male TV Host of China Student Television Festival. Do you like him?
+
+
+{'Dream at That Time'}
+set()
+Then have you ever listened to Dream at That Time It's also sung by Jiong He. Many people like it.
+This one you must listen to. It's a very good song.
+
+
+{'Dream at That Time'}
+set()
+Dream at That Time is playing for you now. Please enjoy it.
+Playing now. Please enjoy it.
+
+
+{'Fireworks Cool Easily'}
+set()
+[2] I've always been like this. It's suitable to listen to Fireworks Cool Easily in such weather. This song has classic and beautiful lyrics as well as a profound artistic conception.
+[2] It's a perfect day for Duck Blooding Chili Sauce.
+
+
+{'Fireworks Cool Easily'}
+set()
+Okay. Jay Chou's Fireworks Cool Easily is playing for you.
+It's playing for you.
+
+
+{'Hold me down'}
+set()
+[3] Yes. I recommend his song Hold me down to you. It tells about a boy who is not afraid of rumors and only falls for one person. He always dedicates himself to his love. Very good.
+[3] I'd like to recommend a movie starred by him. The movie is very good. It's called "Shangyin 2: The Lost Legend".
+
+
+{'Mapo Tofu'}
+set()
+[2] Isn't it nice to have Mapo Tofu in such weather?
+[2] Hehe, it's a perfect day to have Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Mapo Tofu'}
+set()
+Mapo Tofu is a very popular snack. Of course I know.
+Of course. This hot dish is very popular.
+
+
+{'No.3 Courtyard Selected Restaurant', 'Mapo Tofu'}
+set()
+[3] Speaking of Mapo Tofu No.3 Courtyard Selected Restaurant cooks it well. You can even make a reservation.
+Then you can try it.
+
+
+{'Peanuts with Black Vinegar'}
+set()
+[2] Today's weather is perfect for Peanuts with Black Vinegar
+[2] You're welcome. Today's weather is suitable for eating Boiled Fish with Pickled Cabbage and Chili.
+
+
+{'Chuanlaojiu Chuanchuanxiang'}
+set()
+[3] Good. This dish in Chuanlaojiu Chuanchuanxiang is pretty good. You can think about it.
+[3] If you want to eat, I recommend you to go to Tiangengshang Organic Sichuan Cuisine.
+
+
+{'Those Years'}
+set()
+Yes. Those Years is playing for you.
+OK, it's playing for you.
+
+
+{'Heartburn'}
+set()
+[2] My pleasure. His song Heartburn is a little bit weird, but also very catchy. I recommend it to you.
+[2] You're welcome. It's my pleasure to serve you. I recommend you to listen to Wonderful Happiness. It's a song of Jiong He. Do you like it?
+
+
+{'The Bullet Vanishes'}
+set()
+[4] Then Nicolas Tse's The Bullet Vanishes is pretty good too. It's the most bizarre case of the Republic of China.
+[4] Then I recommend you his movie Unforgetable. It's a love story mixed with action and plot.
+
+
+{'Another Self'}
+set()
+[3] I'd like to recommend his song Another Self to you. Jiong He, who is 41 years old, combined the challenge of‘find another self' and the wish of realizing his director dream into a song, conveying a young attitude of‘It's not too late'.
+[3] He has a song called One Dream. It's a beautiful song. Do you want to listen to it?
+
+
+{'Who'}
+set()
+[2] You're welcome. It is suitable to listen to Who the Keyman in today's weather. The song is very attractive.
+[2] It's a nice day to have Sautéed Beef Fillet.
+
+
+{'Heaven & Earth'}
+set()
+[2] My pleasure. Here's also another song by Kris Wu, Heaven & Earth It has a magnificent and vast style, which is a thousand-year sigh from the river carrying the long history of China. Would you like to listen to it?
+[2] You're welcome. Do you want to listen to another song by Jiong He? I recommend it to you. It's called Wonderful Happiness.
+
+
+{'Exquisite Sichuan Cuisine (University Town Store)'}
+set()
+[3] Exquisite Sichuan Cuisine (University Town Store). Sautéed Shredded Pork in Sweet Bean Sauce in this restaurant is very delicious.
+I hope you like it.
+
+
+{'Secret'}
+set()
+OK, Secret is playing for you.
+OK, it's playing for you.
+
+
+{'Once', 'Once a Thief'}
+set()
+[3] In this case, I recommend that you watch his movie Once a Thief It's a classic. Hope you'll like it.
+He was also one of the 25 greatest actors in Asia on CNN.
+
+
+{'City of Glass'}
+set()
+[3] Her movie City of Glass is soul-stirringly romantic. I recommend it to you.
+[3] Well, I recommend you to see her movie "Wonderful Happiness" starring Hsu Chi. It's a wonderful love story.
+
+
+{'Another Self'}
+set()
+Yes. Another Self
+I like the song Wonderful Happiness best.
+
+
+{'Rooftop'}
+set()
+Rooftop is playing for you.
+OK, playing now.
+
+
+{'Rain Falls All Night', 'Rain'}
+set()
+[2] Hee hee, another affectionate song called Rain Falls All Night of Jay Chou is also very good. It's a lyric song. It turns into Chinese style in the middle of the song, and it's so refreshing.
+[2] You're welcome. Jay Chou's song is also very nice. It's a song that combines rap music with Chinese traditional culture. You can listen to it.
+
+
+{'Golden Armor'}
+set()
+How about this magnificent Golden Armor Jay Chou, instead of adopting R & B style, combines heavy rock, street rap and Chinese style for the first time.
+This song is sung by Jay Chou. It's very nice.
+
+
+{'Golden Armor'}
+set()
+I'll play the song Golden Armor right now.
+OK, I'm on it.
+
+
+{'Moonlight Express'}
+set()
+[3] Leslie Cheung's Moonlight Express is also great. In this movie, Leslie Cheung plays two roles. His performance is full of tension and his inner emotion is very delicate. He grasped his role with ease. I recommend you to watch it.
+Yes, Leslie Cheung was born on October 26, 1965. He was born on October 26, 1965. He is a perfect artist.
+
+
+{'Moonlight Express'}
+set()
+[3] There is a movie called Moonlight Express starred by Leslie Cheung. He plays two roles in this movie. His performance is full of tension and his inner emotion is very delicate. He grasped his role with ease. I recommend it to you.
+[3] I'd like to recommand his movie, The Bare-Footed Kid, which is a very good film. Leslie Cheung's acting skills have always been excellent. You can see it.
+
+
+{"No Man's Land"}
+{'The Last Tycoon'}
+[3] Speaking of his works, there is his work called No Man's Land Do you want to see it? After watching it, you will find that Bo Huang is really a good actor.
+[3] Since you like Bo Huang so much, I recommend you to see his movie, The Last Tycoon. It's a good movie.
+
+
+{'Rooftop'}
+set()
+[3] I recommend you to listen to Rooftop which is a typical work with Jay Chou style. It is undeniable that this song has strong artistic characteristics of Jay Chou.
+[3] I'd like to recommend you to listen to his song One Dream. It has a good rhythm and catchy melody.
+
+
+{'Rooftop'}
+set()
+[4] How about playing Rooftop for you now?
+[4] Do you need me to play this song for you?
+
+
+{'Everyday is Valentine'}
+set()
+[3] Then you can see her Everyday is Valentine It's very funny, and the acting skills of Leon in the film are also highly praised. He acted it to the point.
+[3] I recommend you to see her movie "Beauty on Duty". It's a good movie.
+
+
+{'I Waited Until the Flower Withered'}
+set()
+[3] The voice of the god of singer is also very good. I'd like to recommend the song I Waited Until the Flower Withered to you. The melody of this song is beautiful. Jacky Cheung successfully performed this song with his mellow voice and exquisite singing skills.
+[3] Ha ha, I'm flattered. Do you want to listen to his music now?
+
+
+{'I Waited Until the Flower Withered'}
+set()
+I Waited Until the Flower Withered is playing for you.
+It's playing for you. Please enjoy it!
+
+
+{'Anna Magdalena'}
+set()
+[3] Ha ha, so you like him so much. I'd like to recommend his movie Anna Magdalena to you, which is known as a sketch of magic and reality.
+[3] Yes, do you want me to play it for you now?
+
+
+{'All the Things You Never Knew'}
+set()
+[2] Yes. This kind of weather is suitable for listening to All the Things You Never Knew This song is full of strong classical flavor, profound and sincere words and rhythm. Each note hits your heart.
+[2] You're welcome. This kind of weather is suitable for eating Poached Spicy Slices of Pork.
+
+
+{'All the Things You Never Knew'}
+set()
+[3] Do you want to play All the Things You Never Knew for you?
+[3] Do you want me to play it for you now?
+
+
+{'All the Things You Never Knew'}
+set()
+Playing All the Things You Never Knew for you.
+It's playing for you.
+
+
+{'All the Way'}
+set()
+[3] All the Way is a very good song. It makes people feel good.
+[3] Do you want to listen to his song Orchid Pavilion? It's a great song.
+
+
+{'Who'}
+set()
+Who are the stars in this movie?
+What kind of movie is it?
+
+
+{'Rain'}
+set()
+I like listening to Rain Night Romance.
+I like to listen to music and watch the news.
+
+
+{'Who', 'Beautiful'}
+set()
+Who doesn't like Beautiful and smart pop star.
+I've seen this movie. Any other recommendations?
+
+
+{'Miracle', 'Run'}
+set()
+[3] Have you ever heard of his Run Miracle belongs to people who believe it. It's a very inspirational song.
+[3] Do you want me to play it for you?
+
+
+{'Run'}
+set()
+Run is playing for you.
+It's playing for you.
+
+
+{'Sautéed\xa0Beef\xa0Fillet'}
+set()
+[2] You're welcome. You know what? Hee hee, this kind of weather is most suitable for eating Sautéed Beef Fillet
+[2] You're welcome. It's a perfect day to have Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Sautéed\xa0Beef\xa0Fillet'}
+set()
+Yes, Sautéed Beef Fillet is delicious.
+Yes, it's a delicious hot dish.
+
+
+{'Yixiangyuan New Hunan Cuisine', 'Sautéed\xa0Beef\xa0Fillet'}
+set()
+[3] I know a restaurant called Yixiangyuan New Hunan Cuisine. Sautéed Beef Fillet from it is delicious. You can try it.
+[3] If you want to eat it, I recommend you to go to Mingyuan Sichuan Cuisine(Normal University store). This store is very famous.
+
+
+{'Metade Fumaca'}
+set()
+[3] Maybe you can watch Metade Fumaca starred by him. It's an atypical Hong Kong underworld movie.
+Sorry, not really interested in this.
+
+
+{'Left Right Love Destiny'}
+set()
+[4] Then you can watch Left Right Love Destiny starred by Cecilia Cheung. It's a short movie with French style.
+Cecilia Cheung is a great actress, and her acting skills are also very good.
+
+
+{'Bosom Friend'}
+set()
+OK, Bosom Friend is playing for you.
+Playing now.
+
+
+{'All the Things You Never Knew'}
+set()
+Yes, do you want to listen to All the Things You Never Knew This song is full of strong classical flavor, profound and sincere words and rhythm. Each note hits the heart.
+This song is sung by Leehom Wang. Would you like to listen to it?
+
+
+{'New Police Story'}
+set()
+[3] That's right. I'd like to recommend New Police Story starred by him. The film is well made and the plot is kept in good balance.
+[3] Do you want to know about his achievements? He won the Best Actor of the Hong Kong Film Awards and the Best Actor of the Golden Horse Awards.
+
+
+{'Red-Cooked\xa0Spare Ribs'}
+set()
+[2] It must be nice to have a steaming Red-Cooked Spare Ribs in this kind of weather.
+[2] You're welcome. It is suitable to eat Steamed Fish Head with Diced Hot Red Peppers in such weather.
+
+
+{'Red-Cooked\xa0Spare Ribs', 'The Big Stuffing Dumpling Restaurant'}
+set()
+[3] Then I recommend you to order Red-Cooked Spare Ribs from The Big Stuffing Dumpling Restaurant.
+Yes, thank you.
+
+
+{'Not The End Of The World', 'The World'}
+set()
+My favorite song is Not The End Of The World
+I like the song Wonderful Happiness best.
+
+
+{'Night Rose'}
+set()
+[3] Yes, and she has a good movie called Night Rose I'd like to recommend it to you.
+[3] Yes, she has also won the Best Actress of Chinese Film Media Award. She is excellent. You can't miss it.
+
+
+{"Can't Fight The Feeling"}
+set()
+OK, I'll play Can't Fight The Feeling for you now.
+[5] You're welcome. I'll leave you alone now. Bye.
+
+
+{'Deserve'}
+set()
+[3] I'd like to recommend his song Deserve to you. His voice is so good! The song is very good.
+[3] Ha ha, if you like him so much, don't miss his movie, The Bare-Footed Kid, which is starred by him. It's very good.
+
+
+{'Deserve'}
+set()
+OK, I'm playing Deserve for you.
+It's playing for you.
+
+
+{'Failan'}
+set()
+[3] Yes. You can see her Failan Cecilia Cheung's performance in it is really unexpected.
+[3] Well, I recommend you to see her movie Unforgetable. Cecilia Cheung's performance is very good. I hope you like it
+
+
+{'Hope for Love'}
+set()
+OK, let me recommend you Hope for Love which gives people a warm feeling. It's also the theme song of public welfare activity I Desire to Go to School. You can try it.
+Sorry, I don't want to listen to music for the time being.
+
+
+{'Hope for Love'}
+set()
+OK, Jiong He's Hope for Love is palying.
+OK, it's playing for you.
+
+
+{'The 18 Martial Arts'}
+set()
+[2] You're welcome. You know what? You can listen to The 18 Martial Arts at home in the evening. The combination of diversified music styles can bring people a happy mood.
+[2] It's a perfect day to have Sautéed Spicy Pork in Sweet Bean Sauce.
+
+
+{'The 18 Martial Arts'}
+set()
+Playing The 18 Martial Arts for you now.
+It's playing for you.
+
+
+{'Rooftop'}
+set()
+Rooftop is playing for you.
+There you go.
+
+
+{'Love Letter'}
+set()
+I'm playing Love Letter for you!
+OK, now it's playing for you.
+
+
+{"Still Think You're the Best"}
+set()
+OK, then another song Still Think You're the Best is definitely worth listening to. It's a representative of Jacky Cheung's Cantonese songs
+Then you can listen to Be Torn With Grief, which is the most classic one among his many Cantonese songs.
+
+
+{"Still Think You're the Best"}
+set()
+It's playing Still Think You're the Best
+You're welcome. I'll play it for you right away!
+
+
+{'Blamefully Beautiful', 'Beautiful'}
+set()
+Playing Blamefully Beautiful for you.
+It's playing for you.
+
+
+{'Foreign Lands'}
+set()
+[3] Then I recommend you his film Foreign Lands It takes a new angle to depict the KMT-CPC civil war and display the essence of the war more realistically.
+[3] Well, I'd like to recommend his movie "Orchid Pavilion". It's very good. I hope you like it.
+
+
+{'Griddle\xa0Cooked Cauliflower'}
+set()
+[2] Today's weather is suitable for eating Griddle Cooked Cauliflower
+[2] You're welcome. This kind of weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Jialinjiang Riverside Sichuan Cuisine'}
+set()
+[3] I recommend you to eat at Jialinjiang Riverside Sichuan Cuisine. Their specialty is Cauliflower.
+You can try it.
+
+
+{'The Usual Place Sichuan Cuisine'}
+set()
+[3] I'd like to recommend you a place called The Usual Place Sichuan Cuisine. Its speciality is Poached Spicy Slices of Pork
+[3] If you want to eat, I recommend that you go to Bailechuan Roasted Fish. It's their specialty.
+
+
+{'Big Bowl Thick Noodles'}
+set()
+OK, it's playing Big Bowl Thick Noodles for you
+OK, it's playing for you.
+
+
+{'A Life Of Fighting Is But A Dream'}
+set()
+[2] It's what I should do. By the way, do you want to listen to A Life Of Fighting Is But A Dream This song is the theme song of the mobile game World of Sword. It's cool and pleasing
+[2] Do you want to listen to it now?
+
+
+{'November Rain', 'Rain'}
+set()
+OK, what about November Rain A lot of people think that it sounds good and worth listening to
+You can listen to it. It's very nice
+
+
+{'Who'}
+set()
+[2] Today is the birthday of an actor who is famous for his Kungfu and bringing Chinese martial arts abroad. Who he is?
+[2] Hehe, today is also the birthday of Jiong He. He was born on April 7th, 1974.
+
+
+{'Insanity'}
+set()
+[3] Do you want to see Insanity starred by Xiaoming Huang? It's a very good movie. It's a story of the most handsome person and the most intelligent person fighting against each other.
+[3] Ha ha, I recommend you his movie One Dream, which has a good reputation
+
+
+{'Kung Fu Panda 3'}
+set()
+[4] OK, I recommend you to watch Kung Fu Panda 3 It's also great. It continues making fun with Chinese elements
+I don't want to see movies now.
+
+
+{'Shaolin Popey'}
+set()
+[3] This classic movie Shaolin Popey starred by him is very interesting. I recommend it to you.
+[3] Yes. By the way, have you seen his movie, Unforgetable, which is a good documentary. It tells a sad story about the determination of love between men and women.
+
+
+{'Sliced\xa0Fish\xa0in\xa0Hot\xa0Chili\xa0Oil'}
+set()
+[2] You're welcome. I'd like to recommend Sliced Fish in Hot Chili Oil This weather is very suitable for it
+[2] You're welcome. Today's weather is suitable for eating Duck Blooding Chili Sauce.
+
+
+{'Woman Who Flirt', 'Who'}
+set()
+[3] Then you must like watching his movies very much. Here I recommend Woman Who Flirt starred by him. There are some things from it we can learn
+[3] You can watch his movie, The Bare-Footed Kid, which tells about a young man's determination to be a god. I recommend it to you
+
+
+{'Call for Love'}
+set()
+[3] Since you like her so much, you can have a look at Call for Love It is a very good movie starred by her.
+[3] Yes, do you want to see her movie The Bare-Footed Kid starred by Bingbing Fan? The Bare-Footed Kid starred by Bingbing Fan is a very touching movie.
+
+
+{'Who'}
+set()
+[2] This weather is suitable for listening to Who the Keyman. This song is catchy and its rhythm is lively.
+[2] It's a perfect day for eating Duck Blooding Chili Sauce.
+
+
+{'Time Boils The Rain', 'Rain'}
+set()
+[2] Thanks for your praise. This weather is quite suitable for listening to Time Boils The Rain This melodious song can remind its audiences of the youth memories
+[2] Thank you for your praise. It's a good day to have Jiaozi Stuffed with Celery.
+
+
+{'Time Boils The Rain', 'Rain'}
+set()
+I'll play the song Time Boils The Rain right now.
+Playing for you. Please enjoy it.
+
+
+{'As The Light Goes Out'}
+set()
+[3] Yes. I recommend you to watch As The Light Goes Out The English interlude song at the end sounds great.
+[3] Yes, I'd like to recommend his movie to you. It's called World of Sword. It's a good movie.
+
+
+{'Everyday is Valentine'}
+set()
+[4] Then you can see Cecilia Cheung's Everyday is Valentine a good film. Liming's acting skills in the play are highly praised and well performed.
+[4] Then I don't want to talk about movies now.
+
+
+{'Blessing'}
+set()
+I didn't know the name of this song is Blessing until today. I thought it's called Parting. Hahaha. It seems that the song is very meaningful.
+Yes, it's very popular.
+
+
+{'The Pirate'}
+set()
+[3] I'd like to recommend you his song The Pirate It’s a dance music with the style of Flamenco and Hip Hop. It's very interesting
+[3] I recommend you to listen to his song One Dream(Live)
+
+
+{'The Sun Washed by Spring Rain', 'Rain'}
+set()
+[4] How about playing The Sun Washed by Spring Rain for you now?
+[4] Do you want me to play this song for you?
+
+
+{'The Bullet Vanishes'}
+set()
+[3] Then I recommend a movie for you, The Bullet Vanishes It's a great movie with an unexpected ending, well worth watching.
+[3] Yes, I recommend you to see Mi Yang's movie, My Grandma's Story. It’s very good.
+
+
+{'Days of Tomorrow'}
+set()
+[3] As we mentioned him, I'd like to recommend his movie Days of Tomorrow to you. It records the peak of Andy Lau's handsome appearance.
+[3] I'd like to recommend to you a song named Unforgetable by him. It's a love song.
+
+
+{'Need Some Company'}
+set()
+Well, Need Some Company is also very good. It's a song that emphasizes the inner world. Leehom Wang wrote out the inner lonely voice of urban people
+Well, how about "Wonderful Happiness"? It's a good song.
+
+
+{'Sweet\xa0and\xa0Sour\xa0Spare\xa0Ribs'}
+set()
+[2] It's good to eat Sweet and Sour Spare Ribs in this weather.
+[2] Hehe, it's really a good weather for eating Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Sweet\xa0and\xa0Sour\xa0Spare\xa0Ribs', 'Daqinghua Dumplings(Shiyiwei Road Store)'}
+{'Yuweitang Flavour Sichuan Cuisine'}
+[3] I happen to know a shop. I recommend you to order Sweet and Sour Spare Ribs in Daqinghua Dumplings(Shiyiwei Road Store).
+[3] I recommend that you order Sautéed Shredded Pork in Yuweitang Flavour Sichuan Cuisine.
+
+
+{'All the Things You Never Knew'}
+set()
+Well, I like the song All the Things You Never Knew
+Well, I like the song Wonderful Happiness best.
+
+
+{'Fried Shrimps in Hot Spicy Sauce'}
+set()
+[2] Hey, this weather is suitable for Fried Shrimps in Hot Spicy Sauce It's a very good dish.
+[2] Thank you for your praise. By the way, it's a perfect day to have Duck Blooding Chili Sauce.
+
+
+{'Wushan Roasted Fish'}
+set()
+[3] Well, if you want to eat it, you can make a reservation at Wushan Roasted Fish. It's delicious there!
+I'm sure you'll like it.
+
+
+{'Bridge of Faith'}
+set()
+[3] He has a song Bridge of Faith as a postlude. You can try to listen to it.
+[3] Do you want me to play it for you now?
+
+
+{'Peanuts and Spinach'}
+set()
+[2] Hee hee, I'm very smart. It's good to eat Peanuts and Spinach in this weather
+[2] Thank you for your praise. This kind of weather is very suitable for eating Sautéed Shredded Pork in Sweet Bean Sauce.
+
+
+{'Daqinghua Dumplings(Shiyiwei Road Store)', 'Peanuts and Spinach'}
+{'The Big Stuffing Dumpling Restaurant'}
+[3] Peanuts and Spinach in Daqinghua Dumplings(Shiyiwei Road Store) are delicious. You can try them
+[3] If you want to eat, you can go to the The Big Stuffing Dumpling Restaurant. It's their speciality.
+
+
+{'In My Lifetime'}
+set()
+It's playing In My Lifetime for you.
+It's playing for you. Please enjoy it!
+
+
+{'A Man Of Intention'}
+set()
+[2] You can also listen to this song, A Man Of Intention which is also sung by Leslie Cheung. It expresses the flavor of boudoir
+[2] You're welcome. Do you want to listen to this song now? It's Jacky Cheung's first work after returning home.
+
+
+{'Run Toward the Future', 'Run'}
+set()
+You will love this song, Run Toward the Future which sings love beyond words.
+OK, let's change the subject. Do you want to play it for you?
+
+
+{'Love Now'}
+set()
+[3] Do you want to listen to the song Love Now It's a love song, but it doesn't have the common kind of lingering love in love songs. This song is about the courage and confidence to break through the gap between lovers
+[3] Yes. By the way, do you want to know about his achievements?
+
+
+{'Love Now'}
+set()
+It's playing Love Now for you
+It's playing for you.
+
+
+{'Heroes of Earth'}
+set()
+[2] It's suitable for listening to Heroes of Earth weather in such weather. It's a classic song in the hearts of Leehom Wang's fans.
+[2] You're welcome. This kind of weather is very suitable for eating Sliced Fish in Hot Chili Oil.
+
+
+{'Hongyan Classic Hunan Cuisine (Huaita Store)'}
+{'Country Love Dumpling Restaurant'}
+[3] If you wanna eat it, Hongyan Classic Hunan Cuisine (Huaita Store) is recommended to you. It's a specialty at this store. You can also order it in advance.
+[3] Then I recommend you to order Steamed Fish Head with Diced Hot Red Peppers at Country Love Dumpling Restaurant.
+
+
+(0.2110215053763441, 0.2060931899641577, 0.20766129032258066)
