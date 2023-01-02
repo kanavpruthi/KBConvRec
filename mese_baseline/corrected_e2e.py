@@ -64,7 +64,7 @@ model.to(device)
 
 # parameters
 batch_size = 1
-num_epochs = 10
+num_epochs = 15
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
