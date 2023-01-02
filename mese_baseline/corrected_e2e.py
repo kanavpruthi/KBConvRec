@@ -36,7 +36,6 @@ train_path = "data/processed/durecdial2_all_train_placeholder_updated"
 test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
 
 
-
 train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
 test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
