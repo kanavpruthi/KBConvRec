@@ -12,9 +12,9 @@ from loss import SequenceCrossEntropyLoss
 from trainer import Trainer
 import time
 import tqdm
-from dataset import MovieRecDataset
-from mese import UniversalCRSModel
-from engine import Engine
+from dataset import MovieRecDataset, RecDataset
+from corrected_mese import C_UniversalCRSModel
+from corrected_engine import C_Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
 
@@ -32,17 +32,17 @@ gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
 # train_path = "data/processed/durecdial2_full_train_placeholder"
-test_path = "data/processed/durecdial2_food_sub_test_placeholder"
-items_db_path = "data/processed/durecdial2_full_food_db_placeholder"
+test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
+items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
-test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 
 device = torch.device(0)
 
 
-model = UniversalCRSModel(
+model = C_UniversalCRSModel(
     gpt2_model, 
     bert_model_recall, 
     bert_model_rerank, 
@@ -72,7 +72,7 @@ temperature = 1.2
 # Data loader 
 test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate)
 
-engine = Engine(device,
+engine = C_Engine(device,
                 validation_recall_size = validation_recall_size,
                 temperature = temperature)
 

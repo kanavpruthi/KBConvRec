@@ -47,7 +47,7 @@ class C_UniversalCRSModel(torch.nn.Module):
         self.SEP_TOKEN_STR = sep_token_str
         self.PLACEHOLDER_TOKEN_STR = placeholder_token_str
         # map output of recommender vector to a single class to check whether it is a recommendation or not 
-        self.rec_query_goal_type_mapper = torch.nn.Linear(self.language_model.config.n_embd, 1) 
+        # self.rec_query_goal_type_mapper = torch.nn.Linear(self.language_model.config.n_embd, 1) 
         # map language model hidden states to a vector to query annoy-item-base for recall
         self.recall_lm_query_mapper = torch.nn.Linear(self.language_model.config.n_embd, self.recall_item_dim) # default [768,768]
         # map output of self.item_encoder to vectors to be stored in annoy-item-base 
@@ -321,6 +321,7 @@ class C_UniversalCRSModel(torch.nn.Module):
         #  items wtes to compute rerank loss
         # sample rerank examples
         sampled_item_ids = sample_ids_from_db(self.items_db, gt_item_id, num_samples, include_gt=True)
+        # logger.debug(f'Sampled Item Ids : {sampled_item_ids}')
         gt_item_id_index = sampled_item_ids.index(gt_item_id)
         # compute item wtes by batch
         num_chunks = math.ceil(len(sampled_item_ids) / rerank_items_chunk_size)

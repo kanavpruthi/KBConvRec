@@ -71,7 +71,7 @@ num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // 
 num_samples_recall_train = 300
 num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 300
+validation_recall_size = 30
 
 temperature = 1.2
 
@@ -149,13 +149,13 @@ trainer = Trainer(
 )
 
 # print(get_memory_free_MiB(4))
-# trainer.train(
-#     num_epochs,
-#     num_gradients_accumulation,
-#     batch_size,
-#     output_file_path,
-#     model_saved_path
-# )
+trainer.train(
+    num_epochs,
+    num_gradients_accumulation,
+    batch_size,
+    output_file_path,
+    model_saved_path
+)
 
 
 total_sentences_original, total_sentences_generated, (valid_cnt, response_with_items, total_gen_cnt) = trainer.generate()
