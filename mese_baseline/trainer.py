@@ -100,8 +100,7 @@ class Trainer(object):
 
         with torch.no_grad():
             self.model.annoy_base_constructor()
-
-
+            
             item_id_2_lm_token_id = self.model.lm_expand_wtes_with_items_annoy_base()
             
             pbar = self.progress_bar(self.test_dataloader)

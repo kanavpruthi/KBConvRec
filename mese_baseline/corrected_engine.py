@@ -4,6 +4,7 @@ import numpy as np
 import sys
 from corrected_mese import C_UniversalCRSModel
 from loguru import logger
+import torch.nn.functional as F
 
 class C_Engine(object):
     def __init__(self,
@@ -50,7 +51,7 @@ class C_Engine(object):
     #     language_logits, language_targets = [], []
         for turn_num in range(len(role_ids)):
             current_tokens = dialog_tensors[turn_num]
-            _, recommended_ids, true_goal = dialogues[turn_num]
+            _, recommended_ids, goal_rec_or_not = dialogues[turn_num]
 
             if past_list == []:
                 past_list.append((current_tokens, recommended_ids))
@@ -63,14 +64,20 @@ class C_Engine(object):
                 else: #system
                     past_wtes = past_wtes_constructor(past_list, model)
                     with torch.cuda.amp.autocast():
-                        language_logits, language_targets = model.forward_pure_language_turn(past_wtes, current_tokens)
+                        language_logits, language_targets, goal_type_logits = model.forward_pure_language_turn(past_wtes, current_tokens)
                         # print('after pure language turn (non recommendation): ',get_memory_free_MiB(4))
                         
-                        # loss backward
+                        # language loss backward
                         language_targets_mask = torch.ones_like(language_targets).float()
                         loss_ppl = self.criterion_language(language_logits, language_targets, language_targets_mask, label_smoothing=0.02, reduce="batch")
                         loss_ppl = self.language_loss_train_coeff * loss_ppl
-                    scaler.scale(loss_ppl).backward()
+
+                        # Recommendation Binary loss 
+                        goal_targets = torch.Tensor([0]).to(model.device)
+                        loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                        net_loss = loss_ppl+loss_goal_type
+
+                    scaler.scale(net_loss).backward()
 
                     perplexity = np.exp(loss_ppl.item())
                     ppl_history.append(perplexity)
@@ -97,7 +104,7 @@ class C_Engine(object):
 
 
                         # goal type loss 
-                        goal_targets = torch.Tensor([true_goal]).to(model.device)
+                        goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
                         loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
 
                         # recall items loss
@@ -168,7 +175,7 @@ class C_Engine(object):
                     past_list.append((current_tokens, None))
                 else: #system
                     past_wtes = past_wtes_constructor(past_list, model)
-                    language_logits, language_targets = model.forward_pure_language_turn(past_wtes, current_tokens)
+                    language_logits, language_targets, _ = model.forward_pure_language_turn(past_wtes, current_tokens)
                     
                     # loss backward
                     language_targets_mask = torch.ones_like(language_targets).float()
@@ -229,16 +236,17 @@ class C_Engine(object):
 
     def validate_language_metrics_batch(self, batch, model, item_id_2_lm_token_id):
         role_ids, dialogues = batch
-        dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ in dialogues]
+        dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
         
     #     past_list = []
         past_tokens = None
+        past_list = []
         tokenized_sentences = []
         integration_total, integration_cnt = 0, 0
         
         for turn_num in range(len(role_ids)):
             dial_turn_inputs = dialog_tensors[turn_num]
-            _, recommended_ids = dialogues[turn_num]
+            _, recommended_ids, goal_rec_or_not = dialogues[turn_num]
             
             item_ids = []; 
             if recommended_ids != None:
@@ -248,18 +256,26 @@ class C_Engine(object):
             
             if turn_num == 0:
                 past_tokens = dial_turn_inputs
+                
             if role_ids[turn_num] == 0:
                 if turn_num != 0:
                     past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
+                past_list.append((dial_turn_inputs,recommended_ids))
             else:
+                past_wtes = past_wtes_constructor(past_list, model)
+                predicted_goal_type = F.sigmoid(model.check_goal(past_wtes)) > 0.5
+                
                 if turn_num != 0:
                     if item_ids != []:
                         rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
                         rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
-                        past_tokens = torch.cat((past_tokens, rec_start_token, item_ids, rec_end_token), dim=1)
+                        if predicted_goal_type:
+                            past_tokens = torch.cat((past_tokens, rec_start_token, item_ids, rec_end_token), dim=1)
+                        else:
+                            past_tokens = past_tokens
                     else:
                         past_tokens = past_tokens
-                    
+                
                 total_len = past_tokens.shape[1]
                 if total_len >= 1024: break
     #                 print("Original Rec: " + model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True))
@@ -288,6 +304,12 @@ class C_Engine(object):
                 
                 if turn_num != 0:
                     past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
+                if recommended_ids== []:
+                        past_list.append((dial_turn_inputs,recommended_ids))
+                else:
+                    past_list.append((None, recommended_ids))
+                    past_list.append((dial_turn_inputs, None))
+
                 
         return tokenized_sentences, integration_cnt, integration_total
 
@@ -413,6 +435,7 @@ class C_Engine(object):
 
                     if turn_num != 0:
                         past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
+                    
                     del generated
                     
 
@@ -472,11 +495,13 @@ class C_Engine(object):
                     title = model.items_db[recommended_id]
                     title = title.split('[SEP]')[0].strip()
                     recommended_item_id = torch.tensor([[rec_token_id]]).to(self.device)
-                
-                    rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
-                    rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
-                    past_tokens = torch.cat((past_tokens, rec_start_token, recommended_item_id, rec_end_token), dim=1)
-                
+                    predicted_goal_type = F.sigmoid(model.check_goal(past_wtes)) > 0.5
+
+                    if predicted_goal_type:
+                        rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
+                        rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
+                        past_tokens = torch.cat((past_tokens, rec_start_token, recommended_item_id, rec_end_token), dim=1)
+                    
                     total_len = past_tokens.shape[1]
                     if total_len >= 1024: break
 
@@ -521,7 +546,9 @@ class C_Engine(object):
                             response_with_items += 1
                         final_gen = replace_placeholder(final_gen, [title])
                         valid_gen_selected_cnt += 1
-
+                    
+                    if '[REC]' in final_gen:
+                        continue
                     tokenized_sen = final_gen.strip().split(' ')
                     tokenized_sentences.append(tokenized_sen)
                     original_sen = replace_placeholder(original_sen, gold_item_titles).replace("\n\n\n", "")
