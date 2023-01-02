@@ -47,7 +47,7 @@ class C_UniversalCRSModel(torch.nn.Module):
         self.SEP_TOKEN_STR = sep_token_str
         self.PLACEHOLDER_TOKEN_STR = placeholder_token_str
         # map output of recommender vector to a single class to check whether it is a recommendation or not 
-        # self.rec_query_goal_type_mapper = torch.nn.Linear(self.language_model.config.n_embd, 1) 
+        self.rec_query_goal_type_mapper = torch.nn.Linear(self.language_model.config.n_embd, 1) 
         # map language model hidden states to a vector to query annoy-item-base for recall
         self.recall_lm_query_mapper = torch.nn.Linear(self.language_model.config.n_embd, self.recall_item_dim) # default [768,768]
         # map output of self.item_encoder to vectors to be stored in annoy-item-base 
@@ -217,20 +217,36 @@ class C_UniversalCRSModel(torch.nn.Module):
                                   ):
         train_logits, train_targets = None, None
         current_wtes = self.language_model.transformer.wte(current_tokens)
+
         
         if past_wtes == None:
             lm_outputs = self.language_model(inputs_embeds=current_wtes)
             train_logits = lm_outputs.logits[:, :-1, :]
             train_targets = current_tokens[:,1:]
         else:
+            REC_wtes = self.get_rec_token_wtes()
+            rec_or_not_wtes =  torch.cat((past_wtes, REC_wtes), dim=1)
+            # rec_or_not_wtes = self.trim_lm_wtes(rec_or_not_wtes)
+
+
             all_wtes = torch.cat((past_wtes, current_wtes), dim=1)
             all_wtes = self.trim_lm_wtes(all_wtes)
+
             lm_outputs = self.language_model(inputs_embeds=all_wtes)
+            rec_lm_outputs = self.language_model(inputs_embeds=rec_or_not_wtes, output_hidden_states=True)
+            
+            REC_wtes_len = REC_wtes.shape[1] # 1 by default
+            rec_token_start_index = -REC_wtes_len
+            # [batch (1), REC_wtes_len, self.language_model.config.n_embd]
+            
+            rec_token_hidden = rec_lm_outputs.hidden_states[-1][:, rec_token_start_index:, :]
+            rec_query_vector = self.recall_lm_query_mapper(rec_token_hidden).squeeze(1)
+            goal_type_logits = self.rec_query_goal_type_mapper(rec_query_vector).squeeze(1)
+
             train_logits = lm_outputs.logits[:, -current_wtes.shape[1]:-1, :] # skip the last one
             train_targets = current_tokens[:,1:]
-
         # torch.Size([batch, len_cur, lm_vocab]), torch.Size([batch, len_cur]), torch.Size([batch, len_past+len_cur, lm_emb(768)])
-        return train_logits, train_targets
+        return train_logits, train_targets, goal_type_logits
         
     def forward_retrieval_and_response_generation(self, 
                        past_wtes, # past word token embeddings, [1, len, 768]
@@ -483,3 +499,22 @@ class C_UniversalCRSModel(torch.nn.Module):
             )
             generated_sen = self.lm_tokenizer.decode(generated[0], skip_special_tokens=True)
             return generated_sen, self.get_movie_title(recommended_id)
+
+    def check_goal(self, 
+                            past_wtes):
+
+        REC_wtes = self.get_rec_token_wtes()
+        rec_or_not_wtes =  torch.cat((past_wtes, REC_wtes), dim=1)
+        # rec_or_not_wtes = self.trim_lm_wtes(rec_or_not_wtes)
+
+        rec_lm_outputs = self.language_model(inputs_embeds=rec_or_not_wtes, output_hidden_states=True)
+        
+        REC_wtes_len = REC_wtes.shape[1] # 1 by default
+        rec_token_start_index = -REC_wtes_len
+        # [batch (1), REC_wtes_len, self.language_model.config.n_embd]
+        
+        rec_token_hidden = rec_lm_outputs.hidden_states[-1][:, rec_token_start_index:, :]
+        rec_query_vector = self.recall_lm_query_mapper(rec_token_hidden).squeeze(1)
+        goal_type_logits = self.rec_query_goal_type_mapper(rec_query_vector).squeeze(1)
+
+        return goal_type_logits
