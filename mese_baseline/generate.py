@@ -54,7 +54,7 @@ model = C_UniversalCRSModel(
     rec_end_token_str=REC_END_TOKEN
 )
 
-CKPT = 'runs/Durecdial_19.pt'
+CKPT = 'runs/Durecdial_6.pt'
 
 model.to(device)
 
@@ -65,7 +65,7 @@ progress_bar = tqdm.std.tqdm
 
 # parameters
 batch_size = 1
-validation_recall_size = 150
+validation_recall_size = 30
 
 temperature = 1.2
 

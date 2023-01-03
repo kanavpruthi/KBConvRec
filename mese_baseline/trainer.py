@@ -108,7 +108,7 @@ class Trainer(object):
             integration_cnt, total_int_cnt = 0, 0
             valid_cnt, total_gen_cnt, response_with_items = 0, 0, 0
             for batch in pbar:
-                original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.generation_language_metrics(batch[0], self.model, item_id_2_lm_token_id)
+                original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.validate_with_generated_recommendation(batch[0], self.model, item_id_2_lm_token_id)
                 total_sentences_original.append(original_sens)
                 total_sentences_generated.append(sentences)
                 
