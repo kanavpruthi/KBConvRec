@@ -164,7 +164,7 @@ class C_Engine(object):
         
         for turn_num in range(len(role_ids)):
             current_tokens = dialog_tensors[turn_num]
-            _, recommended_ids , rec_or_not = dialogues[turn_num]
+            _, recommended_ids , _ = dialogues[turn_num]
             
             if past_list == []:
                 past_list.append((current_tokens, None))
