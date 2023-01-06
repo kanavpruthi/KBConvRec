@@ -54,7 +54,7 @@ model = C_UniversalCRSModel(
     rec_end_token_str=REC_END_TOKEN
 )
 
-CKPT = 'runs/Durecdial_6.pt'
+CKPT = 'runs/rec_binary.pt'
 
 model.to(device)
 
