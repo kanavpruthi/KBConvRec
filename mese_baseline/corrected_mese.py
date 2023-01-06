@@ -211,6 +211,34 @@ class C_UniversalCRSModel(torch.nn.Module):
         combined_mask_to_add = torch.cat((language_mask_to_add, items_mask_to_add), dim=0)
         return combined_mask_to_add #[total_length, total_length]
     
+
+    def forward_binary_turn(self, 
+                                   past_wtes, # past word token embeddings, [1, len, 768]
+                                   current_tokens # tokens of current turn conversation, [1, len]
+                                  ):
+
+        REC_wtes = self.get_rec_token_wtes()
+        rec_or_not_wtes =  torch.cat((
+                            past_wtes, 
+                            REC_wtes
+                            ), 
+                            dim=1)
+        rec_or_not_wtes = self.trim_lm_wtes(rec_or_not_wtes)
+
+        rec_lm_outputs = self.language_model(inputs_embeds=rec_or_not_wtes, output_hidden_states=True)
+        
+        REC_wtes_len = REC_wtes.shape[1] # 1 by default
+        rec_token_start_index = -REC_wtes_len
+        # [batch (1), REC_wtes_len, self.language_model.config.n_embd]
+        
+        rec_token_hidden = rec_lm_outputs.hidden_states[-1][:, rec_token_start_index:, :]
+        rec_query_vector = self.recall_lm_query_mapper(rec_token_hidden).squeeze(1)
+        goal_type_logits = self.rec_query_goal_type_mapper(rec_query_vector).squeeze(1)
+
+        return goal_type_logits
+
+
+
     def forward_pure_language_turn(self, 
                                    past_wtes, # past word token embeddings, [1, len, 768]
                                    current_tokens # tokens of current turn conversation, [1, len]

@@ -44,6 +44,7 @@ class C_Engine(object):
         # Negligible GPU Usage at this point
         past_list = []
         ppl_history = []
+        ce_loss_history = []
         # for i,d in enumerate(dialog_tensors):
         #     _, recommended_ids = dialogues[i]
         #     print(model.lm_tokenizer.decode(d[0]),recommended_ids)
@@ -75,10 +76,11 @@ class C_Engine(object):
                         # Recommendation Binary loss 
                         goal_targets = torch.Tensor([0]).to(model.device)
                         loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                        ce_loss_history.append(loss_goal_type.item())
+                        
                         net_loss = loss_ppl+loss_goal_type
 
                     scaler.scale(net_loss).backward()
-
                     perplexity = np.exp(loss_ppl.item())
                     ppl_history.append(perplexity)
                     # print('after backward call language turn (non recommendation): ',get_memory_free_MiB(0))
@@ -106,6 +108,7 @@ class C_Engine(object):
                         # goal type loss 
                         goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
                         loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                        ce_loss_history.append(loss_goal_type.item())
 
                         # recall items loss
                         select_targets = torch.LongTensor([select_true_index]).to(model.device)
@@ -128,13 +131,6 @@ class C_Engine(object):
                         # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
                         rerank_logits /= self.temperature
 
-                        # rerank loss 
-                        # logger.debug(f'Gt Item Id: {recommended_id}')
-                        # logger.debug(f'Rerank Logits: {rerank_logits}')
-                        # logger.debug(f'Rerank Logits Shape: {rerank_logits.shape}')
-                        # logger.debug(f'Argmax Rerank: {torch.argmax(rerank_logits)}')
-                        # logger.debug(f'Rerank True Index: {rerank_true_index}')
-                        # raise('Debug')
                         rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
                         loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
                     # combined loss
@@ -147,14 +143,17 @@ class C_Engine(object):
         # Free GPU memory
         # dialog_tensors = [torch.LongTensor(utterance).to(self.cpu) for utterance, _ in dialogues]
         del dialog_tensors
-        return np.mean(ppl_history)
+        return np.mean(ppl_history), np.mean(ce_loss_history)
 
 
     def validate_one_iteration(self, batch, model: C_UniversalCRSModel):
         role_ids, dialogues = batch
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _, _ in dialogues]
 
+        y_true = []
+        y_pred = []
         past_list = []
+        ce_history = []
         ppl_history = []
         recall_loss_history = []
         rerank_loss_history = []
@@ -164,20 +163,32 @@ class C_Engine(object):
         
         for turn_num in range(len(role_ids)):
             current_tokens = dialog_tensors[turn_num]
-            _, recommended_ids , _ = dialogues[turn_num]
+            _, recommended_ids , gold_goal = dialogues[turn_num]
             
             if past_list == []:
                 past_list.append((current_tokens, None))
                 continue
             
             if recommended_ids == None: # no rec
+
                 if role_ids[turn_num] == 0: # user
                     past_list.append((current_tokens, None))
                 else: #system
+                    y_true.append(0)    # No Gold Recommendation
                     past_wtes = past_wtes_constructor(past_list, model)
-                    language_logits, language_targets, _ = model.forward_pure_language_turn(past_wtes, current_tokens)
+                    language_logits, language_targets, goal_type_logits = model.forward_pure_language_turn(past_wtes, current_tokens)
                     
-                    # loss backward
+                    goal_targets = torch.Tensor([0]).to(model.device)
+                    loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                    ce_history.append(loss_goal_type.item())
+                    ############### Checking Binary Classifier Accuracy ################
+                    pred_goal = F.sigmoid(goal_type_logits) > 0.5
+                    if pred_goal[0]:
+                        y_pred.append(1)
+                    else:
+                        y_pred.append(0)
+                    ############### ----------------------------------- ################
+                    
                     language_targets_mask = torch.ones_like(language_targets).float()
                     loss_ppl = self.criterion_language(language_logits, language_targets, language_targets_mask, label_smoothing=-1, reduce="sentence")
                     perplexity = np.exp(loss_ppl.item())
@@ -187,12 +198,31 @@ class C_Engine(object):
                     # append to past list
                     past_list.append((current_tokens, None))
             else: # rec!
-                
+
                 if role_ids[turn_num] == 0: #user mentioned
                     past_list.append((current_tokens, recommended_ids))
                     continue
+
+                if gold_goal:
+                    y_true.append(1)
+                else:
+                    y_true.append(0)
+
+                past_wtes = past_wtes_constructor(past_list, model)
+                goal_type_logits = model.check_goal(past_wtes)
+                goal_targets = torch.Tensor([gold_goal]).to(model.device)
+                loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                ce_history.append(loss_goal_type.item())
+
+                predicted_goal_type = F.sigmoid(goal_type_logits) > 0.5
+                if predicted_goal_type:
+                    y_pred.append(1)
+                else:
+                    y_pred.append(0)
+                
+
+
                 for recommended_id in recommended_ids:
-                    past_wtes = past_wtes_constructor(past_list, model)
 
                     total += 1
 
@@ -229,9 +259,91 @@ class C_Engine(object):
                 
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
-        return ppl_history, recall_loss_history, rerank_loss_history, \
+        return ppl_history, ce_history, recall_loss_history, rerank_loss_history, \
                 total, recall_top100, recall_top300, recall_top500, \
-                rerank_top1, rerank_top10, rerank_top50
+                rerank_top1, rerank_top10, rerank_top50, \
+                    y_true, y_pred
+
+
+    def train_one_iteration_binary(self,batch,model: C_UniversalCRSModel, scaler):
+        role_ids, dialogues = batch
+        dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
+
+        past_list = []
+        ce_loss_history = []
+        y_true = []
+        y_pred = []
+
+        for turn_num in range(len(role_ids)):
+            current_tokens = dialog_tensors[turn_num]
+            _, recommended_ids, goal_rec_or_not = dialogues[turn_num]
+
+            if past_list == []:
+                past_list.append((current_tokens, recommended_ids))
+                continue
+            
+            if recommended_ids == None: # no rec
+                # logger.debug(f'In No Recommended')
+                if role_ids[turn_num] == 0: # user
+                    past_list.append((current_tokens, None))
+                    
+                else: #system
+                    y_true.append(0)    # No Gold Recommendation
+                    past_wtes = past_wtes_constructor(past_list, model)
+                    with torch.cuda.amp.autocast():
+                        goal_type_logits = model.forward_binary_turn(past_wtes, current_tokens)
+
+                        pred_goal = F.sigmoid(goal_type_logits) > 0.5
+                        if pred_goal[0]:
+                            y_pred.append(1)
+                        else:
+                            y_pred.append(0)
+                        
+                        
+                        # Recommendation Binary loss 
+                        goal_targets = torch.Tensor([0]).to(model.device)
+                        loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                        net_loss = loss_goal_type
+
+                    ce_loss_history.append(loss_goal_type.item())
+                    scaler.scale(net_loss).backward()
+
+                    # append to past list
+                    past_list.append((current_tokens, None))
+                
+            else: # rec!
+                
+
+                if role_ids[turn_num] == 0: #user mentioned
+                    past_list.append((current_tokens, recommended_ids))
+                    continue
+                
+                y_true.append(goal_rec_or_not)
+                past_wtes = past_wtes_constructor(past_list, model)
+                #system recommend turn
+                with torch.cuda.amp.autocast():
+                    goal_type_logits = model.forward_binary_turn(past_wtes, current_tokens)
+
+                    pred_goal = F.sigmoid(goal_type_logits) > 0.5
+                    if pred_goal[0]:
+                        y_pred.append(1)
+                    else:
+                        y_pred.append(0)
+
+                    # goal type loss 
+                    goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
+                    loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+
+                    total_loss = loss_goal_type
+                
+                ce_loss_history.append(loss_goal_type.item())
+
+                scaler.scale(total_loss).backward()
+                        
+                past_list.append((None, recommended_ids))
+                past_list.append((current_tokens, None))
+    
+        return np.mean(ce_loss_history), y_true, y_pred
 
 
     def validate_language_metrics_batch(self, batch, model, item_id_2_lm_token_id):

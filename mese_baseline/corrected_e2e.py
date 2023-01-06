@@ -1,5 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
 from transformers import get_linear_schedule_with_warmup
@@ -36,12 +37,13 @@ train_path = "data/processed/durecdial2_all_train_placeholder_updated"
 test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
 
 
-train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
-test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+train_dataset = RecDataset(torch.load(train_path)[100:200], bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path)[:200], bert_tokenizer, gpt_tokenizer)
 
 
 # print(get_memory_free_MiB(0))
-
+# Visualise Training and Set device 
+writer = SummaryWriter()
 device = torch.device(0)
 
 
@@ -132,7 +134,7 @@ engine = C_Engine(device,
                 temperature)
 
 
-output_file_path = "out/CRS_Train_Durecdial.txt"
+output_file_path = "out/CRS_Train_Durecdial_Binary.txt"
 model_saved_path = "runs/Durecdial_"
 
 ## Define Trainer
@@ -144,7 +146,8 @@ trainer = Trainer(
     optimizer,
     scheduler,
     scaler,
-    progress_bar
+    progress_bar,
+    writer
 )
 
 # print(get_memory_free_MiB(4))
@@ -157,14 +160,17 @@ trainer.train(
 )
 
 
-total_sentences_original, total_sentences_generated, (valid_cnt, response_with_items, total_gen_cnt) = trainer.generate()
-total_sentences_original = [item for sublist in total_sentences_original for item in sublist]
-total_sentences_generated = [item for sublist in total_sentences_generated for item in sublist]
-print(valid_cnt / total_gen_cnt, response_with_items / total_gen_cnt)
-dist1, dist2, dist3, dist4 = distinct_metrics(total_sentences_generated)
-bleu1, bleu2, bleu3, bleu4 = bleu_calc_all(total_sentences_original, total_sentences_generated)
-print(dist1, dist2, dist3, dist4)
-print(bleu1, bleu2, bleu3, bleu4)
+# total_sentences_original, total_sentences_generated, (valid_cnt, response_with_items, total_gen_cnt) = trainer.generate()
+# total_sentences_original = [item for sublist in total_sentences_original for item in sublist]
+# total_sentences_generated = [item for sublist in total_sentences_generated for item in sublist]
+# print(valid_cnt / total_gen_cnt, response_with_items / total_gen_cnt)
+# dist1, dist2, dist3, dist4 = distinct_metrics(total_sentences_generated)
+# bleu1, bleu2, bleu3, bleu4 = bleu_calc_all(total_sentences_original, total_sentences_generated)
+# print(dist1, dist2, dist3, dist4)
+# print(bleu1, bleu2, bleu3, bleu4)
 
-torch.save(total_sentences_generated, 'human_eval/mese.pt')
-torch.save(total_sentences_original,'human_eval/gold.pt')
+# torch.save(total_sentences_generated, 'human_eval/mese.pt')
+# torch.save(total_sentences_original,'human_eval/gold.pt')
+
+writer.flush()
+writer.close()
