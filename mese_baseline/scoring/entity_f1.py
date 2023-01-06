@@ -34,7 +34,9 @@ def f1(preds, golds, movie_list):
 
 	for i, (pred, gold) in enumerate(zip(preds, golds)):
 		
-
+		if "for you" in gold:
+			continue
+		
 		entities_in_gold = set(get_entities_in_utt(gold,movie_list))
 		entities_in_pred = set(get_entities_in_utt(pred,movie_list))
 		common = float(len(entities_in_gold.intersection(entities_in_pred)))
