@@ -86,7 +86,10 @@ criterion_language = SequenceCrossEntropyLoss()
 criterion_recall = torch.nn.CrossEntropyLoss()
 # rerank_class_weights = torch.FloatTensor([1] * (num_samples_rerank_train-1) + [30]).to(model.device)
 criterion_rerank_train = torch.nn.CrossEntropyLoss()
-criterion_goal = torch.nn.BCEWithLogitsLoss()
+num_pos_classes_dev = 530
+num_neg_classes_dev = 5777
+pos_weight = num_neg_classes_dev/num_pos_classes_dev
+criterion_goal = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight))
 
 # optimizer and scheduler
 param_optimizer = list(model.language_model.named_parameters()) + \
