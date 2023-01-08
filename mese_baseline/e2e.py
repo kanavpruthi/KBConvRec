@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
-
+from torch.utils.tensorboard import SummaryWriter
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
 from transformers import AdamW, get_linear_schedule_with_warmup
 
@@ -32,8 +32,8 @@ gpt2_model.resize_token_embeddings(len(gpt_tokenizer))
 items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
-train_path = "data/processed/durecdial2_all_train_placeholder"
-test_path = "data/processed/durecdial2_all_dev_placeholder"
+train_path = "data/processed/durecdial2_all_train_placeholder_updated"
+test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
 
 
 
@@ -43,7 +43,7 @@ test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokeni
 
 
 # print(get_memory_free_MiB(0))
-
+writer = SummaryWriter()
 device = torch.device(0)
 
 
@@ -65,14 +65,14 @@ model.to(device)
 
 # parameters
 batch_size = 1
-num_epochs = 15
+num_epochs = 10
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 600
+num_samples_recall_train = 500
 num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = 300
+validation_recall_size = 500
 
 temperature = 1.2
 
@@ -132,8 +132,8 @@ engine = Engine(device,
                 temperature)
 
 
-output_file_path = "out/CRS_Train_Durecdial.txt"
-model_saved_path = "runs/Durecdial_"
+output_file_path = "out/Train_Original.txt"
+model_saved_path = "runs/NR_Durecdial_"
 
 ## Define Trainer
 trainer = Trainer(
@@ -144,7 +144,8 @@ trainer = Trainer(
     optimizer,
     scheduler,
     scaler,
-    progress_bar
+    progress_bar,
+    writer
 )
 
 # print(get_memory_free_MiB(4))
@@ -168,3 +169,7 @@ print(bleu1, bleu2, bleu3, bleu4)
 
 torch.save(total_sentences_generated, 'human_eval/mese.pt')
 torch.save(total_sentences_original,'human_eval/gold.pt')
+
+
+writer.flush()
+writer.close()
