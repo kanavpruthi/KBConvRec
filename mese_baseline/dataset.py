@@ -17,17 +17,17 @@ class MovieRecDataset(Dataset):
         
         dialogue_tokens = []
         
-        for utterance, gt_ind in dialogue:
+        for utterance, gt_ind, _ in dialogue:
             utt_tokens = self.gpt2_tok(utterance, return_tensors="pt")['input_ids']
             dialogue_tokens.append( ( torch.cat( (utt_tokens, self.turn_ending), dim=1), gt_ind) )
             
         role_ids = None
         previous_role_ids = None
         if role_ids == None:
-            role_ids = [ 0 if item[0] == 'B' else 1 for item, _ in dialogue]
+            role_ids = [ 0 if item[0] == 'B' else 1 for item, _, _ in dialogue]
             previous_role_ids = role_ids
         else:
-            role_ids = [ 0 if item[0] == 'B' else 1 for item, _ in dialogue]
+            role_ids = [ 0 if item[0] == 'B' else 1 for item, _, _ in dialogue]
             if not np.array_equal(role_ids, previous_role_ids):
                 raise Exception("Role ids dont match between languages")
             previous_role_ids = role_ids
