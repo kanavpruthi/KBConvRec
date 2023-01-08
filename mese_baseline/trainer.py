@@ -1,5 +1,6 @@
 from corrected_engine import C_Engine
 from engine import Engine
+from corrected_engine import C_Engine
 import time 
 import torch
 from metrics import distinct_metrics
@@ -36,9 +37,13 @@ class Trainer(object):
             for batch in pbar:
                 # batch size of train_dataloader is 1
                 self.optimizer.zero_grad()
-                avg_ppl, avg_ce_loss = self.engine.train_one_iteration(batch[0], self.model, self.scaler)
-                self.writer.add_scalar("Loss/train/CE_Loss", avg_ce_loss, step_train)
-                self.writer.add_scalar("Loss/train/PPL_Loss", avg_ppl, step_train)
+                if isinstance(self.engine,C_Engine):
+                    avg_ppl, avg_ce_loss = self.engine.train_one_iteration(batch[0], self.model, self.scaler)
+                    self.writer.add_scalar("Loss/train/CE_Loss", avg_ce_loss, step_train)
+                    self.writer.add_scalar("Loss/train/PPL_Loss", avg_ppl, step_train)
+                else:
+                    avg_ppl = self.engine.train_one_iteration(batch[0], self.model, self.scaler)
+                    self.writer.add_scalar("Loss/train/PPL_Loss", avg_ppl, step_train)
                 step_train += 1
                 self.update_count +=1
                 if self.update_count % num_gradients_accumulation == num_gradients_accumulation - 1:
@@ -54,11 +59,15 @@ class Trainer(object):
                     start = end
                     
                     # show progress
-                    pbar.set_postfix(ppl=avg_ppl, ce_loss = avg_ce_loss, speed=speed)
+                    pbar.set_postfix(ppl=avg_ppl, speed=speed)
             
             output_file = open(output_file_path, 'a')
             output_file.write('Training Stage:\n')
-            output_file.writelines([f"Epoch {ep}: ppl: {np.mean(avg_ppl)}, CE Loss: {np.mean(avg_ce_loss)}"])
+            if isinstance(self.engine,C_Engine):
+                output_file.writelines([f"Epoch {ep}: ppl: {np.mean(avg_ppl)}, CE Loss: {np.mean(avg_ce_loss)}"])
+            else:
+                output_file.writelines([f"Epoch {ep}: ppl: {np.mean(avg_ppl)}"])
+
             output_file.write('\n')
 
             self.model.eval()
@@ -70,14 +79,20 @@ class Trainer(object):
                 total_val, recall_top100_val, recall_top300_val, recall_top500_val, \
                     rerank_top1_val, rerank_top10_val, rerank_top50_val = 0,0,0,0,0,0,0
                 for batch in pbar:
-                    ppl_history, ce_history, recall_loss_history, rerank_loss_history, \
-                    total, recall_top100, recall_top300, recall_top500, \
-                    rerank_top1, rerank_top10, rerank_top50, \
-                    y_true, y_pred     = self.engine.validate_one_iteration(batch[0], self.model)
-                    true_goals.extend(y_true)
-                    pred_goals.extend(y_pred)
-                    self.writer.add_scalar("Loss/dev/PPL_Loss", np.mean(ppl_history), step_valid)
-                    self.writer.add_scalar("Loss/dev/CE_Loss", np.mean(ce_history), step_valid)
+                    if isinstance(self.engine,C_Engine):
+                        ppl_history, ce_history, recall_loss_history, rerank_loss_history, \
+                        total, recall_top100, recall_top300, recall_top500, \
+                        rerank_top1, rerank_top10, rerank_top50, \
+                        y_true, y_pred     = self.engine.validate_one_iteration(batch[0], self.model)
+                        true_goals.extend(y_true)
+                        pred_goals.extend(y_pred)
+                        self.writer.add_scalar("Loss/dev/CE_Loss", np.mean(ce_history), step_valid)
+                    else:
+                        ppl_history, recall_loss_history, rerank_loss_history, \
+                        total, recall_top100, recall_top300, recall_top500, \
+                        rerank_top1, rerank_top10, rerank_top50 = self.engine.validate_one_iteration(batch[0], self.model)
+                    
+                    self.writer.add_scalar("Loss/dev/PPL_Loss", np.mean(ppl_history), step_valid)    
                     step_valid += 1
                     ppls += ppl_history; recall_losses += recall_loss_history; rerank_losses += rerank_loss_history
                     total_val += total; 
@@ -99,8 +114,6 @@ class Trainer(object):
                 # self.model.lm_restore_wtes(self.original_token_emb_size)
                 
             # output_file = open(output_file_path, 'a')
-            tn, fp, fn, tp = confusion_matrix(true_goals,pred_goals).ravel()
-
             output_file.write('Validation Stage:\n')
             output_file.writelines([f"Epoch {ep} ppl: {np.mean(ppls)}, recall_loss: {np.mean(recall_losses)}, rerank_loss: {np.mean(rerank_losses)}"])
             output_file.write('\n')
@@ -108,23 +121,30 @@ class Trainer(object):
             output_file.write('\n')
             output_file.writelines([f"rerank top1: {rerank_top1_val/total_val}, top10: {rerank_top10_val/total_val}, top50: {rerank_top50_val/total_val}"])
             output_file.write('\n')
-            output_file.writelines([f"True Positive: {tp}, False Positive: {fp}, False Negative: {fn}, True Negative: {tn}"])
-            output_file.write('\n')
-            output_file.writelines([f"Total Recommendations = {len(true_goals)}"])
-            output_file.write('\n')
-            acc = (tp+tn)/(tp+tn+fp+fn)
-            p = tp/(tp+fp)
-            r = tp/(tp+fn)
-            f1 = 2*p*r/(p+r)
-            output_file.writelines([f"Accuracy: {acc}, Precision: {p}, Recall: {r}, F1: {f1}"])
+
+            if isinstance(self.engine,C_Engine):
+                tn, fp, fn, tp = confusion_matrix(true_goals,pred_goals).ravel()
+
+                output_file.writelines([f"True Positive: {tp}, False Positive: {fp}, False Negative: {fn}, True Negative: {tn}"])
+                output_file.write('\n')
+                output_file.writelines([f"Total Recommendations = {len(true_goals)}"])
+                output_file.write('\n')
+                acc = (tp+tn)/(tp+tn+fp+fn)
+                p = tp/(tp+fp)
+                r = tp/(tp+fn)
+                f1 = 2*p*r/(p+r)
+                output_file.writelines([f"Accuracy: {acc}, Precision: {p}, Recall: {r}, F1: {f1}"])
+
+                #################### Tensorboard Visualisation ####################
+                self.writer.add_scalar("Scores/dev/Accuracy", acc, ep)
+                self.writer.add_scalar("Scores/dev/Precision", p, ep)
+                self.writer.add_scalar("Scores/dev/Recall", r, ep)
+                self.writer.add_scalar("Scores/dev/F1", f1, ep)
+                #################### Tensorboard Visualisation #####################
+
             output_file.write('\n\n')
             output_file.close()
-            #################### Tensorboard Visualisation ####################
-            self.writer.add_scalar("Scores/dev/Accuracy", acc, ep)
-            self.writer.add_scalar("Scores/dev/Precision", p, ep)
-            self.writer.add_scalar("Scores/dev/Recall", r, ep)
-            self.writer.add_scalar("Scores/dev/F1", f1, ep)
-            #################### Tensorboard Visualisation #####################
+            
             torch.save(self.model.state_dict(), model_saved_path + str(ep) +".pt")
 
 
@@ -203,7 +223,7 @@ class Trainer(object):
             integration_cnt, total_int_cnt = 0, 0
             valid_cnt, total_gen_cnt, response_with_items = 0, 0, 0
             for batch in pbar:
-                original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.validate_language_metrics_batch2(batch[0], self.model, item_id_2_lm_token_id)
+                original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.generation_language_metrics(batch[0], self.model, item_id_2_lm_token_id)
                 total_sentences_original.append(original_sens)
                 total_sentences_generated.append(sentences)
                 
