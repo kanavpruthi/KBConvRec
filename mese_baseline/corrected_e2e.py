@@ -69,7 +69,7 @@ num_epochs = 10
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 300
+num_samples_recall_train = 500
 num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
 validation_recall_size = 500
