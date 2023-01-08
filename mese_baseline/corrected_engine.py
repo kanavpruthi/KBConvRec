@@ -225,6 +225,29 @@ class C_Engine(object):
                 for recommended_id in recommended_ids:
 
                     total += 1
+                    
+                    # recall
+                    recall_logits, recall_true_index, all_wte_logits, all_wte_targets = model.forward_recall(
+                        past_wtes, 
+                        current_tokens, 
+                        recommended_id, 
+                        self.num_samples_recall_train
+                    )
+
+                    
+                    # recall items loss
+                    recall_targets = torch.LongTensor([recall_true_index]).to(model.device)
+                    loss_recall = self.criterion_recall(recall_logits.unsqueeze(0), recall_targets)
+                    recall_loss_history.append(loss_recall.item())
+                    del loss_recall; del recall_logits; del recall_targets
+
+                    # language loss in recall turn, REC_TOKEN, Language on conditional generation
+                    all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
+                    loss_ppl = self.criterion_language(all_wte_logits, all_wte_targets, all_wte_targets_mask, label_smoothing=-1, reduce="sentence")
+                    perplexity = np.exp(loss_ppl.item())
+                    ppl_history.append(perplexity)
+                    del loss_ppl; del all_wte_logits; del all_wte_targets
+
 
                     recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
                     if recommended_id in recalled_ids[:500]:
