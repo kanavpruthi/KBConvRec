@@ -189,9 +189,9 @@ class Engine(object):
                 if role_ids[turn_num] == 0: #user mentioned
                     past_list.append((current_tokens, recommended_ids))
                     continue
+                
+                past_wtes = past_wtes_constructor(past_list, model)
                 for recommended_id in recommended_ids:
-                    past_wtes = past_wtes_constructor(past_list, model)
-
                     total += 1
 
                     # recall
@@ -229,7 +229,6 @@ class Engine(object):
                         continue # no need to compute rerank since recall is unsuccessful
 
                     # rerank
-                    past_wtes = past_wtes_constructor(past_list, model)
                     rerank_true_index = recalled_ids.index(recommended_id)
                     rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
         #             print(rerank_logits)
