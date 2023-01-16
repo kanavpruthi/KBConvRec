@@ -502,3 +502,130 @@ class Engine(object):
                             past_tokens = dial_turn_inputs
                         del generated
             return original_sentences, tokenized_sentences, integration_cnt, integration_total, valid_gen_selected_cnt, total_gen_cnt, response_with_items, original_response_with_items
+
+    def generation_language_metrics(self, batch, model, item_id_2_lm_token_id):
+        with torch.no_grad():
+            role_ids, dialogues = batch
+            dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _  in dialogues]
+            # print('dialog_tensors :',get_memory_free_MiB(0))
+        #     past_list = []
+            past_list = []
+            past_tokens = None
+            original_sentences = []
+            tokenized_sentences = []
+            integration_total, integration_cnt = 0, 0
+            valid_gen_selected_cnt = 0; total_gen_cnt = 0; response_with_items = 0; original_response_with_items = 0
+            
+            for turn_num in range(len(role_ids)):
+                dial_turn_inputs = dialog_tensors[turn_num]
+                _, gold_recommended_ids = dialogues[turn_num]
+                
+                ##
+                # logger.debug(f'{turn_num}. Dial Turn Inputs --> {dial_turn_inputs.shape}')
+                # original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
+                # logger.debug(f'{turn_num}. Current Utterance --> {original_sen}')
+                # logger.debug(f'{turn_num}. Recommended Ids : {recommended_ids}')
+                # logger.debug(f'{turn_num}. Target Goal => : {target_goal}')
+                ##
+                
+                gold_item_ids = []; gold_item_titles = []
+                if gold_recommended_ids != None:
+                    for r_id in gold_recommended_ids:
+                        gold_item_ids.append(item_id_2_lm_token_id[r_id])
+                        title = model.items_db[r_id]
+                        title = title.split('[SEP]')[0].strip()
+                        gold_item_titles.append(title)
+                
+                if role_ids[turn_num] == 0: # User
+                    if turn_num == 0:
+                        past_tokens = dial_turn_inputs
+                    else:
+                        past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
+                    past_list.append((dial_turn_inputs,gold_recommended_ids))
+                else: # System
+
+                    past_wtes = past_wtes_constructor(past_list, model)
+                    recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
+                    rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
+                    recommended_id = recalled_ids[np.argsort(rerank_logits.cpu().detach().numpy())[-1]]
+                    # logger.debug(f'Recalled Ids: {recalled_ids}')
+                    # logger.debug(f'Recommended Id: {recommended_id}')
+
+                    rec_token_id = item_id_2_lm_token_id[recommended_id]
+                    title = model.items_db[recommended_id]
+                    title = title.split('[SEP]')[0].strip()
+                    recommended_item_id = torch.tensor([[rec_token_id]]).to(self.device)
+                    # predicted_goal_type = F.sigmoid(model.check_goal(past_wtes)) > 0.5
+
+                    rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
+                    rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
+                    past_tokens = torch.cat((past_tokens, rec_start_token, recommended_item_id, rec_end_token), dim=1)
+                
+                    total_len = past_tokens.shape[1]
+                    if total_len >= 1024: break
+
+                    original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
+
+                    # print('Before generation: ',get_memory_free_MiB(0))
+                    generated = model.language_model.generate(
+                        input_ids= torch.cat((past_tokens, torch.tensor([[32, 25]]).to(self.device)), dim=1),
+                        max_length=1024,
+                        num_return_sequences=1,
+                        do_sample=True,
+                        num_beams=2,
+                        top_k=50,
+                        temperature=1.25,
+                        eos_token_id=628,
+                        pad_token_id=628,
+        #                 no_repeat_ngram_size=3,
+                        output_scores=True,
+                        return_dict_in_generate=True,
+                        early_stopping=True
+                    )
+                    # print(get_memory_free_MiB(0))
+                    # check valid generations, equal num [MOVIE_ID] placeholders
+                    total_gen_cnt += 1
+                    valid_gens = []; valid_gens_scores = []
+                    final_gen = None
+                
+                    for i in range(len(generated.sequences)):
+                        gen_sen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
+                        if gen_sen.count("[MOVIE_ID]") == original_sen.count("[MOVIE_ID]"):
+                            valid_gens.append(gen_sen); valid_gens_scores.append(generated.sequences_scores[i].item())
+                    if valid_gens == [] and valid_gens_scores == []: # no valid, pick with highest score
+                        i = torch.argmax(generated.sequences_scores).item()
+                        final_gen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
+                        if "[MOVIE_ID]" in final_gen:
+                            response_with_items += 1
+                        final_gen = replace_placeholder(final_gen, [title])
+                    else:
+                        i = np.argmax(valid_gens_scores)
+                        final_gen = valid_gens[i]
+                        if "[MOVIE_ID]" in final_gen:
+                            response_with_items += 1
+                        final_gen = replace_placeholder(final_gen, [title])
+                        valid_gen_selected_cnt += 1
+                    
+                    if '[REC]' in final_gen:
+                        continue
+                    tokenized_sen = final_gen.strip().split(' ')
+                    tokenized_sentences.append(tokenized_sen)
+                    original_sen = replace_placeholder(original_sen, gold_item_titles).replace("\n\n\n", "")
+        #             print("Original Rec: " + original_sen)
+                    original_sentences.append( original_sen.strip().split(' ') )
+                    if gold_recommended_ids != None:
+                        integration_total += 1                        
+                        if "[MOVIE_ID]" in final_gen:
+                            integration_cnt += 1
+
+                    if turn_num != 0:
+                        past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
+                        if gold_recommended_ids== []:
+                            past_list.append((dial_turn_inputs,gold_recommended_ids))
+                        else:
+                            past_list.append((None, gold_recommended_ids))
+                            past_list.append((dial_turn_inputs, None))
+                    del generated
+                        
+
+            return original_sentences, tokenized_sentences, integration_cnt, integration_total, valid_gen_selected_cnt, total_gen_cnt, response_with_items, original_response_with_items
