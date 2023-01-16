@@ -16,11 +16,12 @@ from engine import Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
 
-bert_tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-bert_model_recall = DistilBertModel.from_pretrained('distilbert-base-uncased')
-bert_model_rerank = DistilBertModel.from_pretrained('distilbert-base-uncased')
-gpt_tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-gpt2_model = GPT2InductiveAttentionHeadModel.from_pretrained('gpt2')
+bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer")
+bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
+bert_model_rerank = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
+# bert_tokenizer.save_pretrained('../../../../offline_transformers/distilbert-base-uncased/tokenizer')
+gpt_tokenizer = GPT2Tokenizer.from_pretrained("../../../../offline_transformers/gpt2/tokenizer")
+gpt2_model = GPT2InductiveAttentionHeadModel.from_pretrained('../../../../offline_transformers/gpt2/model')
 
 REC_TOKEN = "[REC]"
 REC_END_TOKEN = "[REC_END]"
