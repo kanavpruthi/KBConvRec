@@ -57,5 +57,26 @@ def sequence_cross_entropy_with_logits(logits, targets, mask, label_smoothing, r
     return loss
 
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+
+class DisentanglementLoss(nn.Module):
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self, logits, dis_labels):
+        """
+        reduce: None, "batch", "sentence"
+        """
+        recommendation_encourangement = logits * torch.log(dis_labels)
+        chitchat_discouragement = (1-logits) * torch.log(1-dis_labels)
+        return -recommendation_encourangement-chitchat_discouragement
+
+
+
+
 
 

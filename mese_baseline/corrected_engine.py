@@ -1,5 +1,5 @@
 import torch 
-from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB
+from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB, calculate_mrr_sample
 import numpy as np
 import sys
 from corrected_mese import C_UniversalCRSModel
@@ -13,6 +13,7 @@ class C_Engine(object):
                 criterion_recall = None,
                 criterion_rerank_train = None,
                 criterion_goal = None,
+                disentanglement_loss = None,
                 language_loss_train_coeff = None, 
                 recall_loss_train_coeff = None,
                 rerank_loss_train_coeff = None, 
@@ -24,6 +25,7 @@ class C_Engine(object):
         self.criterion_language = criterion_language
         self.criterion_recall = criterion_recall
         self.criterion_goal = criterion_goal
+        self.disentanglement_loss = disentanglement_loss
         self.criterion_rerank_train = criterion_rerank_train
         self.device = device 
         self.temperature = temperature
@@ -104,6 +106,10 @@ class C_Engine(object):
                             self.num_samples_recall_train
                         )
 
+                        ############### Debugging to include disentanglement loss ##########
+                        language_logits_flat, disentanglement_labels = model.get_disentanglement_label(language_logits)
+                        loss_disentanglement = self.disentanglement_loss(language_logits_flat,disentanglement_labels)
+                        ####################################################################
 
                         # goal type loss 
                         goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
@@ -134,7 +140,7 @@ class C_Engine(object):
                         rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
                         loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
                     # combined loss
-                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type
+                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type + loss_disentanglement
                     scaler.scale(total_loss).backward()
                         
                 past_list.append((None, recommended_ids))
@@ -157,6 +163,7 @@ class C_Engine(object):
         ppl_history = []
         recall_loss_history = []
         rerank_loss_history = []
+        mrr_history = []
         total = 0
         recall_top100, recall_top300, recall_top500 = 0, 0, 0,
         rerank_top1, rerank_top10, rerank_top50 = 0, 0, 0
@@ -227,7 +234,7 @@ class C_Engine(object):
                     total += 1
                     
                     # recall
-                    recall_logits, recall_true_index, all_wte_logits, all_wte_targets = model.forward_recall(
+                    recall_logits, recall_true_index, all_wte_logits, all_wte_targets, goal_type_logits = model.forward_retrieval_and_response_generation(
                         past_wtes, 
                         current_tokens, 
                         recommended_id, 
@@ -250,6 +257,9 @@ class C_Engine(object):
 
 
                     recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
+                    sample_mrr = calculate_mrr_sample(recommended_id,recalled_ids)
+                    mrr_history.append(sample_mrr)
+
                     if recommended_id in recalled_ids[:500]:
                         recall_top500 += 1
                     if recommended_id in recalled_ids[:300]:
@@ -282,7 +292,8 @@ class C_Engine(object):
                 
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
-        return ppl_history, ce_history, recall_loss_history, rerank_loss_history, \
+                
+        return ppl_history, ce_history, recall_loss_history, rerank_loss_history, mrr_history, \
                 total, recall_top100, recall_top300, recall_top500, \
                 rerank_top1, rerank_top10, rerank_top50, \
                     y_true, y_pred
@@ -955,8 +966,9 @@ class C_Engine(object):
                     ####################################
 
                     # print('Before generation: ',get_memory_free_MiB(0))
+                    force_words = model.lm_tokenizer(["[MOVIE_ID]"],add_special_tokens=False).input_ids
+                    
                     if item_ids!=[]:
-                        force_words = model.lm_tokenizer(["[MOVIE_ID]"],add_special_tokens=False).input_ids
 
                         generated = model.language_model.generate(
                             input_ids= torch.cat((past_tokens, torch.tensor([[32, 25]]).to(self.device)), dim=1),
@@ -1185,13 +1197,13 @@ class C_Engine(object):
                             
                             if "[MOVIE_ID]" in final_gen:
                                 response_with_items += 1
-                            final_gen = replace_placeholder(final_gen, [title])
+                            final_gen = replace_placeholder(final_gen, gold_item_titles)
                         else:
                             i = np.argmax(valid_gens_scores)
                             final_gen = valid_gens[i]
                             if "[MOVIE_ID]" in final_gen:
                                 response_with_items += 1
-                            final_gen = replace_placeholder(final_gen, [title])
+                            final_gen = replace_placeholder(final_gen, gold_item_titles)
                             valid_gen_selected_cnt += 1
 
                     if '[REC]' in final_gen:

@@ -79,3 +79,15 @@ def sample_ids_from_db(item_db,
     else:
         results = random.sample(ids_2_sample_from, num_samples)
     return results
+
+
+def calculate_mrr_sample(rec_id, query_list):
+    if rec_id in query_list:
+        index = query_list.index(rec_id)+1
+        return index/len(query_list)
+    else:
+        return 0
+
+
+
+

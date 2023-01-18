@@ -245,11 +245,11 @@ class Trainer(object):
 
             self.model.annoy_base_constructor()
             pbar = self.progress_bar(self.test_dataloader)
-            ppls, recall_losses, rerank_losses, true_goals, pred_goals = [],[],[],[],[]
+            mrrs, ppls, recall_losses, rerank_losses, true_goals, pred_goals = [],[],[],[],[], []
             total_val, recall_top100_val, recall_top300_val, recall_top500_val, \
                 rerank_top1_val, rerank_top10_val, rerank_top50_val = 0,0,0,0,0,0,0
             for batch in pbar:
-                ppl_history, recall_loss_history, rerank_loss_history, \
+                ppl_history, ce_history, recall_loss_history, rerank_loss_history, mrr_history,\
                 total, recall_top100, recall_top300, recall_top500, \
                 rerank_top1, rerank_top10, rerank_top50, \
                 y_true, y_pred                               = self.engine.validate_one_iteration(batch[0], self.model)
@@ -259,6 +259,8 @@ class Trainer(object):
                 rerank_top1_val += rerank_top1; rerank_top10_val += rerank_top10; rerank_top50_val += rerank_top50
                 true_goals.extend(y_true)
                 pred_goals.extend(y_pred)
+                if len(mrr_history)!=0:
+                    mrrs.append(np.mean(mrr_history))
             
             tn, fp, fn, tp = confusion_matrix(true_goals,pred_goals).ravel()
 
@@ -268,6 +270,8 @@ class Trainer(object):
             output_file.writelines([f"recall top100: {recall_top100_val/total_val}, top300: {recall_top300_val/total_val}, top500: {recall_top500_val/total_val}"])
             output_file.write('\n')
             output_file.writelines([f"rerank top1: {rerank_top1_val/total_val}, top10: {rerank_top10_val/total_val}, top50: {rerank_top50_val/total_val}"])
+            output_file.write('\n')
+            output_file.writelines([f"Mean Reciprocal Rank: {np.mean(mrrs)}"])
             output_file.write('\n')
             output_file.writelines([f"True Positive: {tp}, False Positive: {fp}, False Negative: {fn}, True Negative: {tn}"])
             output_file.write('\n')

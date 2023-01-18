@@ -223,6 +223,28 @@ class C_UniversalCRSModel(torch.nn.Module):
         return combined_mask_to_add #[total_length, total_length]
     
 
+    def get_disentanglement_label(self, logits: torch.Tensor):
+        KB_TOKEN = "[MOVIE_ID]"
+        EPS = 1e-6
+        oov_id = self.lm_tokenizer.encode(KB_TOKEN)[0]
+        logger.debug(f'Logits Shape: {logits.shape}')
+        generated_ids = torch.argmax(logits,dim = -1)[0]
+        logger.debug(f'Generated IDS Shape: {generated_ids.shape}')
+        generated_logits = torch.zeros_like(generated_ids)
+        
+        for i, id in enumerate(generated_ids):
+            logit_value = logits[:,i,id] 
+            generated_logits[i] = logit_value
+
+        dis_labels = torch.zeros_like(generated_ids, dtype = torch.float)
+        for i,id in enumerate(generated_ids):
+            if id.item() == oov_id:
+                dis_labels[i] = 1-EPS
+            else:
+                dis_labels[i] = EPS
+
+        return generated_logits, dis_labels
+
     def forward_binary_turn(self, 
                                    past_wtes, # past word token embeddings, [1, len, 768]
                                    current_tokens # tokens of current turn conversation, [1, len]
