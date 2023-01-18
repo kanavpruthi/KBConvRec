@@ -224,7 +224,7 @@ class Trainer(object):
             valid_cnt, total_gen_cnt, response_with_items = 0, 0, 0
             for batch in pbar:
                 if isinstance(self.engine,C_Engine):
-                    original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.generation_with_gold_labels(batch[0], self.model, item_id_2_lm_token_id)
+                    original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.generation_with_gold_labels_and_gold_recs(batch[0], self.model, item_id_2_lm_token_id)
                 else:
                     original_sens, sentences, ic, tc, vc, tgc, rwi, group = self.engine.generate_with_gold_labels(batch[0], self.model, item_id_2_lm_token_id)
                 total_sentences_original.append(original_sens)
