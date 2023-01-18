@@ -5,3 +5,4 @@ out/*.txt
 data/raw_data/
 nohup.out
 runs/Jan*
+gen_log.txt

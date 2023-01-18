@@ -38,29 +38,45 @@ test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
 items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
-test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+CKPT = 'runs/new_model_rec.pt'
 
+if "new" in CKPT:
+    test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+else:
+    test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 device = torch.device(0)
 
+if "new" in CKPT:
+    model = C_UniversalCRSModel(
+        gpt2_model, 
+        bert_model_recall, 
+        bert_model_rerank, 
+        gpt_tokenizer, 
+        bert_tokenizer, 
+        device, 
+        items_db, 
+        rec_token_str=REC_TOKEN, 
+        rec_end_token_str=REC_END_TOKEN
+    )
+else:
+    model = UniversalCRSModel(
+        gpt2_model, 
+        bert_model_recall, 
+        bert_model_rerank, 
+        gpt_tokenizer, 
+        bert_tokenizer, 
+        device, 
+        items_db, 
+        rec_token_str=REC_TOKEN, 
+        rec_end_token_str=REC_END_TOKEN
+    )
 
-model = C_UniversalCRSModel(
-    gpt2_model, 
-    bert_model_recall, 
-    bert_model_rerank, 
-    gpt_tokenizer, 
-    bert_tokenizer, 
-    device, 
-    items_db, 
-    rec_token_str=REC_TOKEN, 
-    rec_end_token_str=REC_END_TOKEN
-)
 
-CKPT = 'runs/new_model_rec.pt'
 
 model.to(device)
 
-model.load_state_dict(torch.load(CKPT,map_location='cuda:0')) 
+model.load_state_dict(torch.load(CKPT,map_location=device)) 
 
 
 progress_bar = tqdm.std.tqdm
@@ -74,9 +90,14 @@ temperature = 1.2
 # Data loader 
 test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate)
 
-engine = C_Engine(device,
-                validation_recall_size = validation_recall_size,
-                temperature = temperature)
+if "new" in CKPT:
+    engine = C_Engine(device,
+                    validation_recall_size = validation_recall_size,
+                    temperature = temperature)
+else:
+    engine = Engine(device,
+                    validation_recall_size = validation_recall_size,
+                    temperature = temperature)
 
 
 

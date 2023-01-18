@@ -164,6 +164,14 @@ class C_UniversalCRSModel(torch.nn.Module):
     
     def lm_expand_wtes_with_items_annoy_base(self):
         all_item_ids = list(self.items_db.keys())
+        
+        ########## Adding all entities to language model dictionary ###########
+        # new_tokens_to_add = []
+        # for i in all_item_ids:
+        #     new_tokens_to_add.append('['+str(i)+']')
+        # self.lm_tokenizer.add_tokens(new_tokens_to_add)
+        #######################################################################
+
         total_pooled = []
         for i in all_item_ids:
             total_pooled.append(self.annoy_base_rerank.get_item_vector(i))
@@ -178,6 +186,9 @@ class C_UniversalCRSModel(torch.nn.Module):
         new_embeddings = torch.nn.Embedding.from_pretrained(new_embeddings)
         self.language_model.set_input_embeddings(new_embeddings)
         self.language_model.to(self.device)
+        # print(self.language_model.get_input_embeddings())
+        # print(len(self.lm_tokenizer))
+        # raise('')
         return item_id_2_lm_token_id
     
     def lm_restore_wtes(self, original_token_emb_size):
