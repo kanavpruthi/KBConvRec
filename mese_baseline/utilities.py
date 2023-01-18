@@ -84,9 +84,9 @@ def sample_ids_from_db(item_db,
 def calculate_mrr_sample(rec_id, query_list):
     if rec_id in query_list:
         index = query_list.index(rec_id)+1
-        return index/len(query_list)
+        return 1/index
     else:
-        return 0
+        return 0.0
 
 
 
