@@ -227,9 +227,9 @@ class C_UniversalCRSModel(torch.nn.Module):
         KB_TOKEN = "[MOVIE_ID]"
         EPS = 1e-6
         oov_id = self.lm_tokenizer.encode(KB_TOKEN)[0]
-        logger.debug(f'Logits Shape: {logits.shape}')
+        # logger.debug(f'Logits Shape: {logits.shape}')
         generated_ids = torch.argmax(logits,dim = -1)[0]
-        logger.debug(f'Generated IDS Shape: {generated_ids.shape}')
+        # logger.debug(f'Generated IDS Shape: {generated_ids.shape}')
         generated_logits = torch.zeros_like(generated_ids)
         
         for i, id in enumerate(generated_ids):
