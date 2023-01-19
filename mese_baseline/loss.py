@@ -70,11 +70,21 @@ class DisentanglementLoss(nn.Module):
     def forward(self, logits, dis_labels):
         """
         reduce: None, "batch", "sentence"
+
+        
+        Shape:
+            - Logits: Shape : [B, Sequence_Length, Vocab_Length]
+            - dis_labels: [B, Sequence_Length, Vocab_Length]
         """
-        recommendation_encourangement = logits * torch.log(dis_labels)
-        chitchat_discouragement = (1-logits) * torch.log(1-dis_labels)
+
+        softmax_logits = torch.softmax(logits,dim = -1) # [B, Seq_Length, Vocab]    
+
+        recommendation_encourangement = softmax_logits * torch.log(dis_labels)
+        chitchat_discouragement = (1-softmax_logits) * torch.log(1-dis_labels)
+
         res = -recommendation_encourangement-chitchat_discouragement
         loss = res.sum()
+        
         return loss 
 
 

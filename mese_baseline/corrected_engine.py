@@ -107,7 +107,7 @@ class C_Engine(object):
                         )
 
                         ############### Debugging to include disentanglement loss ##########
-                        language_logits_flat, disentanglement_labels = model.get_disentanglement_label(language_logits)
+                        language_logits_flat, disentanglement_labels = model.get_disentanglement_labels(language_logits)
                         loss_disentanglement = self.disentanglement_loss(language_logits_flat,disentanglement_labels)
                         ####################################################################
 

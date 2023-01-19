@@ -20,6 +20,8 @@ from corrected_engine import C_Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
 
+device = torch.device(0)
+
 bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer/")
 bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model/')
 bert_model_rerank = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model/')
@@ -45,7 +47,7 @@ if "new" in CKPT:
 else:
     test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
-device = torch.device(0)
+
 
 if "new" in CKPT:
     model = C_UniversalCRSModel(

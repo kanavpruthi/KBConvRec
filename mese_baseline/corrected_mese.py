@@ -223,27 +223,25 @@ class C_UniversalCRSModel(torch.nn.Module):
         return combined_mask_to_add #[total_length, total_length]
     
 
-    def get_disentanglement_label(self, logits: torch.Tensor):
+    def get_disentanglement_labels(self, logits: torch.Tensor):
         KB_TOKEN = "[MOVIE_ID]"
         EPS = 1e-6
-        oov_id = self.lm_tokenizer.encode(KB_TOKEN)[0]
-        # logger.debug(f'Logits Shape: {logits.shape}')
-        generated_ids = torch.argmax(logits,dim = -1)[0]
+        oov_id = self.lm_tokenizer.encode(KB_TOKEN)[0] # Integer
+        softmax_logits = torch.softmax(logits,dim = -1) # [B, Seq_Length, Vocab]    
+        generated_ids = torch.argmax(logits,dim = -1) # [B, Seq_Len]
         # logger.debug(f'Generated IDS Shape: {generated_ids.shape}')
-        generated_logits = torch.zeros_like(generated_ids)
         
-        for i, id in enumerate(generated_ids):
-            logit_value = logits[:,i,id] 
-            generated_logits[i] = logit_value
 
-        dis_labels = torch.zeros_like(generated_ids, dtype = torch.float)
-        for i,id in enumerate(generated_ids):
-            if id.item() == oov_id:
-                dis_labels[i] = 1-EPS
-            else:
-                dis_labels[i] = EPS
+        dis_labels = torch.full_like(softmax_logits,EPS,  dtype = torch.float)  # [B, Seq_Len, Vocab]
+        num_batch, sequence_length, vocab_length = dis_labels.shape
+        
+        for batch in range(num_batch):
+            for timestep in range(sequence_length):
+                current_generated_token = generated_ids[batch,timestep]
+                dis_labels[batch][timestep][current_generated_token] = 1.0-EPS
+        
 
-        return generated_logits, dis_labels
+        return dis_labels
 
     def forward_binary_turn(self, 
                                    past_wtes, # past word token embeddings, [1, len, 768]

@@ -270,7 +270,7 @@ class Trainer(object):
                 if len(mrr_history)!=0:
                     mrrs.append(np.mean(mrr_history))
             
-            tn, fp, fn, tp = confusion_matrix(true_goals,pred_goals).ravel()
+            
 
             output_file = open(output_file_path, 'a')
             output_file.writelines([f"ppl: {np.mean(ppls)}, recall_loss: {np.mean(recall_losses)}, rerank_loss: {np.mean(rerank_losses)}"])
@@ -282,6 +282,7 @@ class Trainer(object):
             output_file.writelines([f"Mean Reciprocal Rank: {np.mean(mrrs)}"])
             output_file.write('\n')
             if isinstance(self.engine, C_Engine):
+                tn, fp, fn, tp = confusion_matrix(true_goals,pred_goals).ravel()
                 output_file.writelines([f"True Positive: {tp}, False Positive: {fp}, False Negative: {fn}, True Negative: {tn}"])
                 output_file.write('\n')
                 output_file.writelines([f"Total Recommendations = {len(true_goals)}"])
