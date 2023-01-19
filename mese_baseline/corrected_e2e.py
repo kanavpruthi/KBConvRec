@@ -19,6 +19,8 @@ from corrected_engine import C_Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
 
+device = torch.device(0)
+
 bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer")
 bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
 bert_model_rerank = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
@@ -47,7 +49,6 @@ test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 # print(get_memory_free_MiB(0))
 # Visualise Training and Set device 
 writer = SummaryWriter()
-device = torch.device('cpu')
 
 
 model = C_UniversalCRSModel(
@@ -141,7 +142,7 @@ engine = C_Engine(device,
                 temperature)
 
 
-output_file_path = "out/CRS_Train_New_Model.txt"
+output_file_path = "out/NewModel_with_DELoss.txt"
 model_saved_path = "runs/Durecdial_"
 
 ## Define Trainer
