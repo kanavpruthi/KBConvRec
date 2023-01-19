@@ -35,11 +35,11 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = "../input/durecdial2/Durecdial2/processed/durecdial2_full_entity_db_placeholder"
+items_db_path = "../../../input/durecdial2/Durecdial2/processed/durecdial2_full_entity_db_placeholder"
 items_db = torch.load(items_db_path)
 
-train_path = "../input/durecdial2/Durecdial2/processed/durecdial2_all_train_placeholder_updated"
-test_path = "../input/durecdial2/Durecdial2/processed/durecdial2_all_dev_placeholder_updated"
+train_path = "../../../input/durecdial2/Durecdial2/processed/durecdial2_all_train_placeholder_updated"
+test_path = "../../../input/durecdial2/Durecdial2/processed/durecdial2_all_dev_placeholder_updated"
 
 
 train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
