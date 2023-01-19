@@ -1,5 +1,5 @@
 import torch 
-from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB
+from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB, calculate_mrr_sample
 import numpy as np
 import sys
 from mese import UniversalCRSModel
@@ -156,6 +156,7 @@ class Engine(object):
         ppl_history = []
         recall_loss_history = []
         rerank_loss_history = []
+        mrr_history = []
         total = 0
         recall_top100, recall_top300, recall_top500 = 0, 0, 0,
         rerank_top1, rerank_top10, rerank_top50 = 0, 0, 0
@@ -217,6 +218,9 @@ class Engine(object):
                     del loss_ppl; del all_wte_logits; del all_wte_targets
 
                     recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
+                    sample_mrr = calculate_mrr_sample(recommended_id,recalled_ids)
+                    mrr_history.append(sample_mrr)
+
 
                     if recommended_id in recalled_ids[:500]:
                         recall_top500 += 1
@@ -249,7 +253,8 @@ class Engine(object):
                 
                 past_list.append((None, recommended_ids))
                 past_list.append((current_tokens, None))
-        return ppl_history, recall_loss_history, rerank_loss_history, \
+                
+        return ppl_history, recall_loss_history, rerank_loss_history, mrr_history, \
                 total, recall_top100, recall_top300, recall_top500, \
                 rerank_top1, rerank_top10, rerank_top50
 

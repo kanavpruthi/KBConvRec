@@ -15,8 +15,14 @@ import tqdm
 from dataset import MovieRecDataset, RecDataset
 from corrected_mese import C_UniversalCRSModel
 from corrected_engine import C_Engine
+from engine import Engine 
+from mese import UniversalCRSModel
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
+
+CKPT = 'runs/mese.pt'
+device = torch.device('cpu')
+
 
 bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer")
 bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
@@ -37,7 +43,10 @@ output_file_path = 'out/retrieval_results_best.txt'
 
 items_db = torch.load(items_db_path)
 
-test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+if "new" in CKPT:
+    test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+else:
+    test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 num_pos_classes_dev = 530
 num_neg_classes_dev = 5777
@@ -46,22 +55,31 @@ criterion_language = SequenceCrossEntropyLoss()
 criterion_goal = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight))
 criterion_recall = torch.nn.CrossEntropyLoss()
 
-device = torch.device('cpu')
+if "new" in CKPT:
+    model = C_UniversalCRSModel(
+        gpt2_model, 
+        bert_model_recall, 
+        bert_model_rerank, 
+        gpt_tokenizer, 
+        bert_tokenizer, 
+        device, 
+        items_db, 
+        rec_token_str=REC_TOKEN, 
+        rec_end_token_str=REC_END_TOKEN
+    )
+else:
+    model = UniversalCRSModel(
+        gpt2_model, 
+        bert_model_recall, 
+        bert_model_rerank, 
+        gpt_tokenizer, 
+        bert_tokenizer, 
+        device, 
+        items_db, 
+        rec_token_str=REC_TOKEN, 
+        rec_end_token_str=REC_END_TOKEN
+    )
 
-
-model = C_UniversalCRSModel(
-    gpt2_model, 
-    bert_model_recall, 
-    bert_model_rerank, 
-    gpt_tokenizer, 
-    bert_tokenizer, 
-    device, 
-    items_db, 
-    rec_token_str=REC_TOKEN, 
-    rec_end_token_str=REC_END_TOKEN
-)
-
-CKPT = 'runs/new_model_rec.pt'
 
 model.to(device)
 
@@ -81,13 +99,21 @@ temperature = 1.2
 # Data loader 
 test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate)
 
-engine = C_Engine(device,
-                criterion_language=criterion_language,
-                criterion_recall = criterion_recall,
-                criterion_goal= criterion_goal,
-                num_samples_recall_train= num_samples_recall_train,
-                validation_recall_size = validation_recall_size,
-                temperature = temperature)
+if "new" in CKPT:
+    engine = C_Engine(device,
+                    criterion_language=criterion_language,
+                    criterion_recall = criterion_recall,
+                    criterion_goal= criterion_goal,
+                    num_samples_recall_train= num_samples_recall_train,
+                    validation_recall_size = validation_recall_size,
+                    temperature = temperature)
+else:
+    engine = Engine(device,
+                    criterion_language=criterion_language,
+                    criterion_recall = criterion_recall,
+                    num_samples_recall_train= num_samples_recall_train,
+                    validation_recall_size = validation_recall_size,
+                    temperature = temperature)
 
 
 
