@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+from loguru import logger 
 
 
 class SequenceCrossEntropyLoss(nn.Module):
@@ -73,7 +73,9 @@ class DisentanglementLoss(nn.Module):
         """
         recommendation_encourangement = logits * torch.log(dis_labels)
         chitchat_discouragement = (1-logits) * torch.log(1-dis_labels)
-        return -recommendation_encourangement-chitchat_discouragement
+        res = -recommendation_encourangement-chitchat_discouragement
+        loss = res.sum()
+        return loss 
 
 
 
