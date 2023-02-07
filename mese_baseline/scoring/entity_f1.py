@@ -46,19 +46,27 @@ def f1(preds, golds, movie_list):
 			continue
 		else:
 			if entities_in_gold != entities_in_pred:
-				print(entities_in_gold)
-				print(entities_in_pred)
-				print(f'{gold}{pred}')
-				print()
-				print()
-			re_list.append(common/len(entities_in_gold))
+				pass
+				# print(entities_in_gold)
+				# print(entities_in_pred)
+				# print(f'{gold}{pred}')
+				# print()
+				# print()
+			recall = common/len(entities_in_gold)
+			re_list.append(recall)
 
 		
 		
 		if len(entities_in_pred) == 0:
 			pr_list.append(0)
+			precision = 0
 		else:
-			pr_list.append(common/len(entities_in_pred))
+			precision = common/len(entities_in_pred)
+			pr_list.append(precision)
+
+		if precision != recall:
+			print('Gold:',entities_in_gold)
+			print('Predicted:',entities_in_pred)
 		
 	macro_pr, macro_re, macro_f1 = compute_macro_f1(pr_list, re_list)
 

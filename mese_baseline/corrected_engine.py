@@ -106,9 +106,9 @@ class C_Engine(object):
                             self.num_samples_recall_train
                         )
 
-                        ############### Debugging to include disentanglement loss ##########
-                        language_logits_flat, disentanglement_labels = model.get_disentanglement_labels(language_logits)
-                        loss_disentanglement = self.disentanglement_loss(language_logits_flat,disentanglement_labels)
+                        # ############### Debugging to include disentanglement loss ##########
+                        # language_logits_flat, disentanglement_labels = model.get_disentanglement_labels(language_logits)
+                        # loss_disentanglement = self.disentanglement_loss(language_logits_flat,disentanglement_labels)
                         ####################################################################
 
                         # goal type loss 
@@ -140,7 +140,7 @@ class C_Engine(object):
                         rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
                         loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
                     # combined loss
-                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type + loss_disentanglement
+                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type 
                     scaler.scale(total_loss).backward()
                         
                 past_list.append((None, recommended_ids))

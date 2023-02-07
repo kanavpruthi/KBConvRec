@@ -80,7 +80,7 @@ class Trainer(object):
                     rerank_top1_val, rerank_top10_val, rerank_top50_val = 0,0,0,0,0,0,0
                 for batch in pbar:
                     if isinstance(self.engine,C_Engine):
-                        ppl_history, ce_history, recall_loss_history, rerank_loss_history, \
+                        ppl_history, ce_history, recall_loss_history, rerank_loss_history, mrr_history, \
                         total, recall_top100, recall_top300, recall_top500, \
                         rerank_top1, rerank_top10, rerank_top50, \
                         y_true, y_pred     = self.engine.validate_one_iteration(batch[0], self.model)

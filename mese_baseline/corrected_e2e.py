@@ -35,11 +35,11 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
+items_db_path = "data/processed/redial_movie_db_placeholder"
 items_db = torch.load(items_db_path)
 
-train_path = "data/processed/durecdial2_all_train_placeholder_updated"
-test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
+train_path = "data/processed/redial_all_train_placeholder_updated"
+test_path = "data/processed/redial_all_test_placeholder_updated"
 
 
 train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
@@ -73,7 +73,7 @@ num_epochs = 10
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 500
+num_samples_recall_train = 150
 num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
 validation_recall_size = 500
@@ -90,8 +90,10 @@ criterion_language = SequenceCrossEntropyLoss()
 criterion_recall = torch.nn.CrossEntropyLoss()
 # rerank_class_weights = torch.FloatTensor([1] * (num_samples_rerank_train-1) + [30]).to(model.device)
 criterion_rerank_train = torch.nn.CrossEntropyLoss()
-num_pos_classes_dev = 530
-num_neg_classes_dev = 5777
+# num_pos_classes_dev = 530
+# num_neg_classes_dev = 5777
+num_pos_classes_dev = 38453
+num_neg_classes_dev = 63076
 pos_weight = num_neg_classes_dev/num_pos_classes_dev
 criterion_goal = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight))
 disentanglement_loss = DisentanglementLoss()
@@ -131,19 +133,19 @@ engine = C_Engine(device,
                 criterion_recall,
                 criterion_rerank_train,
                 criterion_goal,
-                disentanglement_loss,
-                language_loss_train_coeff,
-                recall_loss_train_coeff,
-                rerank_loss_train_coeff,
-                num_samples_recall_train,
-                num_samples_rerank_train,
-                rerank_encoder_chunk_size,
-                validation_recall_size,
-                temperature)
+                # disentanglement_loss,
+                language_loss_train_coeff = language_loss_train_coeff,
+                recall_loss_train_coeff = recall_loss_train_coeff,
+                rerank_loss_train_coeff = rerank_loss_train_coeff,
+                num_samples_recall_train = num_samples_recall_train,
+                num_samples_rerank_train = num_samples_rerank_train,
+                rerank_encoder_chunk_size = rerank_encoder_chunk_size,
+                validation_recall_size = validation_recall_size,
+                temperature = temperature)
 
 
-output_file_path = "out/NewModel_with_DELoss.txt"
-model_saved_path = "runs/Durecdial_"
+output_file_path = "out/redial_new_model.txt"
+model_saved_path = "runs/redial_"
 
 ## Define Trainer
 trainer = Trainer(

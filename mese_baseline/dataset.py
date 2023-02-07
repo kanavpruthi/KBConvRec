@@ -52,7 +52,6 @@ class RecDataset(Dataset):
         dialogue = self.data[index]
         
         dialogue_tokens = []
-        
         for utterance, gt_ind, rec_or_not_target in dialogue:
             utt_tokens = self.gpt2_tok(utterance, return_tensors="pt")['input_ids']
             dialogue_tokens.append( ( torch.cat( (utt_tokens, self.turn_ending), dim=1), gt_ind, int(rec_or_not_target)) )
