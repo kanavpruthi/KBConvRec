@@ -129,7 +129,9 @@ def calc_distinct(pair_list):
     """
     distinct1 = calc_distinct_ngram(pair_list, 1)
     distinct2 = calc_distinct_ngram(pair_list, 2)
-    return [distinct1, distinct2]
+    distinct3 = calc_distinct_ngram(pair_list, 3)
+    distinct4 = calc_distinct_ngram(pair_list, 4)
+    return [distinct1, distinct2, distinct3, distinct4]
 
 
 def calc_f1(data):
@@ -168,11 +170,13 @@ f1 = calc_f1(sents)
 # calc bleu
 bleu1, bleu2 = calc_bleu(sents)
 # calc distinct
-distinct1, distinct2 = calc_distinct(sents)
+distinct1, distinct2 , distinct3, distinct4 = calc_distinct(sents)
 
 output_str = "F1: %.2f%%\n" % (f1 * 100)
 output_str += "BLEU1: %.3f%%\n" % bleu1
 output_str += "BLEU2: %.3f%%\n" % bleu2
 output_str += "DISTINCT1: %.3f%%\n" % distinct1
 output_str += "DISTINCT2: %.3f%%\n" % distinct2
+output_str += "DISTINCT3: %.3f%%\n" % distinct3
+output_str += "DISTINCT4: %.3f%%\n" % distinct4
 sys.stdout.write(output_str)
