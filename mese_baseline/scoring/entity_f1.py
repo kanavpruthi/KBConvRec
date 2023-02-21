@@ -9,7 +9,7 @@ def get_entities_in_utt(utt, entities):
 	return seen
 
 
-def compute_macro_f1(pr_list, re_list):
+def compute_micro_f1(pr_list, re_list):
 
 	#average of F1s
 	#arithmetic mean over harmonic mean
@@ -25,6 +25,37 @@ def compute_macro_f1(pr_list, re_list):
 
 	return total_pr/float(len(pr_list)), total_re/float(len(pr_list)), total_f1/float(len(pr_list))
 		
+
+def compute_micro_f1(pr_list, re_list):
+
+	#average of F1s
+	#arithmetic mean over harmonic mean
+	total_f1 = 0
+	total_pr = 0
+	total_re = 0
+	for pr, re in zip(pr_list, re_list):
+		if pr+re > 0:
+			f1=(2*pr*re)/(pr+re)
+			total_f1 += f1
+		total_pr += pr
+		total_re += re
+
+	return total_pr/float(len(pr_list)), total_re/float(len(pr_list)), total_f1/float(len(pr_list))
+		
+def compute_macro_f1(pr_list, re_list):
+	average_conv_len = 9
+	conv_pr_list, conv_re_list, conv_f1_list = [], [], []
+	#average of F1s
+	#arithmetic mean over harmonic mean
+	for idx in range(0,len(pr_list),average_conv_len):
+		p,r,f1 =  compute_micro_f1(pr_list[idx:idx+average_conv_len], re_list[idx:idx+average_conv_len])
+		conv_pr_list.append(p)
+		conv_re_list.append(r)
+		conv_f1_list.append(f1)
+
+	return sum(conv_pr_list)/float(len(conv_pr_list)), sum(conv_re_list)/float(len(conv_re_list)), sum(conv_f1_list)/float(len(conv_f1_list))
+	
+
 
 def f1(preds, golds, movie_list):
 	
@@ -47,11 +78,11 @@ def f1(preds, golds, movie_list):
 		else:
 			if entities_in_gold != entities_in_pred:
 				pass
-				# print(entities_in_gold)
-				# print(entities_in_pred)
-				# print(f'{gold}{pred}')
-				# print()
-				# print()
+			# print(entities_in_gold)
+			# print(entities_in_pred)
+			# print(f'{gold}{pred}')
+			# print()
+			# print()
 			recall = common/len(entities_in_gold)
 			re_list.append(recall)
 
@@ -68,6 +99,8 @@ def f1(preds, golds, movie_list):
 			print('Gold:',entities_in_gold)
 			print('Predicted:',entities_in_pred)
 		
+	micro_pr, micro_re, micro_f1 = compute_micro_f1(pr_list, re_list)
+
 	macro_pr, macro_re, macro_f1 = compute_macro_f1(pr_list, re_list)
 
 	return (macro_pr, macro_re, macro_f1)
@@ -94,7 +127,8 @@ movies.extend(music)
 file = open(file_path,'r')
 
 golds = [];preds = []
-for line in file:
+for line_no,line in enumerate(file):
+	# print(line_no)
 	pred, gold = line.split('\t')
 	preds.append(pred)
 	golds.append(gold)
