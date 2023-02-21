@@ -17,7 +17,7 @@ from constrained_decoder.generate import generate
 from constrained_decoder.utils import tokenize_constraints
 from constrained_decoder.lexical_constraints import init_batch
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
-from InductiveAttentionModels import GPT2InductiveAttentionHeadModel
+from inductive_attention_model import GPT2InductiveAttentionHeadModel
 from utilities import replace_placeholder
 from dataset import RecDataset
 from torch.utils.data import DataLoader

@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
 from transformers import AdamW, get_linear_schedule_with_warmup
 
-from InductiveAttentionModels import GPT2InductiveAttentionHeadModel
+from inductive_attention_model import GPT2InductiveAttentionHeadModel
 from loss import SequenceCrossEntropyLoss
 
 from trainer import Trainer

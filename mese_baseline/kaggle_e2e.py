@@ -8,7 +8,7 @@ from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, Di
 from transformers import get_linear_schedule_with_warmup
 from torch.optim import AdamW
 
-from InductiveAttentionModels import GPT2InductiveAttentionHeadModel
+from inductive_attention_model import GPT2InductiveAttentionHeadModel
 from loss import SequenceCrossEntropyLoss, DisentanglementLoss
 
 from trainer import Trainer

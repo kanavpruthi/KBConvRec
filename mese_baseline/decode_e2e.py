@@ -17,7 +17,7 @@ from constrained_decoder.generate import generate
 from constrained_decoder.utils import tokenize_constraints
 from constrained_decoder.lexical_constraints import init_batch
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
-from InductiveAttentionModels import GPT2InductiveAttentionHeadModel
+from inductive_attention_model import GPT2InductiveAttentionHeadModel
 from utilities import replace_placeholder
 from dataset import RecDataset
 from torch.utils.data import DataLoader
@@ -64,7 +64,7 @@ CONSTRAINTS = [[['[MOVIE_ID]']]]
 ENTITY_TOKEN = ['[MOVIE_ID]']
 
 @torch.no_grad()
-def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id):
+def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = False):
     
     period_id = [tokenizer.convert_tokens_to_ids('.')]
     period_id.append(tokenizer.convert_tokens_to_ids('Ġ.'))
@@ -79,11 +79,13 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id):
     model.eval()
     model = model.to(device)
 
-    writer = open('constrained_generations_e2e','a')
+    writer = open('redial_constrained_generations_e2e','a')
     
     ############################### ADDITION ######################
     role_ids, dialogues = batch
     dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
+
+
 
     past_tokens = None
     original_sentences = []
@@ -134,7 +136,12 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id):
             elif turn_num!= 0:
                 past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
             past_list.append((dial_turn_inputs,gold_recommended_ids))
+        
         else: # System    
+                if turn_num == 0:
+                    past_tokens = dial_turn_inputs
+                    past_list.append((dial_turn_inputs,gold_recommended_ids))
+                    continue
                 
                 past_wtes = past_wtes_constructor(past_list, model)
                 recalled_ids = model.validation_perform_recall(past_wtes, 500)
@@ -264,7 +271,7 @@ if __name__ == '__main__':
 
 
     
-    CKPT = 'runs/new_model_rec.pt'
+    CKPT = 'runs/redial_new_model.pt'
     device = torch.device(0)
     # device = torch.device('cpu')
 
@@ -284,12 +291,12 @@ if __name__ == '__main__':
 
 
 
-    items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
+    items_db_path = "data/processed/redial_movie_db_placeholder"
     items_db = torch.load(items_db_path)
 
 
     ############## Dataset loading ###########
-    test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
+    test_path = "data/processed/redial_all_test_placeholder_updated"
     test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
     
     
