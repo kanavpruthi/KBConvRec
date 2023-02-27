@@ -2,7 +2,7 @@ import torch
 from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB, calculate_mrr_sample
 import numpy as np
 import sys
-from corrected_mese import C_UniversalCRSModel
+from model.mese import C_UniversalCRSModel
 from loguru import logger
 import torch.nn.functional as F
 
@@ -40,18 +40,12 @@ class C_Engine(object):
 
     def train_one_iteration(self,batch,model: C_UniversalCRSModel, scaler):
         role_ids, dialogues = batch
-        # print('before training free space: ',get_memory_free_MiB(4))
         dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
-        # print('after sending dialogue tensors: ',get_memory_free_MiB(4)) 
-        # Negligible GPU Usage at this point
+
         past_list = []
         ppl_history = []
         ce_loss_history = []
-        # for i,d in enumerate(dialog_tensors):
-        #     _, recommended_ids = dialogues[i]
-        #     print(model.lm_tokenizer.decode(d[0]),recommended_ids)
-        # sys.exit(0)
-    #     language_logits, language_targets = [], []
+
         for turn_num in range(len(role_ids)):
             current_tokens = dialog_tensors[turn_num]
             _, recommended_ids, goal_rec_or_not = dialogues[turn_num]

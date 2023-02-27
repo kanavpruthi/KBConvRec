@@ -2,7 +2,7 @@ import torch
 from utilities import past_wtes_constructor, replace_placeholder, get_memory_free_MiB, calculate_mrr_sample
 import numpy as np
 import sys
-from mese import UniversalCRSModel
+from old.model.mese import UniversalCRSModel
 
 class Engine(object):
     def __init__(self,

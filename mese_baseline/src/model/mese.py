@@ -83,7 +83,7 @@ class C_UniversalCRSModel(torch.nn.Module):
                                             ):
         chunk_ids = item_ids
         chunk_infos = [items_db_to_use[key] for key in chunk_ids ]
-        chunk_tokens = self.encoder_tokenizer(chunk_infos, padding=True, truncation=True, return_tensors="pt")
+        chunk_tokens = self.encoder_tokenizer(chunk_infos, max_length = 64, padding='max_length', truncation=True, return_tensors="pt")
         chunk_input_ids = chunk_tokens['input_ids'].to(self.device)
         chunk_attention_mask = chunk_tokens['attention_mask'].to(self.device)
         chunk_hiddens = encoder_to_use(input_ids=chunk_input_ids, attention_mask=chunk_attention_mask).last_hidden_state

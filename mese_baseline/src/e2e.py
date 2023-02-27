@@ -1,27 +1,32 @@
 import torch
 from torch.utils.data import DataLoader
+import os 
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 from torch.utils.tensorboard import SummaryWriter
-from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
-from transformers import AdamW, get_linear_schedule_with_warmup
 
-from inductive_attention_model import GPT2InductiveAttentionHeadModel
-from loss import SequenceCrossEntropyLoss
+from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
+from transformers import get_linear_schedule_with_warmup
+from torch.optim import AdamW
+
+from model.inductive_attention_model import GPT2InductiveAttentionHeadModel
+from loss import SequenceCrossEntropyLoss, DisentanglementLoss
 
 from trainer import Trainer
-import time
 import tqdm
-from dataset import MovieRecDataset
-from mese import UniversalCRSModel
-from engine import Engine
+from dataset import MovieRecDataset, RecDataset
+from model.mese import C_UniversalCRSModel
+from engine import C_Engine
 from utilities import get_memory_free_MiB
 from metrics import distinct_metrics, bleu_calc_all
+
+device = torch.device(0)
 
 bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer")
 bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
 bert_model_rerank = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model')
-# bert_tokenizer.save_pretrained('../../../../offline_transformers/distilbert-base-uncased/tokenizer')
 gpt_tokenizer = GPT2Tokenizer.from_pretrained("../../../../offline_transformers/gpt2/tokenizer")
 gpt2_model = GPT2InductiveAttentionHeadModel.from_pretrained('../../../../offline_transformers/gpt2/model')
+
 
 REC_TOKEN = "[REC]"
 REC_END_TOKEN = "[REC_END]"
@@ -30,25 +35,23 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = "data/processed/durecdial2_full_entity_db_placeholder"
+items_db_path = "data/kb/redial_db"
 items_db = torch.load(items_db_path)
 
-train_path = "data/processed/durecdial2_all_train_placeholder_updated"
-test_path = "data/processed/durecdial2_all_dev_placeholder_updated"
+train_path = "data/processed/redial/train_wrl"
+test_path = "data/processed/redial/test_wrl"
 
 
-
-train_dataset = MovieRecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
-test_dataset = MovieRecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
-
+train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 
 # print(get_memory_free_MiB(0))
+# Visualise Training and Set device 
 writer = SummaryWriter()
-device = torch.device(0)
 
 
-model = UniversalCRSModel(
+model = C_UniversalCRSModel(
     gpt2_model, 
     bert_model_recall, 
     bert_model_rerank, 
@@ -70,7 +73,7 @@ num_epochs = 10
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = 500
+num_samples_recall_train = 150
 num_samples_rerank_train = 60
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
 validation_recall_size = 500
@@ -85,9 +88,15 @@ rerank_loss_train_coeff = 1.0
 # loss
 criterion_language = SequenceCrossEntropyLoss()
 criterion_recall = torch.nn.CrossEntropyLoss()
-rerank_class_weights = torch.FloatTensor([1] * (num_samples_rerank_train-1) + [30]).to(model.device)
-criterion_rerank_train = torch.nn.CrossEntropyLoss(weight=rerank_class_weights)
-
+# rerank_class_weights = torch.FloatTensor([1] * (num_samples_rerank_train-1) + [30]).to(model.device)
+criterion_rerank_train = torch.nn.CrossEntropyLoss()
+# num_pos_classes_dev = 530
+# num_neg_classes_dev = 5777
+num_pos_classes_dev = 38453
+num_neg_classes_dev = 63076
+pos_weight = num_neg_classes_dev/num_pos_classes_dev
+criterion_goal = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight))
+disentanglement_loss = DisentanglementLoss()
 # optimizer and scheduler
 param_optimizer = list(model.language_model.named_parameters()) + \
     list(model.recall_encoder.named_parameters()) + \
@@ -115,26 +124,28 @@ progress_bar = tqdm.std.tqdm
 
 # Data loader 
 
-train_dataloader = DataLoader(dataset=train_dataset, shuffle=False, batch_size=batch_size, collate_fn=train_dataset.collate, pin_memory=True)
-test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate, pin_memory=True)
+train_dataloader = DataLoader(dataset=train_dataset, shuffle=False, batch_size=batch_size, collate_fn=train_dataset.collate)
+test_dataloader = DataLoader(dataset=test_dataset, shuffle=False, batch_size=batch_size, collate_fn=test_dataset.collate)
 
 
-engine = Engine(device,
+engine = C_Engine(device,
                 criterion_language,
                 criterion_recall,
                 criterion_rerank_train,
-                language_loss_train_coeff,
-                recall_loss_train_coeff,
-                rerank_loss_train_coeff,
-                num_samples_recall_train,
-                num_samples_rerank_train,
-                rerank_encoder_chunk_size,
-                validation_recall_size,
-                temperature)
+                criterion_goal,
+                # disentanglement_loss,
+                language_loss_train_coeff = language_loss_train_coeff,
+                recall_loss_train_coeff = recall_loss_train_coeff,
+                rerank_loss_train_coeff = rerank_loss_train_coeff,
+                num_samples_recall_train = num_samples_recall_train,
+                num_samples_rerank_train = num_samples_rerank_train,
+                rerank_encoder_chunk_size = rerank_encoder_chunk_size,
+                validation_recall_size = validation_recall_size,
+                temperature = temperature)
 
 
-output_file_path = "out/Train_Original.txt"
-model_saved_path = "runs/NR_Durecdial_"
+output_file_path = "out/redial_new_model.txt"
+model_saved_path = "runs/redial_"
 
 ## Define Trainer
 trainer = Trainer(
@@ -170,7 +181,6 @@ print(bleu1, bleu2, bleu3, bleu4)
 
 torch.save(total_sentences_generated, 'human_eval/mese.pt')
 torch.save(total_sentences_original,'human_eval/gold.pt')
-
 
 writer.flush()
 writer.close()

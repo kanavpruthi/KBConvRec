@@ -11,13 +11,13 @@ import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' 
 from itertools import islice
 from transformers import AutoTokenizer, AutoModelWithLMHead
-from corrected_mese import C_UniversalCRSModel
-from corrected_engine import C_Engine
+from model.mese import C_UniversalCRSModel
+from engine import C_Engine
 from constrained_decoder.generate import generate
 from constrained_decoder.utils import tokenize_constraints
 from constrained_decoder.lexical_constraints import init_batch
 from transformers import GPT2Config, GPT2Tokenizer, BertModel, BertTokenizer, DistilBertModel, DistilBertTokenizer
-from inductive_attention_model import GPT2InductiveAttentionHeadModel
+from model.inductive_attention_model import GPT2InductiveAttentionHeadModel
 from utilities import replace_placeholder
 from dataset import RecDataset
 from torch.utils.data import DataLoader
@@ -63,16 +63,116 @@ def parse_decoder_args():
 CONSTRAINTS = [[['[MOVIE_ID]']]]
 ENTITY_TOKEN = ['[MOVIE_ID]']
 
-@torch.no_grad()
-def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = False):
-    
+def get_special_tokens_ids(tokenizer):
     period_id = [tokenizer.convert_tokens_to_ids('.')]
     period_id.append(tokenizer.convert_tokens_to_ids('Ġ.'))
     eos_ids = [tokenizer.eos_token_id] + period_id
     bad_token = [':', "'", '-', '_', '@', 'Ċ', 'Ġ:', 'Ġwho', "'s"]
     bad_words_ids = [tokenizer.convert_tokens_to_ids([t]) for t in bad_token]
 
+    return eos_ids, bad_words_ids
+
+
+def generate_with_constraints(args, inputs, constraints_list, turn_num, eos_ids, bad_words_ids):
+    constraints = init_batch(raw_constraints=constraints_list[turn_num:turn_num+1],
+            key_constraints=constraints_list[turn_num:turn_num+1],
+            beam_size=args.beam_size,
+            eos_id=eos_ids)
+
     
+    ###################################
+    advanced_constraints = []
+    for j, init_cons in enumerate(constraints):
+        adv_cons = init_cons
+        for token in inputs[j // args.beam_size]:
+            adv_cons = adv_cons.advance(token)
+        advanced_constraints.append(adv_cons)
+    
+    # print(len(advanced_constraints))
+    # print(advanced_constraints[0])
+    # raise('')
+    ################################### 
+    attention_mask = (~torch.eq(inputs, 628)).int()
+    attention_mask = attention_mask.to(device)
+
+    generated, _, _ = generate(   
+                self=model.language_model,
+                input_ids= inputs,
+                attention_mask= attention_mask,
+                pad_token_id=628,
+                bad_words_ids=bad_words_ids,
+                min_length=args.min_tgt_length,
+                max_length=args.max_tgt_length,
+                num_beams=args.beam_size,
+                no_repeat_ngram_size=args.ngram_size,
+                length_penalty=args.length_penalty,
+                constraints=advanced_constraints,
+                prune_factor=args.prune_factor,
+                sat_tolerance=args.sat_tolerance,
+                look_ahead_step=args.look_ahead_step,
+                look_ahead_width=args.look_ahead_width,
+                alpha=args.alpha,
+                fusion_t=args.fusion_t,
+                look_ahead_sample=args.look_ahead_sample,
+                top_k=50,
+                temperature=1.25,
+                eos_token_id=628
+        )
+    
+    return generated
+
+
+def generate_without_constraints(inputs):
+    generated = model.language_model.generate(
+                        input_ids= torch.cat((inputs, torch.tensor([[32, 25]]).to(device)), dim=1),
+                        max_length=1024,
+                        num_return_sequences=1,
+                        do_sample=True,
+                        num_beams=2,
+                        top_k=50,
+                        temperature=1.25,
+                        eos_token_id=628,
+                        pad_token_id=628,
+        #                 no_repeat_ngram_size=3,
+                        output_scores=True,
+                        return_dict_in_generate=True,
+                        early_stopping=True
+                    )
+
+    return generated
+
+
+def get_recommended_id(past_list, model):
+    past_wtes = past_wtes_constructor(past_list, model)
+    recalled_ids = model.validation_perform_recall(past_wtes, 500)
+    rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
+    recommended_id = recalled_ids[np.argsort(rerank_logits.cpu().detach().numpy())[-1]]
+
+    rec_token_id = item_id_2_lm_token_id[recommended_id]
+    title = model.items_db[recommended_id]
+    title = title.split('[SEP]')[0].strip()
+    recommended_item_id = torch.tensor([[rec_token_id]]).to(device)
+
+    return title, recommended_item_id
+
+
+def get_constraints(length, dialogues):
+    CTRS = []
+
+    multiplier = 0
+    for turn_num in range(length):
+        _, gold_recommended_ids, _ = dialogues[turn_num]
+        if gold_recommended_ids != None:
+            multiplier += 1
+        CTRS.append([multiplier*ENTITY_TOKEN])
+
+    return CTRS
+
+
+@torch.no_grad()
+def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = False):
+    
+    eos_ids, bad_words_ids = get_special_tokens_ids(tokenizer)
 
     if device is torch.device('cuda:0'):
         torch.cuda.empty_cache()
@@ -80,7 +180,6 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
     model = model.to(device)
 
     writer = open('redial_constrained_generations_e2e','a')
-    
     ############################### ADDITION ######################
     role_ids, dialogues = batch
     dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
@@ -91,17 +190,7 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
     original_sentences = []
     tokenized_sentences = []
     
-    CTRS = []
-
-    multiplier = 0
-    for turn_num in range(len(role_ids)):
-        dial_turn_inputs = dialog_tensors[turn_num]
-        _, gold_recommended_ids, _ = dialogues[turn_num]
-        if gold_recommended_ids != None:
-            multiplier += 1
-        original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
-        CTRS.append([multiplier*ENTITY_TOKEN])
-
+    
     ################## CONTRAINTS Handling ###################
     
     def expand_factor(items, factors):
@@ -109,6 +198,8 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
         for item, factor in zip(items, factors):
             expanded_items.extend([item] * factor)
         return expanded_items
+
+    CTRS = get_constraints(len(role_ids), dialogues)
 
     constraints_list = tokenize_constraints(tokenizer, CTRS)
     # init_factor = [args.beam_size for _ in constraints_list]
@@ -121,7 +212,6 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
         
         gold_item_ids = []; gold_item_titles = []
         if gold_recommended_ids != None:
-            multiplier += 1
             for r_id in gold_recommended_ids:
                 gold_item_ids.append(item_id_2_lm_token_id[r_id])
                 title = model.items_db[r_id]
@@ -143,19 +233,12 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
                     past_list.append((dial_turn_inputs,gold_recommended_ids))
                     continue
                 
-                past_wtes = past_wtes_constructor(past_list, model)
-                recalled_ids = model.validation_perform_recall(past_wtes, 500)
-                rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
-                recommended_id = recalled_ids[np.argsort(rerank_logits.cpu().detach().numpy())[-1]]
-
-                rec_token_id = item_id_2_lm_token_id[recommended_id]
-                title = model.items_db[recommended_id]
-                title = title.split('[SEP]')[0].strip()
-                recommended_item_id = torch.tensor([[rec_token_id]]).to(device)
+                title, recommended_item_id = get_recommended_id(past_list,model)
 
                 if gold_recommended_ids!=None:
                     rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
                     rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
+                    
                     past_tokens = torch.cat((past_tokens, rec_start_token, recommended_item_id, rec_end_token), dim=1)
                 else:
                     past_tokens = past_tokens
@@ -165,73 +248,15 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
 
 
                 original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
+                inputs = torch.cat((past_tokens, torch.tensor([[32, 25]]).to(device)), dim=1) 
 
-                if gold_recommended_ids!=None:
-                    inputs = torch.cat((past_tokens, torch.tensor([[32, 25]]).to(device)), dim=1) 
-                    # print(constraints_list[args.beam_size*turn_num:args.beam_size*(turn_num+1)])
-                    constraints = init_batch(raw_constraints=constraints_list[turn_num:turn_num+1],
-                            key_constraints=constraints_list[turn_num:turn_num+1],
-                            beam_size=args.beam_size,
-                            eos_id=eos_ids)
 
-                    
-                    ###################################
-                    advanced_constraints = []
-                    for j, init_cons in enumerate(constraints):
-                        adv_cons = init_cons
-                        for token in inputs[j // args.beam_size]:
-                            adv_cons = adv_cons.advance(token)
-                        advanced_constraints.append(adv_cons)
-                    
-                    # print(len(advanced_constraints))
-                    # print(advanced_constraints[0])
-                    # raise('')
-                    ################################### 
-                    attention_mask = (~torch.eq(inputs, 628)).int()
-                    attention_mask = attention_mask.to(device)
-
-                    generated, scores, sum_logprobs= generate(   
-                                self=model.language_model,
-                                input_ids= inputs,
-                                attention_mask= attention_mask,
-                                pad_token_id=628,
-                                bad_words_ids=bad_words_ids,
-                                min_length=args.min_tgt_length,
-                                max_length=args.max_tgt_length,
-                                num_beams=args.beam_size,
-                                no_repeat_ngram_size=args.ngram_size,
-                                length_penalty=args.length_penalty,
-                                constraints=advanced_constraints,
-                                prune_factor=args.prune_factor,
-                                sat_tolerance=args.sat_tolerance,
-                                look_ahead_step=args.look_ahead_step,
-                                look_ahead_width=args.look_ahead_width,
-                                alpha=args.alpha,
-                                fusion_t=args.fusion_t,
-                                look_ahead_sample=args.look_ahead_sample,
-                                top_k=50,
-                                temperature=1.25,
-                                eos_token_id=628
-                        )
+                if gold_recommended_ids != None:
+                    generated = generate_with_constraints(args,inputs,constraints_list, turn_num,eos_ids, bad_words_ids)
 
                 else:
-                    generated = model.language_model.generate(
-                        input_ids= torch.cat((past_tokens, torch.tensor([[32, 25]]).to(device)), dim=1),
-                        max_length=1024,
-                        num_return_sequences=1,
-                        do_sample=True,
-                        num_beams=2,
-                        top_k=50,
-                        temperature=1.25,
-                        eos_token_id=628,
-                        pad_token_id=628,
-        #                 no_repeat_ngram_size=3,
-                        output_scores=True,
-                        return_dict_in_generate=True,
-                        early_stopping=True
-                    )
+                    generated = generate_without_constraints(inputs)
 
-                
                 final_gen = None
                 
                 
