@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 python src/e2e.py configs/train_durec.yaml

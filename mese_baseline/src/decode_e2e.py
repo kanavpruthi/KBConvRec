@@ -27,6 +27,8 @@ def parse_decoder_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--output_file",type=str,help='Output File to Store Predicted Sentences')
+    parser.add_argument("--kb_path",type=str, help= 'Location of the knowledge base to use')
+    parser.add_argument("--test_file",type=str,help='Test file location to decode')
     parser.add_argument("--constraint_file", type=str, help="constraint file")
     parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--beam_size', type=int, default=10,
@@ -179,7 +181,7 @@ def CDecode(model, tokenizer, device, args, batch, item_id_2_lm_token_id, e2e = 
     model.eval()
     model = model.to(device)
 
-    writer = open('redial_constrained_generations_e2e','a')
+    writer = open(args.output_file,'w')
     ############################### ADDITION ######################
     role_ids, dialogues = batch
     dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
@@ -316,12 +318,12 @@ if __name__ == '__main__':
 
 
 
-    items_db_path = "data/processed/redial_movie_db_placeholder"
+    items_db_path = args.kb_path
     items_db = torch.load(items_db_path)
 
 
     ############## Dataset loading ###########
-    test_path = "data/processed/redial_all_test_placeholder_updated"
+    test_path = args.test_file
     test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
     
     
