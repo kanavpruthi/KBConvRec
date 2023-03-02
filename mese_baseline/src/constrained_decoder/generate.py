@@ -440,13 +440,19 @@ def _generate_beam_search(
 ):
     """ Generate sequences for each example with beam search.
     """
+
+    ## Comment : Size of Input is Equal to [Num_Beams, Len]
+
     # end condition
     cons_eos = constraints[0].eos()
 
     last_non_masked_idx = (torch.sum(attention_mask, dim=1) - 1).int()
+
+    # Start Index is the last Non Masked Index to Start Decoding because the next tokens are [REC] [MOVIE] [REC_END] 
+    # Dim = [Beam_Size, 1 , Vocab_Size]
     start_idx = (last_non_masked_idx).view(-1, 1).repeat(1, self.config.vocab_size).unsqueeze(1).long()
 
-    init_length = cur_len
+    init_length = cur_len   # Current Length is the length of complete
     position_ids = torch.tensor([list(range(init_length)) for i in range(input_ids.shape[0])])
     for i, position_ids_slice in enumerate(position_ids):
         position_ids_slice[last_non_masked_idx[i]:] = position_ids_slice[last_non_masked_idx[i]]

@@ -41,11 +41,11 @@ PLACEHOLDER_TOKEN = "[MOVIE_ID]"
 gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
-items_db_path = config.items_db_path
+items_db_path = config['items_db_path']
 items_db = torch.load(items_db_path)
 
-train_path = config.train_path
-test_path = config.test_path
+train_path = config['train_path']
+test_path = config['test_path']
 
 
 train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
@@ -74,21 +74,21 @@ model.to(device)
 # print(get_memory_free_MiB(0))
 
 # parameters
-batch_size = config.batch_size
-num_epochs = config.epochs
+batch_size = config['batch_size']
+num_epochs = config['epochs']
 num_gradients_accumulation = 1
 num_train_optimization_steps = len(train_dataset) * num_epochs // batch_size // num_gradients_accumulation
 
-num_samples_recall_train = config.num_samples_recall_train
-num_samples_rerank_train = config.num_samples_rerank_train
+num_samples_recall_train = config['num_samples_recall_train']
+num_samples_rerank_train = config['num_samples_rerank_train']
 rerank_encoder_chunk_size = int(num_samples_rerank_train / 15)
-validation_recall_size = config.validation_recall_size
+validation_recall_size = config['validation_recall_size']
 
-temperature = config.temperature
+temperature = config['temperature']
 
-language_loss_train_coeff = config.language_loss_train_coeff
-recall_loss_train_coeff = config.recall_loss_train_coeff
-rerank_loss_train_coeff = config.rerank_loss_train_coeff
+language_loss_train_coeff = config['language_loss_train_coeff']
+recall_loss_train_coeff = config['recall_loss_train_coeff']
+rerank_loss_train_coeff = config['rerank_loss_train_coeff']
 
 # loss
 criterion_language = SequenceCrossEntropyLoss()
@@ -97,8 +97,8 @@ criterion_recall = torch.nn.CrossEntropyLoss()
 criterion_rerank_train = torch.nn.CrossEntropyLoss()
 # num_pos_classes_dev = 530
 # num_neg_classes_dev = 5777
-num_pos_classes_dev = config.num_pos_classes_dev
-num_neg_classes_dev = config.num_neg_classes_dev
+num_pos_classes_dev = config['num_pos_classes_dev']
+num_neg_classes_dev = config['num_neg_classes_dev']
 pos_weight = num_neg_classes_dev/num_pos_classes_dev
 criterion_goal = torch.nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight))
 disentanglement_loss = DisentanglementLoss()
@@ -149,7 +149,7 @@ engine = C_Engine(device,
                 temperature = temperature)
 
 
-output_file_path = config.output_file_path
+output_file_path = config['output_file_path']
 model_saved_path = "runs/redial_"
 
 ## Define Trainer

@@ -83,7 +83,7 @@ class C_UniversalCRSModel(torch.nn.Module):
                                             ):
         chunk_ids = item_ids
         chunk_infos = [items_db_to_use[key] for key in chunk_ids ]
-        chunk_tokens = self.encoder_tokenizer(chunk_infos, max_length = 64, padding='max_length', truncation=True, return_tensors="pt")
+        chunk_tokens = self.encoder_tokenizer(chunk_infos, max_length = 48, padding='max_length', truncation=True, return_tensors="pt")
         chunk_input_ids = chunk_tokens['input_ids'].to(self.device)
         chunk_attention_mask = chunk_tokens['attention_mask'].to(self.device)
         chunk_hiddens = encoder_to_use(input_ids=chunk_input_ids, attention_mask=chunk_attention_mask).last_hidden_state
@@ -285,7 +285,7 @@ class C_UniversalCRSModel(torch.nn.Module):
         else:
             REC_wtes = self.get_rec_token_wtes()
             rec_or_not_wtes =  torch.cat((past_wtes, REC_wtes), dim=1)
-            # rec_or_not_wtes = self.trim_lm_wtes(rec_or_not_wtes)
+            rec_or_not_wtes = self.trim_lm_wtes(rec_or_not_wtes)
 
 
             all_wtes = torch.cat((past_wtes, current_wtes), dim=1)

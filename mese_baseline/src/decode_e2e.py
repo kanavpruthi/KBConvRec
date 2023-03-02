@@ -27,6 +27,7 @@ def parse_decoder_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--output_file",type=str,help='Output File to Store Predicted Sentences')
+    parser.add_argument("--pretrained_model",type=str,help='Pretrained Model File to Use for Decoding')
     parser.add_argument("--kb_path",type=str, help= 'Location of the knowledge base to use')
     parser.add_argument("--test_file",type=str,help='Test file location to decode')
     parser.add_argument("--constraint_file", type=str, help="constraint file")
@@ -298,7 +299,7 @@ if __name__ == '__main__':
 
 
     
-    CKPT = 'runs/redial_new_model.pt'
+    CKPT = args.pretrained_model
     device = torch.device(0)
     # device = torch.device('cpu')
 

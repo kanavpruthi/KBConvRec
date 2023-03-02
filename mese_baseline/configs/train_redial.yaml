@@ -3,7 +3,7 @@ train_path : data/processed/redial/train_wrl
 test_path : data/processed/redial/test_wrl
 
 batch_size : 1
-num_epochs : 10
+epochs : 10
 
 num_samples_recall_train : 150
 num_samples_rerank_train : 60
