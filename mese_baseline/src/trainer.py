@@ -1,6 +1,6 @@
 from engine import C_Engine
-from src.old.engine import Engine
-from src.engine import C_Engine
+from old.engine import Engine
+from engine import C_Engine
 import time 
 import torch
 from metrics import distinct_metrics

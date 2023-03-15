@@ -441,6 +441,7 @@ def _generate_beam_search(
     """ Generate sequences for each example with beam search.
     """
 
+    
     ## Comment : Size of Input is Equal to [Num_Beams, Len]
 
     # end condition

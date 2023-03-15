@@ -21,7 +21,8 @@ class C_Engine(object):
                 num_samples_rerank_train = None,
                 rerank_encoder_chunk_size = None, 
                 validation_recall_size = None,
-                temperature = None) -> None:
+                temperature = None,
+                config = None) -> None:
         self.criterion_language = criterion_language
         self.criterion_recall = criterion_recall
         self.criterion_goal = criterion_goal
@@ -36,6 +37,7 @@ class C_Engine(object):
         self.num_samples_rerank_train = num_samples_rerank_train
         self.rerank_encoder_chunk_size = rerank_encoder_chunk_size
         self.validation_recall_size = validation_recall_size
+        self.config = config
         self.cpu = torch.device('cpu')
 
     def train_one_iteration(self,batch,model: C_UniversalCRSModel, scaler):
@@ -93,48 +95,78 @@ class C_Engine(object):
                     #system recommend turn
                     past_wtes = past_wtes_constructor(past_list, model)
                     with torch.cuda.amp.autocast():
-                        select_logits, select_true_index, language_logits, language_targets , goal_type_logits = model.forward_retrieval_and_response_generation(
-                            past_wtes, 
-                            current_tokens, 
-                            recommended_id, 
-                            self.num_samples_recall_train
+                        
+                        total_loss = 0
+                        """
+                        Model Pass 1:
+                        """
+                        if not self.config['freeze_2']:
+                            
+                            select_logits, select_true_index, goal_type_logits = model.forward_retrieval(
+                                past_wtes, 
+                                current_tokens, 
+                                recommended_id, 
+                                self.num_samples_recall_train
+                            )
+
+                            # goal type loss 
+                            goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
+                            loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
+                            ce_loss_history.append(loss_goal_type.item())
+
+                            # recall items loss
+                            select_targets = torch.LongTensor([select_true_index]).to(model.device)
+                            loss_recall = self.criterion_recall(select_logits.unsqueeze(0), select_targets)
+                            adj_loss_recall = loss_recall * self.recall_loss_train_coeff + loss_goal_type
+                            total_loss += adj_loss_recall
+                            """
+                            Model Pass 2:
+                            """
+                            # Reranking Pass
+                            rerank_logits, rerank_true_index = model.forward_rerank(
+                                past_wtes, 
+                                recommended_id, 
+                                self.num_samples_rerank_train, 
+                                self.rerank_encoder_chunk_size
+                            )
+                            
+                            # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
+                            rerank_logits /= self.temperature
+
+                            rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
+                            loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
+                            adj_loss_rerank = loss_rerank * self.rerank_loss_train_coeff
+                            total_loss += adj_loss_rerank
+                        
+                        """
+                        Model Pass 3:
+                        """
+                        # language_logits, language_targets = model.forward_response_generation(
+                        #     past_wtes,
+                        #     current_tokens,
+                        #     recommended_id,
+                        # )
+                        """
+                        Model Pass New 3rd:
+                        """
+                        language_logits, language_targets = model.forward_fluency(
+                            past_wtes,
+                            current_tokens,
                         )
 
-                        # ############### Debugging to include disentanglement loss ##########
-                        # language_logits_flat, disentanglement_labels = model.get_disentanglement_labels(language_logits)
-                        # loss_disentanglement = self.disentanglement_loss(language_logits_flat,disentanglement_labels)
-                        ####################################################################
-
-                        # goal type loss 
-                        goal_targets = torch.Tensor([goal_rec_or_not]).to(model.device)
-                        loss_goal_type = self.criterion_goal(goal_type_logits, goal_targets)
-                        ce_loss_history.append(loss_goal_type.item())
-
-                        # recall items loss
-                        select_targets = torch.LongTensor([select_true_index]).to(model.device)
-                        loss_recall = self.criterion_recall(select_logits.unsqueeze(0), select_targets)
-                        
                         # language loss in retrieval and generation turn, REC_TOKEN, Language on conditional generation
                         language_targets_mask = torch.ones_like(language_targets).float()
                         loss_ppl = self.criterion_language(language_logits, language_targets, language_targets_mask, label_smoothing=0.02, reduce="batch")
+                        adj_loss_ppl = loss_ppl * self.language_loss_train_coeff
+                        total_loss += adj_loss_ppl
+
                         perplexity = np.exp(loss_ppl.item())
                         ppl_history.append(perplexity)
-                    
-                        # Reranking Pass
-                        rerank_logits, rerank_true_index = model.forward_rerank(
-                            past_wtes, 
-                            recommended_id, 
-                            self.num_samples_rerank_train, 
-                            self.rerank_encoder_chunk_size
-                        )
-                        
-                        # print('after forward rerank turn (recommendation): ',get_memory_free_MiB(4))
-                        rerank_logits /= self.temperature
 
-                        rerank_targets = torch.LongTensor([rerank_true_index]).to(model.device)
-                        loss_rerank = self.criterion_rerank_train(rerank_logits.unsqueeze(0), rerank_targets)
+                        
+                    
+                        
                     # combined loss
-                    total_loss = loss_recall * self.recall_loss_train_coeff + loss_ppl * self.language_loss_train_coeff + loss_rerank * self.rerank_loss_train_coeff + loss_goal_type 
                     scaler.scale(total_loss).backward()
                         
                 past_list.append((None, recommended_ids))
@@ -228,7 +260,7 @@ class C_Engine(object):
                     total += 1
                     
                     # recall
-                    recall_logits, recall_true_index, all_wte_logits, all_wte_targets, goal_type_logits = model.forward_retrieval_and_response_generation(
+                    recall_logits, recall_true_index, goal_type_logits = model.forward_retrieval(
                         past_wtes, 
                         current_tokens, 
                         recommended_id, 
@@ -243,6 +275,11 @@ class C_Engine(object):
                     del loss_recall; del recall_logits; del recall_targets
 
                     # language loss in recall turn, REC_TOKEN, Language on conditional generation
+                    all_wte_logits, all_wte_targets = model.forward_fluency(
+                            past_wtes,
+                            current_tokens,
+                        )
+
                     all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
                     loss_ppl = self.criterion_language(all_wte_logits, all_wte_targets, all_wte_targets_mask, label_smoothing=-1, reduce="sentence")
                     perplexity = np.exp(loss_ppl.item())
@@ -881,177 +918,6 @@ class C_Engine(object):
                         past_list.append((dial_turn_inputs,recommended_ids))
                     else:
                         past_list.append((None, recommended_ids))
-                        past_list.append((dial_turn_inputs, None))
-                    
-                    del generated
-                    
-
-            return original_sentences, tokenized_sentences, integration_cnt, integration_total, valid_gen_selected_cnt, total_gen_cnt, response_with_items, original_response_with_items
-
-    def compare_generated_recommendation(self, batch, model, item_id_2_lm_token_id):
-        with torch.no_grad():
-            role_ids, dialogues = batch
-            dialog_tensors = [torch.LongTensor(utterance).to(model.device) for utterance, _ , _ in dialogues]
-            # print('dialog_tensors :',get_memory_free_MiB(0))
-        #     past_list = []
-            past_tokens = None
-            past_list = []
-            original_sentences = []
-            tokenized_sentences = []
-            integration_total, integration_cnt = 0, 0
-            valid_gen_selected_cnt = 0; total_gen_cnt = 0; response_with_items = 0; original_response_with_items = 0
-            
-            for turn_num in range(len(role_ids)):
-                dial_turn_inputs = dialog_tensors[turn_num]
-                _, gold_recommended_ids, target_goal = dialogues[turn_num]
-
-                gold_item_ids = []; gold_item_titles = []
-                if gold_recommended_ids != None:
-                    for r_id in gold_recommended_ids:
-                        gold_item_ids.append(item_id_2_lm_token_id[r_id])
-                        title = model.items_db[r_id]
-                        title = title.split('[SEP]')[0].strip()
-                        gold_item_titles.append(title)
-                    item_ids = torch.tensor([item_ids]).to(self.device)
-                
-        #         if turn_num == 0:
-        #             past_tokens = dial_turn_inputs
-                if role_ids[turn_num] == 0: # User
-                    if turn_num == 0:
-                        past_tokens = dial_turn_inputs
-                    elif turn_num != 0:
-                        past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
-                    past_list.append((dial_turn_inputs,gold_recommended_ids))
-
-                else: # System
-                    past_wtes = past_wtes_constructor(past_list, model)
-                    recalled_ids = model.validation_perform_recall(past_wtes, self.validation_recall_size)
-                    rerank_logits = model.validation_perform_rerank(past_wtes, recalled_ids)
-                    recommended_id = recalled_ids[np.argsort(rerank_logits.cpu().detach().numpy())[-1]]
-                    # logger.debug(f'Recalled Ids: {recalled_ids}')
-                    # logger.debug(f'Recommended Id: {recommended_id}')
-
-                    rec_token_id = item_id_2_lm_token_id[recommended_id]
-                    title = model.items_db[recommended_id]
-                    title = title.split('[SEP]')[0].strip()
-                    recommended_item_id = torch.tensor([[rec_token_id]]).to(self.device)
-
-                    if item_ids != []:
-                        rec_start_token = model.lm_tokenizer(model.REC_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
-                        rec_end_token = model.lm_tokenizer(model.REC_END_TOKEN_STR, return_tensors="pt")["input_ids"].to(model.device)
-                        past_tokens = torch.cat((past_tokens, rec_start_token, recommended_item_id, rec_end_token), dim=1)
-                    else:
-                        past_tokens = past_tokens
-                    
-                    total_len = past_tokens.shape[1]
-                    if total_len >= 1024: break
-
-                    original_sen = model.lm_tokenizer.decode(dial_turn_inputs[0], skip_special_tokens=True)
-                    
-                    ############## Debug ###############
-                    # if item_ids!= []:
-                    #     logger.debug(f'Ids shape: {past_tokens.shape}')
-                    #     logger.debug(f'Actual Tokens: {past_tokens}')
-                    #     logger.debug(f'Movie Token: {past_tokens[0][-2]}')
-                    #     # movie = model.lm_tokenizer.decode([past_tokens[0][-2]])
-                    #     # i_p = model.lm_tokenizer.decode(past_tokens[0])
-                    #     # logger.debug(f'Input to the generator: {i_p}')
-                    #     # raise('debug')
-                    ####################################
-
-                    # print('Before generation: ',get_memory_free_MiB(0))
-                    force_words = model.lm_tokenizer(["[MOVIE_ID]"],add_special_tokens=False).input_ids
-                    
-                    if item_ids!=[]:
-
-                        generated = model.language_model.generate(
-                            input_ids= torch.cat((past_tokens, torch.tensor([[32, 25]]).to(self.device)), dim=1),
-                            max_length=1024,
-                            num_return_sequences=1,
-                            # do_sample=True,
-                            num_beams=2,
-                            top_k=50,
-                            temperature=1.25,
-                            eos_token_id=628,
-                            pad_token_id=628,
-            #                 no_repeat_ngram_size=3,
-                            output_scores=True,
-                            return_dict_in_generate=True,
-                            early_stopping=True,
-                            force_words_ids = force_words
-                        )
-                    else:
-                        generated = model.language_model.generate(
-                            input_ids= torch.cat((past_tokens, torch.tensor([[32, 25]]).to(self.device)), dim=1),
-                            max_length=1024,
-                            num_return_sequences=1,
-                            do_sample=True,
-                            num_beams=2,
-                            top_k=50,
-                            temperature=1.25,
-                            eos_token_id=628,
-                            pad_token_id=628,
-            #                 no_repeat_ngram_size=3,
-                            output_scores=True,
-                            return_dict_in_generate=True,
-                            early_stopping=True,
-                        )
-                    # print(get_memory_free_MiB(0))
-                    # check valid generations, equal num [MOVIE_ID] placeholders
-                    total_gen_cnt += 1
-                    valid_gens = []; valid_gens_scores = []
-                    final_gen = None
-                    if len(item_ids) == 0: # no rec items
-                        for i in range(len(generated.sequences)):
-                            gen_sen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
-                            if gen_sen.count("[MOVIE_ID]") == 0:
-                                valid_gens.append(gen_sen); valid_gens_scores.append(generated.sequences_scores[i].item())
-                        if valid_gens == [] and valid_gens_scores == []: # no valid, pick with highest score
-                            i = torch.argmax(generated.sequences_scores).item()
-                            final_gen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
-                        else: # yes valid
-                            i = np.argmax(valid_gens_scores)
-                            final_gen = valid_gens[i]
-                            valid_gen_selected_cnt += 1
-                    else:
-                        original_response_with_items += 1
-                        for i in range(len(generated.sequences)):
-                            gen_sen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
-                            if gen_sen.count("[MOVIE_ID]") == original_sen.count("[MOVIE_ID]"):
-                                valid_gens.append(gen_sen); valid_gens_scores.append(generated.sequences_scores[i].item())
-                        if valid_gens == [] and valid_gens_scores == []: # no valid, pick with highest score
-                            i = torch.argmax(generated.sequences_scores).item()
-                            final_gen = model.lm_tokenizer.decode(generated.sequences[i][past_tokens.shape[1]:], skip_special_tokens=True)
-                            if "[MOVIE_ID]" in final_gen:
-                                response_with_items += 1
-                            final_gen = replace_placeholder(final_gen, [title])
-                        else:
-                            i = np.argmax(valid_gens_scores)
-                            final_gen = valid_gens[i]
-                            if "[MOVIE_ID]" in final_gen:
-                                response_with_items += 1
-                            final_gen = replace_placeholder(final_gen, [title])
-                            valid_gen_selected_cnt += 1
-
-        #             generated_sen =  model.lm_tokenizer.decode(generated[0][past_tokens.shape[1]:], skip_special_tokens=True)
-        #             print("Generated Rec: " + final_gen)
-                    tokenized_sen = final_gen.strip().split(' ')
-                    tokenized_sentences.append(tokenized_sen)
-                    original_sen = replace_placeholder(original_sen, item_titles).replace("\n\n\n", "")
-        #             print("Original Rec: " + original_sen)
-                    original_sentences.append( original_sen.strip().split(' ') )
-                    if gold_recommended_ids != None:
-                        integration_total += 1                        
-                        if "[MOVIE_ID]" in final_gen:
-                            integration_cnt += 1
-
-                    if turn_num != 0:
-                        past_tokens = torch.cat((past_tokens, dial_turn_inputs), dim=1)
-                    
-                    if gold_recommended_ids == []:
-                        past_list.append((dial_turn_inputs,gold_recommended_ids))
-                    else:
-                        past_list.append((None, gold_recommended_ids))
                         past_list.append((dial_turn_inputs, None))
                     
                     del generated

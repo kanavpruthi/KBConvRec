@@ -38,7 +38,10 @@ REC_TOKEN = "[REC]"
 REC_END_TOKEN = "[REC_END]"
 SEP_TOKEN = "[SEP]"
 PLACEHOLDER_TOKEN = "[MOVIE_ID]"
-gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN])
+L2R_TOKEN = "[L2R]"
+R2L_TOKEN = "[R2L]"
+
+gpt_tokenizer.add_tokens([REC_TOKEN, REC_END_TOKEN, SEP_TOKEN, PLACEHOLDER_TOKEN,L2R_TOKEN,R2L_TOKEN])
 gpt2_model.resize_token_embeddings(len(gpt_tokenizer)) 
 
 items_db_path = config['items_db_path']
@@ -48,8 +51,8 @@ train_path = config['train_path']
 test_path = config['test_path']
 
 
-train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
-test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
+train_dataset = RecDataset(torch.load(train_path)[:10], bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path)[:10], bert_tokenizer, gpt_tokenizer)
 
 
 # print(get_memory_free_MiB(0))
@@ -68,6 +71,9 @@ model = C_UniversalCRSModel(
     rec_token_str=REC_TOKEN, 
     rec_end_token_str=REC_END_TOKEN
 )
+
+if config['load_ckpt']:
+    model.load_state_dict(torch.load(config['ckpt_loc'],map_location=device)) 
 
 model.to(device)
 
@@ -146,7 +152,8 @@ engine = C_Engine(device,
                 num_samples_rerank_train = num_samples_rerank_train,
                 rerank_encoder_chunk_size = rerank_encoder_chunk_size,
                 validation_recall_size = validation_recall_size,
-                temperature = temperature)
+                temperature = temperature,
+                config = config)
 
 
 output_file_path = config['output_file_path']

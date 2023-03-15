@@ -1,4 +1,4 @@
-items_db_path : data/processed/durecdial2/durecdial2_full_movie_db_placeholder
+items_db_path : data/kb/durecdial2_db
 train_path : data/processed/durecdial2/durecdial2_all_train_placeholder_updated
 test_path : data/processed/durecdial2/durecdial2_all_dev_placeholder_updated
 
@@ -21,3 +21,10 @@ num_pos_classes_dev: 530
 num_neg_classes_dev: 5777
 
 output_file_path: "out/durec_train.txt"
+
+# Load from ckpt
+load_ckpt: False
+ckpt_loc: runs/new_model_rec.pt
+
+# Freeze specific parts of the model
+freeze_2: False
