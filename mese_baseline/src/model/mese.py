@@ -469,8 +469,14 @@ class C_UniversalCRSModel(torch.nn.Module):
 
     def forward_fluency(self,
                         past_wtes,
-                        current_tokens):
+                        current_tokens,
+                        gt_item_id):
+
+
+        gt_item_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, [gt_item_id], self.items_db)
+        gt_item_wte = self.rerank_item_wte_mapper(gt_item_wte) # [1, self.rerank_item_wte_mapper.out_features]
         
+
         entity_id_token = self.lm_tokenizer(self.PLACEHOLDER_TOKEN_STR, return_tensors="pt")['input_ids'].to(self.device)[0] # [1, 1]
         tokens = current_tokens.tolist()
         entity_id_idx = tokens[0].index(entity_id_token)
@@ -488,10 +494,12 @@ class C_UniversalCRSModel(torch.nn.Module):
 
         left_wtes_len = left_wtes.shape[1]
         right_wtes_len = right_wtes.shape[1]
+        gt_item_wte_len = gt_item_wte.shape[0] # 1 by default
 
         right_lm_inputs = torch.cat((
             past_wtes,
             lr_wtes,
+            gt_item_wte.unsqueeze(0),
             right_wtes,
             )
             , dim = 1 
@@ -503,6 +511,7 @@ class C_UniversalCRSModel(torch.nn.Module):
         left_lm_inputs = torch.cat( (
             past_wtes,
             rl_wtes,
+            gt_item_wte.unsqueeze(0),
             left_wtes
             ),
             dim = 1

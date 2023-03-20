@@ -51,8 +51,8 @@ train_path = config['train_path']
 test_path = config['test_path']
 
 
-train_dataset = RecDataset(torch.load(train_path)[:10], bert_tokenizer, gpt_tokenizer)
-test_dataset = RecDataset(torch.load(test_path)[:10], bert_tokenizer, gpt_tokenizer)
+train_dataset = RecDataset(torch.load(train_path), bert_tokenizer, gpt_tokenizer)
+test_dataset = RecDataset(torch.load(test_path), bert_tokenizer, gpt_tokenizer)
 
 
 # print(get_memory_free_MiB(0))

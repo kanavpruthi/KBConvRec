@@ -152,6 +152,7 @@ class C_Engine(object):
                         language_logits, language_targets = model.forward_fluency(
                             past_wtes,
                             current_tokens,
+                            recommended_id
                         )
 
                         # language loss in retrieval and generation turn, REC_TOKEN, Language on conditional generation
@@ -278,6 +279,7 @@ class C_Engine(object):
                     all_wte_logits, all_wte_targets = model.forward_fluency(
                             past_wtes,
                             current_tokens,
+                            recommended_id
                         )
 
                     all_wte_targets_mask = torch.ones_like(all_wte_targets).float()
