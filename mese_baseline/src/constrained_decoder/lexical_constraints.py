@@ -174,120 +174,6 @@ class Trie:
         return self.final_ids
 
 
-class NegativeState:
-    """
-    Represents the state of a hypothesis in the AvoidTrie.
-    The offset is used to return actual positions in the one-dimensionally-resized array that
-    get set to infinity.
-
-    :param avoid_trie: The trie containing the phrases to avoid.
-    :param state: The current state (defaults to root).
-    """
-    def __init__(self,
-                 avoid_trie: Trie,
-                 state: List[Trie] = None) -> None:
-
-        self.root = avoid_trie
-        self.state = state if state else [self.root]
-
-    def consume(self, word_id: int) -> 'NegativeState':
-        """
-        Consumes a word, and updates the state based on it. Returns new objects on a state change.
-
-        The next state for a word can be tricky. Here are the cases:
-        (1) If the word is found in our set of outgoing child arcs, we take that transition.
-        (2) If the word is not found, and we are not in the root state, we need to reset.
-            This means we pretend we were in the root state, and see if we can take a step
-        (3) Otherwise, if we are not already in the root state (i.e., we were partially through
-            the trie), we need to create a new object whose state is the root state
-        (4) Finally, if we couldn't advance and were already in the root state, we can reuse
-            this object.
-
-        :param word_id: The word that was just generated.
-        """
-        new_state = []
-        for state in set(self.state + [self.root]):
-            if word_id in state.children:
-                new_state.append(state.step(word_id))
-
-        if new_state:
-            return NegativeState(self.root, new_state)
-        else:
-            if len(self.state) == 1 and self.root == self.state[0]:
-                return self
-            else:
-                return NegativeState(self.root, [self.root])
-
-    def avoid(self) -> Set[int]:
-        """
-        Returns a set of word IDs that should be avoided. This includes the set of final states from the
-        root node, which are single tokens that must never be generated.
-
-        :return: A set of integers representing words that must not be generated next by this hypothesis.
-        """
-        return self.root.final().union(*[state.final() for state in self.state])
-
-    def __str__(self) -> str:
-        return str(self.state)
-
-
-class NegativeBatch:
-    """
-    Represents a set of phrasal constraints for all items in the batch.
-    For each hypotheses, there is an AvoidTrie tracking its state.
-
-    :param beam_size: The beam size.
-    :param avoid_list: The list of lists (raw phrasal constraints as IDs, one for each item in the batch).
-    """
-    def __init__(self,
-                 beam_size: int,
-                 avoid_list: Optional[List[RawConstraintList]] = None) -> None:
-
-        self.avoid_states = []  # type: List[NegativeState]
-
-        # Store the sentence-level tries for each item in their portions of the beam
-        if avoid_list is not None:
-            for literal_phrases in avoid_list:
-                self.avoid_states += [NegativeState(Trie(literal_phrases))] * beam_size
-
-    def reorder(self, indices: torch.Tensor) -> None:
-        """
-        Reorders the avoid list according to the selected row indices.
-        This can produce duplicates, but this is fixed if state changes occur in consume().
-
-        :param indices: An mx.nd.NDArray containing indices of hypotheses to select.
-        """
-        if self.avoid_states:
-            self.avoid_states = [self.avoid_states[x] for x in indices.numpy()]
-
-    def consume(self, word_ids: torch.Tensor) -> None:
-        """
-        Consumes a word for each trie, updating respective states.
-
-        :param word_ids: The set of word IDs.
-        """
-        word_ids = word_ids.numpy().tolist()
-        for i, word_id in enumerate(word_ids):
-            if self.avoid_states:
-                self.avoid_states[i] = self.avoid_states[i].consume(word_id)
-
-    def avoid(self) -> Tuple[Tuple[int], Tuple[int]]:
-        """
-        Assembles a list of per-hypothesis words to avoid. The indices are (x, y) pairs into the scores
-        array, which has dimensions (beam_size, target_vocab_size). These values are then used by the caller
-        to set these items to np.inf so they won't be selected. Words to be avoided are selected by
-        consulting both the global trie of phrases and the sentence-specific one.
-
-        :return: Two lists of indices: the x coordinates and y coordinates.
-        """
-        to_avoid = set()  # type: Set[Tuple[int, int]]
-        for i, state in enumerate(self.avoid_states):
-            for word_id in state.avoid():
-                to_avoid.add((i, word_id))
-
-        return tuple(zip(*to_avoid))  # type: ignore
-
-
 class PositiveState:
     """
     Represents a set of words and phrases that must appear in the output.
@@ -579,12 +465,6 @@ class ConstrainedHypothesis:
         :param word_id: The word ID to advance on.
         """
         obj = copy.deepcopy(self)
-
-        if obj.soft_negative_state is not None:
-            raise NotImplementedError
-
-        if obj.hard_negative_state is not None:
-            obj.hard_negative_state = obj.hard_negative_state.consume(word_id)
 
         if obj.positive_state is not None:
             temp_pos_state = obj.positive_state.advance(word_id)

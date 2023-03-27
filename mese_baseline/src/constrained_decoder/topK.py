@@ -164,7 +164,6 @@ def _sequential_topk(sentno: int,
     Builds a new topk list such that the beam contains hypotheses having completed different numbers of constraints.
     These items are built from three different types: (1) the best items across the whole
     scores matrix, (2) the set of words that must follow existing constraints, and (3) k-best items from each row.
-
     :param timestep: The current decoder timestep.
     :param beam_size: The length of the beam for each segment.
     :param inactive: Array listing inactive rows (shape: (beam_size,)).
@@ -176,7 +175,7 @@ def _sequential_topk(sentno: int,
     :return: A tuple containing the best hypothesis rows, the best hypothesis words, the scores,
         the updated constrained hypotheses, and the updated set of inactive hypotheses.
     """
-    qmark_ids = [x for x in hypotheses[0].eos() if x != model.config.eos_token_id]
+
     chunk_size = int(batch_size * beam_size // look_ahead_width) if chunk_size is None else chunk_size
 
     candidates = set()
@@ -200,27 +199,27 @@ def _sequential_topk(sentno: int,
     # For each hypothesis, we add (2) all the constraints that could follow it and
     # (3) the best item (constrained or not) in that row
     best_next = np.argmax(scores, axis=1)
-    for row in range(beam_size if (timestep - init_length) > 0 else 1):
-        if inactive[row]:
+    for beam in range(beam_size if (timestep - init_length) > 0 else 1):
+        if inactive[beam]:
             continue
 
-        hyp = hypotheses[row]
+        hyp = hypotheses[beam]
 
         # (2) add all the constraints that could extend this
-        nextones = hyp.allowed()
+        nextones = hyp.positive_state.allowed()
 
         # (3) add the single-best item after this (if it's valid)
-        best_k = np.argsort(scores[row])[::-1][:beam_size]
+        best_k = np.argsort(scores[beam])[::-1][:beam_size]
         for col in best_k:
             if hyp.is_valid(col):
                 nextones.add(col)
 
         # Now, create new candidates for each of these items
         for col in nextones:
-            if [row, col] not in hit and (rank[row, col] < prune_factor):
+            if [beam, col] not in hit and (rank[beam, col] < prune_factor):
                 new_item = hyp.advance(col)
-                score = scores[row, col]
-                cand = ConstrainedCandidate(row, col, score, new_item)
+                score = scores[beam, col]
+                cand = ConstrainedCandidate(beam, col, score, new_item)
                 if hyp.finished() and col in hyp.eos():
                     finished_candidates.add(cand)
                 else:
@@ -228,12 +227,12 @@ def _sequential_topk(sentno: int,
 
         # Add finished candidates in finished set:
         if hyp.finished():
-            best_k = np.argsort(scores[row])[::-1][:int(beam_size*10)]
+            best_k = np.argsort(scores[beam])[::-1][:int(beam_size*1.5)]
             for col in best_k:
-                if col in qmark_ids:
+                if col in hyp.eos():
                     new_item = hyp.advance(col)
-                    score = scores[row, col]
-                    cand = ConstrainedCandidate(row, col, score, new_item)
+                    score = scores[beam, col]
+                    cand = ConstrainedCandidate(beam, col, score, new_item)
                     finished_candidates.add(cand)
 
     if num_fill is not None:
@@ -246,72 +245,68 @@ def _sequential_topk(sentno: int,
     if candidates:
         # Sort the candidates.
         all_sorted_candidates = sorted(candidates, key=attrgetter('score'), reverse=True)
-        all_sorted_candidates = [x for x in all_sorted_candidates if x.hypothesis.is_pos_valid()]
 
         max_satisfy = max([x.hypothesis.num_met() for x in all_sorted_candidates])
         all_sorted_candidates = [x for x in all_sorted_candidates if x.hypothesis.num_met() >= max_satisfy - sat_tolerance]
 
-        if not alpha:
-            future_states = [-float('inf')] * len(all_sorted_candidates)
-        else:
-            future_states = []
-            for start in range(0, len(all_sorted_candidates), chunk_size):
-                sorted_candidates = all_sorted_candidates[start: start + chunk_size]
+        future_states = []
+        for start in range(0, len(all_sorted_candidates), chunk_size):
+            sorted_candidates = all_sorted_candidates[start: start + chunk_size]
 
-                back_ptrs = temp_input_ids.new([x.row for x in sorted_candidates])
-                curr_ids = temp_input_ids.new([x.col for x in sorted_candidates])
-                input_ids = torch.cat([temp_input_ids[back_ptrs, :], curr_ids[:, None]], dim=-1)
-                attention_mask = temp_attention_mask[back_ptrs, :]
-                position_ids = temp_position_ids[back_ptrs, :]
-                past = _reorder_cache(temp_past, back_ptrs)
+            back_ptrs = temp_input_ids.new([x.row for x in sorted_candidates])
+            curr_ids = temp_input_ids.new([x.col for x in sorted_candidates])
+            input_ids = torch.cat([temp_input_ids[back_ptrs, :], curr_ids[:, None]], dim=-1)
+            attention_mask = temp_attention_mask[back_ptrs, :]
+            position_ids = temp_position_ids[back_ptrs, :]
+            past = _reorder_cache(temp_past, back_ptrs)
 
-                look_ahead_phrases = [c.hypothesis.phrase_to_look_ahead() for c in sorted_candidates]
-                phrases_idx_map = {}
-                for j, phrases in enumerate(look_ahead_phrases):
-                    for phrase in phrases:
-                        if tuple(phrase) not in phrases_idx_map:
-                            phrases_idx_map[tuple(phrase)] = []
-                        phrases_idx_map[tuple(phrase)].append(j)
-                phrases_idx_mask = [(k, input_ids.new([x in v for x in range(len(sorted_candidates))])[:, None].expand(-1, look_ahead_step))
-                                    for k, v in phrases_idx_map.items()]
+            look_ahead_phrases = [c.hypothesis.phrase_to_look_ahead() for c in sorted_candidates]
+            phrases_idx_map = {}
+            for j, phrases in enumerate(look_ahead_phrases):
+                for phrase in phrases:
+                    if tuple(phrase) not in phrases_idx_map:
+                        phrases_idx_map[tuple(phrase)] = []
+                    phrases_idx_map[tuple(phrase)].append(j)
+            phrases_idx_mask = [(k, input_ids.new([x in v for x in range(len(sorted_candidates))])[:, None].expand(-1, look_ahead_step))
+                                for k, v in phrases_idx_map.items()]
 
-                look_ahead_continues = [c.hypothesis.continue_to_look_ahead() for c in sorted_candidates]
-                if any(look_ahead_continues):
-                    continues_idx_map = {}
-                    for j, continues in enumerate(look_ahead_continues):
-                        for ctn in continues:
-                            if tuple(ctn) not in continues_idx_map:
-                                continues_idx_map[tuple(ctn)] = []
-                            continues_idx_map[tuple(ctn)].append(j)
-                    continues_idx_mask = [(k, torch.cat([input_ids.new([x in v for x in range(len(sorted_candidates))])[:, None],
-                                                         input_ids.new_zeros(len(sorted_candidates), look_ahead_step - 1)], dim=-1))
-                                          for k, v in continues_idx_map.items()]
-                    phrases_idx_mask += continues_idx_mask
+            look_ahead_continues = [c.hypothesis.continue_to_look_ahead() for c in sorted_candidates]
+            if any(look_ahead_continues):
+                continues_idx_map = {}
+                for j, continues in enumerate(look_ahead_continues):
+                    for ctn in continues:
+                        if tuple(ctn) not in continues_idx_map:
+                            continues_idx_map[tuple(ctn)] = []
+                        continues_idx_map[tuple(ctn)].append(j)
+                continues_idx_mask = [(k, torch.cat([input_ids.new([x in v for x in range(len(sorted_candidates))])[:, None],
+                                                     input_ids.new_zeros(len(sorted_candidates), look_ahead_step - 1)], dim=-1))
+                                      for k, v in continues_idx_map.items()]
+                phrases_idx_mask += continues_idx_mask
 
-                look_ahead_scores = torch.full((len(phrases_idx_mask), len(sorted_candidates), look_ahead_step), -float('inf'), device=input_ids.device)
+            look_ahead_scores = torch.full((len(phrases_idx_mask), len(sorted_candidates), look_ahead_step), -float('inf'), device=input_ids.device)
 
-                if look_ahead_scores.shape[0]:
-                    if look_ahead_sample:
-                        future_state = _generate_sample(model, input_ids, look_ahead_scores, timestep + 1,
-                                                        phrases_idx_mask, look_ahead_step, 0, 0.1, past,
-                                                        len(sorted_candidates), look_ahead_width, attention_mask,
+            if look_ahead_scores.shape[0]:
+                if look_ahead_sample:
+                    future_state = _generate_sample(model, input_ids, look_ahead_scores, timestep + 1,
+                                                    phrases_idx_mask, look_ahead_step, 2, 1.0, past,
+                                                    len(sorted_candidates), look_ahead_width, attention_mask,
+                                                    position_ids, _reorder_cache, **decode_kwargs)
+                else:
+                    if look_ahead_width == 1:
+                        future_state = _generate_greedy(model, input_ids, look_ahead_scores, timestep + 1,
+                                                        phrases_idx_mask, look_ahead_step, fusion_t, past,
+                                                        len(sorted_candidates), attention_mask,
                                                         position_ids, _reorder_cache, **decode_kwargs)
                     else:
-                        if look_ahead_width == 1:
-                            future_state = _generate_greedy(model, input_ids, look_ahead_scores, timestep + 1,
-                                                            phrases_idx_mask, look_ahead_step, fusion_t, past,
-                                                            len(sorted_candidates), attention_mask,
-                                                            position_ids, _reorder_cache, **decode_kwargs)
-                        else:
-                            future_state = _generate_beam_search(model, input_ids, look_ahead_scores, timestep + 1,
-                                                                 phrases_idx_mask, look_ahead_step, past,
-                                                                 len(sorted_candidates), look_ahead_width, attention_mask,
-                                                                 position_ids, _reorder_cache, **decode_kwargs)
-                else:
-                    assert all([c.hypothesis.finished()  for c in sorted_candidates])
-                    future_state = [-float('inf')] * len(sorted_candidates)
+                        future_state = _generate_beam_search(model, input_ids, look_ahead_scores, timestep + 1,
+                                                             phrases_idx_mask, look_ahead_step, past,
+                                                             len(sorted_candidates), look_ahead_width, attention_mask,
+                                                             position_ids, _reorder_cache, **decode_kwargs)
+            else:
+                assert all([c.hypothesis.finished()  for c in sorted_candidates])
+                future_state = [-float('inf')] * len(sorted_candidates)
 
-                future_states.extend(future_state)
+            future_states.extend(future_state)
 
         for i, cand in enumerate(all_sorted_candidates):
             future_score = future_states[i]
@@ -348,70 +343,9 @@ def _sequential_topk(sentno: int,
             chunk_candidates.append(chunk_i)
         # Sort candidates in each chunk by score
         chunk_candidates = [sorted(x, key=attrgetter('rank'), reverse=True) for x in chunk_candidates]
-
-    # look ahead for the question mark
-    finished_candidates = sorted(finished_candidates, key=attrgetter('score'), reverse=True)
-    if finished_candidates:
-        # Sort the candidates.
-        all_sorted_finished_candidates = finished_candidates
-
-        if not alpha:
-            finished_future_states = [-float('inf')] * len(all_sorted_finished_candidates)
-        else:
-            finished_future_states = []
-            for start in range(0, len(all_sorted_finished_candidates), chunk_size):
-                sorted_finished_candidates = all_sorted_finished_candidates[start: start + chunk_size]
-
-                back_ptrs = temp_input_ids.new([x.row for x in sorted_finished_candidates])
-                curr_ids = temp_input_ids.new([x.col for x in sorted_finished_candidates])
-                input_ids = torch.cat([temp_input_ids[back_ptrs, :], curr_ids[:, None]], dim=-1)
-                attention_mask = temp_attention_mask[back_ptrs, :]
-                position_ids = temp_position_ids[back_ptrs, :]
-                past = _reorder_cache(temp_past, back_ptrs)
-
-
-                look_ahead_phrases = [[[x] for x in qmark_ids] if c.col not in c.hypothesis.eos() else [] for c in sorted_finished_candidates]
-                phrases_idx_map = {}
-                for j, phrases in enumerate(look_ahead_phrases):
-                    for phrase in phrases:
-                        if tuple(phrase) not in phrases_idx_map:
-                            phrases_idx_map[tuple(phrase)] = []
-                        phrases_idx_map[tuple(phrase)].append(j)
-                phrases_idx_mask = [(k, input_ids.new([x in v for x in range(len(sorted_finished_candidates))])[:, None].expand(-1, look_ahead_step))
-                                    for k, v in phrases_idx_map.items()]
-
-                look_ahead_scores = torch.full((len(phrases_idx_mask), len(sorted_finished_candidates), look_ahead_step), -float('inf'), device=input_ids.device)
-
-                if look_ahead_scores.shape[0]:
-                    if look_ahead_sample:
-                        future_state = _generate_sample(model, input_ids, look_ahead_scores, timestep + 1,
-                                                        phrases_idx_mask, look_ahead_step, 2, 1.0, past,
-                                                        len(sorted_finished_candidates), look_ahead_width, attention_mask,
-                                                        position_ids, _reorder_cache, **decode_kwargs)
-                    else:
-                        if look_ahead_width == 1:
-                            future_state = _generate_greedy(model, input_ids, look_ahead_scores, timestep + 1,
-                                                            phrases_idx_mask, look_ahead_step, fusion_t, past,
-                                                            len(sorted_finished_candidates), attention_mask,
-                                                            position_ids, _reorder_cache, **decode_kwargs)
-                        else:
-                            future_state = _generate_beam_search(model, input_ids, look_ahead_scores, timestep + 1,
-                                                                 phrases_idx_mask, look_ahead_step, past,
-                                                                 len(sorted_finished_candidates), look_ahead_width, attention_mask,
-                                                                 position_ids, _reorder_cache, **decode_kwargs)
-                else:
-                    future_state = [-float('inf')] * len(sorted_finished_candidates)
-
-                finished_future_states.extend(future_state)
-
-        for i, cand in enumerate(all_sorted_finished_candidates):
-            future_score = finished_future_states[i]
-            cand.rank = cand.score / (timestep - init_length + 1)
-            if future_score > -10000.0 and cand.col not in cand.hypothesis.eos():
-                cand.rank += alpha * future_score
-        finished_candidates = sorted(all_sorted_finished_candidates, key=attrgetter('rank'), reverse=True)
-
-    pruned_candidates = finished_candidates[:beam_size]
+    
+    # TODO: abandon candidates which cannot meet all constraints at max length
+    pruned_candidates = sorted(finished_candidates, key=attrgetter('score'), reverse=True)[:beam_size]
     num_finish = len(pruned_candidates)
     for chunk in chunk_candidates:
         if len(pruned_candidates) >= num_fill:

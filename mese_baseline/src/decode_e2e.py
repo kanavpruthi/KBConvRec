@@ -300,8 +300,8 @@ if __name__ == '__main__':
 
     
     CKPT = args.pretrained_model
-    device = torch.device(0)
-    # device = torch.device('cpu')
+    # device = torch.device(0)
+    device = torch.device('cpu')
 
     bert_tokenizer = DistilBertTokenizer.from_pretrained("../../../../offline_transformers/distilbert-base-uncased/tokenizer/")
     bert_model_recall = DistilBertModel.from_pretrained('../../../../offline_transformers/distilbert-base-uncased/model/')

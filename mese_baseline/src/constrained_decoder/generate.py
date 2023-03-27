@@ -500,13 +500,6 @@ def _generate_beam_search(
         
         outputs = self(**model_inputs)  # (batch_size * num_beams, cur_len, vocab_size)
 
-        # print("------!!---------")
-        # print(len(outputs))
-        # print(len(outputs[1]))
-        # print(outputs[1][0][0].shape)
-        # raise('')
-
-
         if cur_len == init_length:
             next_token_logits = outputs[0].gather(1, start_idx).squeeze(1)
         else:

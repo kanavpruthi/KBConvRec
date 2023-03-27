@@ -83,7 +83,7 @@ class C_UniversalCRSModel(torch.nn.Module):
                                             ):
         chunk_ids = item_ids
         chunk_infos = [items_db_to_use[key] for key in chunk_ids ]
-        chunk_tokens = self.encoder_tokenizer(chunk_infos, max_length = 48, padding='max_length', truncation=True, return_tensors="pt")
+        chunk_tokens = self.encoder_tokenizer(chunk_infos, max_length = 4, padding='max_length', truncation=True, return_tensors="pt")
         chunk_input_ids = chunk_tokens['input_ids'].to(self.device)
         chunk_attention_mask = chunk_tokens['attention_mask'].to(self.device)
         chunk_hiddens = encoder_to_use(input_ids=chunk_input_ids, attention_mask=chunk_attention_mask).last_hidden_state
@@ -474,7 +474,7 @@ class C_UniversalCRSModel(torch.nn.Module):
 
 
         gt_item_wte, _ = self.compute_encoded_embeddings_for_items(self.recall_encoder, [gt_item_id], self.items_db)
-        gt_item_wte = self.rerank_item_wte_mapper(gt_item_wte) # [1, self.rerank_item_wte_mapper.out_features]
+        gt_item_wte = self.recall_item_wte_mapper(gt_item_wte) # [1, self.rerank_item_wte_mapper.out_features]
         
 
         entity_id_token = self.lm_tokenizer(self.PLACEHOLDER_TOKEN_STR, return_tensors="pt")['input_ids'].to(self.device)[0] # [1, 1]
