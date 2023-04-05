@@ -1,7 +1,7 @@
 import math
 from loguru import logger
-from transformers import GPT2LMHeadModel, GPT2Tokenizer, AdamW, get_linear_schedule_with_warmup, GPT2Config
-from transformers import GPT2Config, GPT2Tokenizer, GPT2LMHeadModel,GPT2Model, AdamW, get_linear_schedule_with_warmup, BertModel, BertTokenizer
+from transformers import GPT2LMHeadModel
+from transformers import GPT2Model
 from transformers import modeling_outputs, modeling_utils
 from transformers.modeling_outputs import CausalLMOutputWithCrossAttentions
 import torch
